@@ -6,6 +6,8 @@ paper:
   subtitle: "Optional Subtitle"
   version: "1.0"
   date: ""
+  cover:
+    image: "figures/cover_visualization.png"
 
 authors:
   - name: "Your Name"
@@ -42,6 +44,12 @@ steganography:
   encryption_enabled: false
   overlay_mode: "text"
   overlay_text: "CONFIDENTIAL"
+  overlay_opacity: 0.08
+  pdf_encryption_algorithm: "AES-256"
+  kmyth_enabled: false
+  kmyth_required: false
+  kmyth_pcrs: []
+  kmyth_seal_artifacts: []
 
 render:
   formats:
@@ -54,7 +62,11 @@ render:
 llm:
   reviews:
     enabled: false
-    types: []
+    types:
+      - executive_summary
+      - methodology_review
+    requires_ollama: true
+    requires_explicit_opt_in: true
   translations:
     enabled: false
     languages: []
@@ -147,7 +159,27 @@ gold_refinement:
       - "assaying"
       - "certifying"
       - "refining"
+    integrity_terms:
+      - "evidence spine"
+      - "source tier"
+      - "validation gate"
+    evidence_terms:
+      - "fact registry"
+      - "artifact manifest"
+      - "token provenance"
+    boundary_terms:
+      - "local claim"
+      - "analogy boundary"
+      - "domain validator"
+    gate_terms:
+      - "prerender"
+      - "evidence validation"
+      - "coverage gate"
   slots:
+    - name: "INTRO_INTEGRITY_TERM"
+      category: "integrity_terms"
+      count: 2
+      section: "introduction"
     - name: "METHOD_METAL_TERM"
       category: "metallurgical_terms"
       count: 3
@@ -156,14 +188,38 @@ gold_refinement:
       category: "manuscript_terms"
       count: 2
       section: "methodology"
+    - name: "METHOD_GATE_TERM"
+      category: "gate_terms"
+      count: 3
+      section: "methodology"
     - name: "RESULTS_PURITY_ADJ"
       category: "purity_adjectives"
       count: 2
+      section: "results"
+    - name: "RESULTS_EVIDENCE_TERM"
+      category: "evidence_terms"
+      count: 3
       section: "results"
     - name: "DISCUSSION_REFINEMENT_VERB"
       category: "refinement_verbs"
       count: 1
       section: "discussion"
+    - name: "DISCUSSION_BOUNDARY_TERM"
+      category: "boundary_terms"
+      count: 2
+      section: "discussion"
+    - name: "REPRO_EVIDENCE_TERM"
+      category: "evidence_terms"
+      count: 2
+      section: "reproducibility"
+    - name: "EVALUATION_GATE_TERM"
+      category: "gate_terms"
+      count: 2
+      section: "evaluation"
+    - name: "AUTHORING_BOUNDARY_TERM"
+      category: "boundary_terms"
+      count: 2
+      section: "authoring_contract"
   contribution_claims:
     - name: "Five-stage refinery"
       claim: "The refinery pipeline has 5 canonical stages from ore to nine-nines."
@@ -171,7 +227,7 @@ gold_refinement:
       boundary: "local"
     - name: "Monotone purity"
       claim: "Purity increases strictly across all refinery stages."
-      evidence: "src/refinery.py::assert_monotone_increase"
+      evidence: "src/purity.py::assert_monotone_increase"
       boundary: "local"
     - name: "Nine-nines certification"
       claim: "The certification stage achieves 99.9999999% purity."
@@ -180,6 +236,26 @@ gold_refinement:
     - name: "Deterministic tokens"
       claim: "Token selection is deterministic via seeded SHA-256 digest."
       evidence: "src/composition.py::_choose_value"
+      boundary: "local"
+    - name: "Formalism registry"
+      claim: "The manuscript exposes 7 source-owned formalisms with equation labels."
+      evidence: "src/formalisms.py::FORMALISMS"
+      boundary: "local"
+    - name: "Claim-support report separation"
+      claim: "The project-local contribution-claim report is written to claim_support_registry.json."
+      evidence: "scripts/refinement_analysis.py::CLAIM_SUPPORT_REGISTRY_NAME"
+      boundary: "local"
+    - name: "Implementation-linked visualizations"
+      claim: "The manuscript includes generated visualizations that link the refinery analogy to source code, variables, evidence, and validation gates."
+      evidence: "src/figures/diagrams.py::generate_implementation_circuit"
+      boundary: "local"
+    - name: "Scientific-integrity risk model"
+      claim: "The manuscript includes a source-owned integrity risk model linking failure modes, validators, evidence surfaces, and fork obligations."
+      evidence: "src/integrity.py::build_integrity_dimensions"
+      boundary: "local"
+    - name: "Adversarial security assay"
+      claim: "The manuscript includes a source-owned security assay mapping adversarial threats and standards to local evidence surfaces, validators, and claim boundaries."
+      evidence: "src/security_assay.py::build_security_assay"
       boundary: "local"
   pipeline_phases:
     - name: "Schema intake"
@@ -202,6 +278,16 @@ gold_refinement:
       transformation: "Generate purity progression, karat grading, and token density figures"
       output_artifact: "output/figures/*.png"
       guard: "nonblank figure tests"
+    - name: "Integrity risk modeling"
+      input_artifact: "audit rules, failure modes, claims, and shared evidence registry"
+      transformation: "Score integrity dimensions and summarize evidence tiers"
+      output_artifact: "integrity tables and risk visualizations"
+      guard: "tests/test_integrity.py"
+    - name: "Security assay"
+      input_artifact: "gold_refinement.security_assay"
+      transformation: "Map adversarial threats and standards to source-owned evidence and claim boundaries"
+      output_artifact: "security assay table and variables"
+      guard: "tests/test_security_assay.py"
     - name: "Manuscript hydration"
       input_artifact: "manuscript shells and manuscript_variables.json"
       transformation: "Resolve {{TOKEN}} placeholders into output/manuscript/"
@@ -228,3 +314,15 @@ gold_refinement:
     - name: "Figure generation"
       check: "All figure generators must produce non-blank PNGs"
       test: "tests/test_figures.py"
+    - name: "Integrity model coverage"
+      check: "Integrity dimensions must have unique IDs, owners, validators, and evidence surfaces"
+      test: "tests/test_integrity.py"
+    - name: "Security assay boundary"
+      check: "Security standards and scan phases must be represented as scoped guidance unless generated scan artifacts exist"
+      test: "tests/test_security_assay.py and manuscript source review"
+  security_assay:
+    - threat: "implicit trust in generated artifacts"
+      standard: "NIST SP 800-207 zero trust"
+      evidence_surface: "output/reports/evidence_registry.json and src/security_assay.py"
+      validator: "infrastructure.validation.cli evidence --fail-on-issues"
+      claim_boundary: "documents a verification posture, not a deployed zero-trust architecture"
