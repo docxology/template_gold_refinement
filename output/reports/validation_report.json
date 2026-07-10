@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-02T05:02:16.538112",
+  "timestamp": "2026-07-03T09:59:24.140988",
   "checks": {
     "PDF validation": true,
     "Transmission bookends": true,
@@ -64,8 +64,8 @@
           },
           "reports": {
             "exists": true,
-            "files": 13,
-            "size_mb": 0.06,
+            "files": 19,
+            "size_mb": 0.03,
             "readable": true,
             "optional": false
           },
@@ -125,9 +125,9 @@
         },
         "reports": {
           "exists": true,
-          "file_count": 13,
-          "size_mb": "0.06",
-          "largest_file": "artifact_manifest.json"
+          "file_count": 19,
+          "size_mb": "0.03",
+          "largest_file": "token_plan.json"
         },
         "simulations": {
           "exists": true,
@@ -154,12 +154,12 @@
         "slides": 0,
         "figures": 27,
         "data": 2,
-        "reports": 13,
+        "reports": 19,
         "simulations": 0,
         "llm": 0,
         "logs": 1
       },
-      "total_size_mb": 11.727506637573242,
+      "total_size_mb": 11.704459190368652,
       "issues_by_severity": {
         "critical": [],
         "warning": [],
@@ -171,7 +171,7 @@
     },
     "pdf": {
       "files": 10,
-      "size_mb": 5.090171813964844
+      "size_mb": 5.089849472045898
     },
     "figures": {
       "files": 27,
@@ -179,7 +179,7 @@
     },
     "data": {
       "files": 2,
-      "size_mb": 0.033374786376953125
+      "size_mb": 0.03337574005126953
     }
   },
   "summary": {

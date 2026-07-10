@@ -4,7 +4,7 @@ The refinery pipeline produces a monotonically increasing purity sequence across
 
 ## Purity progression
 
-![Purity progression across refinery stages](../output/figures/purity_progression.png){#fig:purity_progression}
+![Purity progression across the five refinery stages from ore (9K) to nine-nines certification.](../output/figures/purity_progression.png){#fig:purity_progression}
 
 | Stage | Name | Output purity | Karat | Gain |
 |-------|------|--------------|-------|------|
@@ -16,7 +16,7 @@ The refinery pipeline produces a monotonically increasing purity sequence across
 
 ## Karat grading scale
 
-![Gold karat grading scale with refinery stage markers](../output/figures/karat_grading.png){#fig:karat_grading}
+![Gold karat grading scale (9K–24K + nine-nines) with refinery stage markers.](../output/figures/karat_grading.png){#fig:karat_grading}
 
 ## Final certification
 
@@ -30,7 +30,7 @@ The refinery pipeline produces a monotonically increasing purity sequence across
 
 The mega-madlib engine generated 24 tokens from seed 431 across 8 lexicon categories.
 
-![Mega-madlib token distribution](../output/figures/token_density.png){#fig:token_density}
+![Mega-madlib token distribution across manuscript sections and lexicon categories.](../output/figures/token_density.png){#fig:token_density}
 
 ### Category distribution
 
@@ -106,7 +106,7 @@ recording file paths. It is preserving causal custody from raw material through
 assay and final certification, so a later change to the stage model must move
 through the same graph, table, and validation surfaces.
 
-![Provenance flow diagram](../output/figures/provenance_sankey.png){#fig:provenance_sankey}
+![Provenance trace: ore → stages → certification purity flow.](../output/figures/provenance_sankey.png){#fig:provenance_sankey}
 
 ## Purity vs claim support
 
@@ -127,7 +127,7 @@ had outrun claim support. Here the two axes are deliberately co-present, so the
 results section cannot celebrate purity while hiding unsupported contribution
 language in a separate paragraph.
 
-![Purity vs claim support](../output/figures/purity_claim_scatter.png){#fig:purity_claim_scatter}
+![Purity vs claim support rate scatter plot.](../output/figures/purity_claim_scatter.png){#fig:purity_claim_scatter}
 
 ## Token selection sensitivity
 
@@ -149,7 +149,7 @@ where a polished section appears stable but its wording is actually controlled
 by hidden or late-bound choices. The result is a sensitivity check on authoring
 machinery, not a claim that any particular synonym is scientifically superior.
 
-![Token selection heatmap](../output/figures/token_heatmap.png){#fig:token_heatmap}
+![Token selection heatmap: seed × category → selected index.](../output/figures/token_heatmap.png){#fig:token_heatmap}
 
 ## Integrity gate matrix
 
@@ -173,7 +173,7 @@ strengthening a claim. The result is intentionally local to this exemplar:
 coverage is measured against the specific audit rules configured here, not
 against a universal publication-readiness standard.
 
-![Integrity-gate matrix](../output/figures/integrity_gate_matrix.png){#fig:integrity_gate_matrix}
+![Integrity-gate matrix linking audit rules to tests, manuscript surfaces, and generated artifacts.](../output/figures/integrity_gate_matrix.png){#fig:integrity_gate_matrix}
 
 ## Formalism traceability
 
@@ -197,7 +197,7 @@ traceability layer should change with it. That is the desired behavior: the
 formal layer is a generated contract, not hand-maintained mathematical
 ornamentation.
 
-![Formalism traceability](../output/figures/formalism_traceability.png){#fig:formalism_traceability}
+![Formalism traceability from source-owned equation identifiers to source evidence.](../output/figures/formalism_traceability.png){#fig:formalism_traceability}
 
 ## Implementation circuit
 
@@ -220,7 +220,7 @@ unsupported claim, the circuit points backward to the owning source surface
 rather than encouraging local patching of rendered Markdown. That direction of
 repair is central to the manuscript's definition of refinement.
 
-![Gold-refinement implementation circuit](../output/figures/implementation_circuit.png){#fig:implementation_circuit}
+![Implementation circuit from config-owned ore through generated manuscript artifacts and validation feedback.](../output/figures/implementation_circuit.png){#fig:implementation_circuit}
 
 ## Claim-evidence assay
 
@@ -242,7 +242,7 @@ matters for the security and integrity extensions in this manuscript: a claim
 can be source-owned without becoming a compliance claim, and a generated assay
 can confirm local evidence without pretending to certify the wider supply chain.
 
-![Claim-evidence assay](../output/figures/claim_evidence_assay.png){#fig:claim_evidence_assay}
+![Claim-evidence assay showing supported contribution claims, evidence surfaces, and boundary classifications.](../output/figures/claim_evidence_assay.png){#fig:claim_evidence_assay}
 
 ## Scientific-integrity risk matrix
 
@@ -265,7 +265,7 @@ every high-severity issue has already been eliminated. It shows which risks this
 exemplar has made inspectable and where future work would need to add stronger
 measurement before using stronger language.
 
-![Scientific-integrity risk matrix](../output/figures/integrity_risk_matrix.png){#fig:integrity_risk_matrix}
+![Scientific-integrity risk matrix plotting severity, detectability, residual risk, and owning evidence surface.](../output/figures/integrity_risk_matrix.png){#fig:integrity_risk_matrix}
 
 ## Evidence-tier ladder
 
@@ -273,7 +273,7 @@ The evidence-tier ladder in [@fig:evidence_tier_ladder] summarizes the evidence 
 
 The ladder complements the risk matrix by counting source tiers rather than
 plotting risks. When the shared evidence registry is available, the manuscript
-can report 0 source-tiered facts to the validation
+can report 291 source-tiered facts to the validation
 surface. When that registry is not available, the same figure falls back to the
 integrity model's configured tiers. Either way, the reader sees the evidentiary
 mix instead of receiving an undifferentiated assurance that evidence exists.
@@ -288,17 +288,14 @@ the counts visible in tabular form. Together they close the figure sequence by
 showing not only that the 12 public figures render, but
 also which source tiers make their claims inspectable.
 
-![Evidence-tier ladder](../output/figures/evidence_tier_ladder.png){#fig:evidence_tier_ladder}
+![Evidence-tier ladder summarizing source tiers available to the shared template evidence registry.](../output/figures/evidence_tier_ladder.png){#fig:evidence_tier_ladder}
 
 | Source tier | Count | Role |
 |-------------|-------|------|
-| artifact | 2 | Generated artifacts exposed to readers |
-| source_code | 2 | Executable source files and symbols |
-| bibliography | 1 | Reference records and citation metadata |
-| claim_ledger | 1 | Source-owned claim and fact declarations |
-| config | 1 | Author-controlled project configuration |
-| generated_metric | 1 | Numbers regenerated from project analysis |
-| validation | 1 | Template gates and test results |
+| artifact | 133 | Generated artifacts exposed to readers |
+| generated_metric | 94 | Numbers regenerated from project analysis |
+| bibliography | 47 | Reference records and citation metadata |
+| claim_ledger | 17 | Source-owned claim and fact declarations |
 : Evidence tiers used by the integrity model and shared registry when available. {#tbl:evidence_tiers}
 
 ## Adversarial security assay
@@ -332,11 +329,17 @@ The project-local claim-support assay reports 9 supported claims out of 9 total 
 
 ## Shared evidence registry summary
 
-When the template evidence gate has run, the shared registry supplies source-tiered facts used by the evidence validator. Current fact count available to this variable pass: 0.
+When the template evidence gate has run, the shared registry supplies source-tiered facts used by the evidence validator. Current fact count available to this variable pass: 291.
 
 | Fact kind | Count |
 |-----------|-------|
-| not generated | 0 |
+| artifact | 88 |
+| citation | 47 |
+| equation | 8 |
+| figure | 29 |
+| number | 102 |
+| section | 10 |
+| table | 7 |
 : Shared evidence-registry fact kinds when available. {#tbl:shared_evidence_kinds}
 
 ## Figure quality report
@@ -346,9 +349,9 @@ The visualization registry is paired with `output/reports/figure_quality_report.
 | Figure | PNG | SVG | Dimensions | Nonwhite | Variance | Status |
 |--------|-----|-----|------------|----------|----------|--------|
 | claim_evidence_assay | yes | yes | 3947x2038 | 0.218 | 0.06041014 | pass |
-| evidence_tier_ladder | yes | yes | 3020x1724 | 0.216 | 0.05410730 | pass |
+| evidence_tier_ladder | yes | yes | 3339x1332 | 0.217 | 0.05471249 | pass |
 | formalism_traceability | yes | yes | 3315x1797 | 0.140 | 0.04409869 | pass |
-| implementation_circuit | yes | yes | 2966x1846 | 0.069 | 0.02257238 | pass |
+| implementation_circuit | yes | yes | 2966x1842 | 0.068 | 0.02214905 | pass |
 | integrity_gate_matrix | yes | yes | 1833x2060 | 0.406 | 0.16147143 | pass |
 | integrity_risk_matrix | yes | yes | 2499x1909 | 0.379 | 0.01892053 | pass |
 | karat_grading | yes | yes | 2956x1699 | 0.279 | 0.07296687 | pass |

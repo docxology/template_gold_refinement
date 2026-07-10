@@ -13,12 +13,7 @@ from typing import Any
 
 import yaml
 
-from infrastructure.core.config.schema import register_project_schema_extension
-
-_PROJECT_SCHEMA_EXTENSION = {"gold_refinement": dict}
-
-register_project_schema_extension("template_gold_refinement", _PROJECT_SCHEMA_EXTENSION)
-register_project_schema_extension("", _PROJECT_SCHEMA_EXTENSION)
+PROJECT_SCHEMA_EXTENSION = {"gold_refinement": dict}
 
 REQUIRED_LEXICON_CATEGORIES: tuple[str, ...] = (
     "metallurgical_terms",
@@ -185,14 +180,17 @@ class GoldRefinementConfig:
 
     @property
     def enabled_sections(self) -> tuple[str, ...]:
+        """Process enabled sections."""
         return tuple(k for k, v in self.section_conditions.items() if v)
 
     @property
     def disabled_sections(self) -> tuple[str, ...]:
+        """Process disabled sections."""
         return tuple(k for k, v in self.section_conditions.items() if not v)
 
     @property
     def total_token_count(self) -> int:
+        """Process total token count."""
         return sum(s.count for s in self.slots)
 
 
@@ -403,6 +401,7 @@ __all__ = [
     "GOLD_REFINEMENT_SCHEMA_FIELDS",
     "GoldRefinementConfig",
     "GoldRefinementConfigError",
+    "PROJECT_SCHEMA_EXTENSION",
     "REQUIRED_LEXICON_CATEGORIES",
     "REQUIRED_ROW_FIELDS",
     "SECTION_KEYS",

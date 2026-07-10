@@ -13,8 +13,17 @@ manuscript composition via mega-madlib token injection.
 | Token selection (deterministic digest) | `src/composition.py` |
 | Source-owned equation registry | `src/formalisms.py` |
 | Scientific-integrity dimensions and evidence tiers | `src/integrity.py` |
-| Figure specs, layouts, SVG output, and quality report | `src/figures.py` |
+| Figure specs, layouts, SVG output, and quality report | `src/figures/` (`FIGURE_SPECS` in `_common.py`) |
 | Manuscript variable map | `src/manuscript_variables.py` |
+| Claim-vs-evidence assay (the assaying stage) | `src/assay.py` |
+| Evidence registry: cross-checks contribution claims against sources | `src/evidence.py` |
+| Domain adapter profile (remap domain metrics onto the purity scale) | `src/domain_adapter.py` |
+| Secure-pipeline policy: steganography and LLM review gating | `src/pipeline_policy.py` |
+| Interactive HTML dashboard | `src/dashboard.py` |
+| Security assay records and summary | `src/security_assay.py` |
+| Shared boolean coercion helper | `src/coercion.py` |
+| Shared parsing and I/O helpers | `src/parsing.py` |
+| Cover visualization (matplotlib composite figure) | `src/cover_visualization.py` |
 | Experiment parameters and metadata | `manuscript/config.yaml` |
 | Open follow-up scope | `TODO.md` |
 
@@ -33,7 +42,7 @@ and hydrated manuscript output, not in hand-authored prose.
 
 ## Visualization Contract
 
-All 12 public figure labels are owned by `src/figures/__init__.py::FIGURE_SPECS`.
+All 12 public figure labels are owned by `src/figures/_common.py::FIGURE_SPECS` (re-exported from `src/figures/__init__.py`).
 Each spec must declare `name`, `label`, `path`, `svg_path`, `caption`,
 `generated_by`, `data_sources`, and `visual_encoding`. `generate_all_figures()`
 must write PNG and SVG companions plus `output/figures/figure_registry.json`
@@ -82,9 +91,9 @@ numbers.
 ```bash
 uv run pytest projects/templates/template_gold_refinement/tests/ \
   --cov=projects/templates/template_gold_refinement/src --cov-fail-under=90
-uv run python scripts/02_run_analysis.py --project templates/template_gold_refinement
-uv run python scripts/03_render_pdf.py --project templates/template_gold_refinement
-uv run python scripts/04_validate_output.py --project templates/template_gold_refinement
+uv run python scripts/pipeline/stage_02_analysis.py --project templates/template_gold_refinement
+uv run python scripts/pipeline/stage_03_render.py --project templates/template_gold_refinement
+uv run python scripts/pipeline/stage_04_validate.py --project templates/template_gold_refinement
 uv run python -m infrastructure.validation.cli prerender \
   projects/templates/template_gold_refinement/manuscript --repo-root .
 uv run python -m infrastructure.validation.cli evidence \

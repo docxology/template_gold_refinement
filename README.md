@@ -36,7 +36,7 @@ hand-edit between the markers; update the config and regenerate (see the legend)
 
 Concept DOI: [10.5281/zenodo.20931955](https://doi.org/10.5281/zenodo.20931955) | Version DOI: [10.5281/zenodo.20938523](https://zenodo.org/records/20938523) | Repository: [docxology/template_gold_refinement](https://github.com/docxology/template_gold_refinement)
 
-Publishing surface — 12 platforms, 7 published:
+Publishing surface — 20 platforms, 7 published:
 
 | Platform | Tier | Status | Reference | Credentials |
 | --- | --- | --- | --- | --- |
@@ -52,10 +52,18 @@ Publishing surface — 12 platforms, 7 published:
 | netlify | first-class | ⚪ available | — | `NETLIFY_AUTH_TOKEN` |
 | huggingface_hub | first-class | ✅ published | [https://huggingface.co/datasets/ActiveInference/template_gold_refinement](https://huggingface.co/datasets/ActiveInference/template_gold_refinement) | `HUGGINGFACE_TOKEN`, `HF_TOKEN` |
 | osf | first-class | ✅ published | [https://osf.io/u485p/](https://osf.io/u485p/) | `OSF_TOKEN` |
+| amazon_kdp | documented | 🟡 planned | — | `AMAZON_KDP_EMAIL`, `AMAZON_KDP_PASSWORD` |
+| google_play_books | documented | 🟡 planned | — | `GOOGLE_PLAY_BOOKS_SERVICE_ACCOUNT_JSON` |
+| gumroad | documented | 🟡 planned | — | `GUMROAD_ACCESS_TOKEN` |
+| leanpub | documented | 🟡 planned | — | `LEANPUB_API_KEY` |
+| lulu | documented | 🟡 planned | — | `LULU_CLIENT_KEY`, `LULU_CLIENT_SECRET` |
+| draft2digital | documented | 🟡 planned | — | `DRAFT2DIGITAL_API_TOKEN` |
+| stripe | documented | 🟡 planned | — | `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY` |
+| ingramspark | documented | 🟡 planned | — | `INGRAMSPARK_CLIENT_ID`, `INGRAMSPARK_CLIENT_SECRET` |
 
 _Keywords: gold refining, manuscript composition, mega-madlib, token injection, scientific purity, assaying, karat grading, security assay, supply-chain provenance._
 
-_Status legend: ✅ published (durable identifier recorded in `config.yaml`) · ⚪ available (adapter implemented and locally verifiable) · 🟡 planned. This block is generated — edit `manuscript/config.yaml`, then regenerate with `uv run python -m infrastructure.publishing.status_report --project <path> --write`._
+_Status legend: ✅ published (durable identifier recorded in `config.yaml`) · 🔵 reserved (identifier reserved but not yet registered by final publication) · ⚪ available (adapter implemented and locally verifiable) · 🟡 planned. This block is generated — edit `manuscript/config.yaml`, then regenerate with `uv run python -m infrastructure.publishing.status_report --project <path> --write`._
 <!-- PUBLISHING-STATUS:END -->
 
 - Canonical renderer: [docxology/template](https://github.com/docxology/template) with `--project templates/template_gold_refinement`
@@ -69,8 +77,8 @@ cd template
 uv sync
 export SOURCE_DATE_EPOCH=1782345600  # 2026-06-25T00:00:00Z, matching manuscript/config.yaml
 ./run.sh --project templates/template_gold_refinement --pipeline --core-only
-uv run python scripts/04_validate_output.py --project templates/template_gold_refinement
-uv run python scripts/05_copy_outputs.py --project templates/template_gold_refinement
+uv run python scripts/pipeline/stage_04_validate.py --project templates/template_gold_refinement
+uv run python scripts/pipeline/stage_05_copy.py --project templates/template_gold_refinement
 ```
 
 Keep `SOURCE_DATE_EPOCH` set when refreshing tracked public outputs so dashboard
@@ -105,7 +113,7 @@ All rendered artifacts are source-owned and disposable. Do not hand-edit
 | `output/reports/token_plan.json` | `src/composition.py`, `manuscript/config.yaml` | Deterministic mega-madlib token choices and provenance |
 | `output/reports/claim_support_registry.json` | `src/evidence.py` | Project-local contribution-claim assay |
 | `output/reports/evidence_registry.json` | template evidence validator | Shared evidence facts consumed by validation gates |
-| `output/figures/figure_registry.json` | `src/figures/__init__.py::FIGURE_SPECS` | Figure label/path/caption/source registry |
+| `output/figures/figure_registry.json` | `src/figures/_common.py::FIGURE_SPECS` | Figure label/path/caption/source registry |
 | `output/reports/figure_quality_report.json` | `src/figures/registry.py::write_figure_quality_report` | PNG/SVG existence, dimensions, nonblank pixels, color variance, and registry parity |
 | `output/figures/cover_visualization.png` | `src/cover_visualization.py::generate_cover_visualization` | Standalone publication cover visual; not part of the stable 12-figure manuscript registry |
 | `output/reports/cover_visualization.json` | `src/cover_visualization.py::write_cover_visualization` | Cover dimensions, byte sizes, nonwhite fraction, and color variance |
@@ -182,7 +190,7 @@ See [AGENTS.md](AGENTS.md) for technical documentation.
 - Copy-and-customize configuration: [`manuscript/config.yaml.example`](manuscript/config.yaml.example).
 - Standalone fork guide: [`STANDALONE.md`](STANDALONE.md).
 - Project validation: `uv run pytest projects/templates/template_gold_refinement/tests/ --cov=projects/templates/template_gold_refinement/src --cov-fail-under=90`.
-- Repo drift validation: `uv run python scripts/check_template_drift.py --strict`.
+- Repo drift validation: `uv run python scripts/audit/check_template_drift.py --strict`.
 
 <!-- foam-orphan-nav:start (auto-managed: links sub-docs so they are reachable) -->
 

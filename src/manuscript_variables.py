@@ -17,18 +17,15 @@ from __future__ import annotations
 
 import hashlib
 import json
-import os
 import platform
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
-
-import yaml
 
 try:
     from .composition import generate_token_plan
     from .config import load_gold_refinement_config
     from .evidence import build_evidence_registry
+    from .figures._common import figure_markdown_variables
     from .formalisms import (
         equation_labels,
         formalism_count,
@@ -44,6 +41,7 @@ try:
         integrity_owner_table_rows,
         integrity_summary_line,
     )
+    from .parsing import build_timestamp, load_json_object, load_manuscript_config
     from .purity import format_purity, purity_to_nines
     from .refinery import run_refinery
     from .security_assay import (
@@ -55,6 +53,7 @@ except ImportError:  # pragma: no cover
     from composition import generate_token_plan  # type: ignore[no-redef]
     from config import load_gold_refinement_config  # type: ignore[no-redef]
     from evidence import build_evidence_registry  # type: ignore[no-redef]
+    from figures._common import figure_markdown_variables  # type: ignore[no-redef]
     from formalisms import (  # type: ignore[no-redef]
         equation_labels,
         formalism_count,
@@ -70,6 +69,7 @@ except ImportError:  # pragma: no cover
         integrity_owner_table_rows,
         integrity_summary_line,
     )
+    from parsing import build_timestamp, load_json_object, load_manuscript_config  # type: ignore[no-redef]
     from purity import format_purity, purity_to_nines  # type: ignore[no-redef]
     from refinery import run_refinery  # type: ignore[no-redef]
     from security_assay import (  # type: ignore[no-redef]
@@ -83,26 +83,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def _build_timestamp() -> str:
-    """Build timestamp, honoring ``SOURCE_DATE_EPOCH`` for reproducible builds."""
-    epoch = os.environ.get("SOURCE_DATE_EPOCH", "").strip()
-    if epoch.isdigit():
-        return datetime.fromtimestamp(int(epoch), tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
 # --------------------------------------------------------------------------- #
 # I/O helpers — thin readers, no business logic
 # --------------------------------------------------------------------------- #
-
-
-def _load_config(project_root: Path) -> dict[str, Any]:
-    config_path = project_root / "manuscript" / "config.yaml"
-    if not config_path.exists():
-        logger.warning("Config file not found: %s", config_path)
-        return {}
-    with config_path.open("r") as f:
-        return yaml.safe_load(f) or {}
 
 
 def _compute_config_hash(project_root: Path) -> str:
@@ -128,14 +111,6 @@ def _count_output_artifacts(project_root: Path) -> dict[str, int]:
         else:
             counts[subdir] = 0
     return counts
-
-
-def _load_json_object(path: Path) -> dict[str, Any]:
-    if not path.exists():
-        return {}
-    with path.open("r") as f:
-        data = json.load(f)
-    return data if isinstance(data, dict) else {}
 
 
 def _shared_evidence_kind_rows(shared_evidence: dict[str, Any]) -> str:
@@ -169,53 +144,7 @@ def _figure_quality_table_rows(figure_quality: dict[str, Any]) -> str:
     return "\n".join(rows)
 
 
-# --------------------------------------------------------------------------- #
-# Public API
-# --------------------------------------------------------------------------- #
-
-
-def generate_variables(project_root: Path, *, require_analysis_outputs: bool = False) -> dict[str, str]:
-    """Generate all manuscript variables from config and refinery computation.
-
-    Args:
-        project_root: Root directory of the project (containing ``manuscript/``
-            and ``output/``).
-        require_analysis_outputs: When True, raise if
-            ``output/data/refinery_results.json`` is missing.
-
-    Returns:
-        ``dict[str, str]`` with UPPERCASE_KEY → value mapping for
-        ``{{TOKEN}}`` substitution.
-    """
-    config = _load_config(project_root)
-    gr_config = load_gold_refinement_config(project_root)
-
-    # Run the refinery
-    refinery_result = run_refinery()
-
-    # Load optional analysis outputs
-    analysis_path = project_root / "output" / "data" / "refinery_results.json"
-    if analysis_path.exists():
-        with analysis_path.open("r") as f:
-            json.load(f)  # Validate file is readable JSON
-    elif require_analysis_outputs:
-        raise FileNotFoundError(
-            f"Analysis outputs required but missing: {analysis_path}. "
-            "Run projects/templates/template_gold_refinement/scripts/refinement_analysis.py first."
-        )
-
-    # Generate the token plan
-    token_plan = generate_token_plan(gr_config)
-
-    artifact_counts = _count_output_artifacts(project_root)
-
-    variables: dict[str, str] = {}
-
-    # ---- Paper metadata ----
-    paper = config.get("paper", {})
-    variables["CONFIG_VERSION"] = paper.get("version", "0.1.0")
-
-    # ---- Refinery stage variables ----
+def _add_refinery_variables(variables: dict[str, str], refinery_result: Any) -> None:
     variables["REFINERY_NUM_STAGES"] = str(refinery_result.stage_count)
     variables["REFINERY_FINAL_PURITY"] = format_purity(refinery_result.final_purity)
     variables["REFINERY_FINAL_KARAT"] = refinery_result.final_karat.label
@@ -223,7 +152,6 @@ def generate_variables(project_root: Path, *, require_analysis_outputs: bool = F
     variables["REFINERY_IS_CERTIFIED"] = "Yes" if refinery_result.is_nine_nines_certified else "No"
     variables["REFINERY_FINAL_NINES"] = str(purity_to_nines(refinery_result.final_purity))
 
-    # Stage labels
     for i, stage in enumerate(refinery_result.stages):
         prefix = f"STAGE_{i + 1}"
         variables[f"{prefix}_NAME"] = stage.name
@@ -236,7 +164,6 @@ def generate_variables(project_root: Path, *, require_analysis_outputs: bool = F
 
     variables["REFINERY_STAGE_LABELS"] = "\n".join(f"- {label}" for label in refinery_result.stage_labels)
 
-    # Stage label table rows for manuscript tables
     table_rows = []
     for stage in refinery_result.stages:
         table_rows.append(
@@ -247,31 +174,26 @@ def generate_variables(project_root: Path, *, require_analysis_outputs: bool = F
             f"| {stage.metallurgical_operation} |"
         )
     variables["STAGE_TABLE_ROWS"] = "\n".join(table_rows)
-
-    # Purity sequence for figures
     variables["PURITY_SEQUENCE"] = ", ".join(f"{p:.6f}" for p in refinery_result.purity_sequence)
 
-    # ---- Token plan variables ----
+
+def _add_token_variables(variables: dict[str, str], token_plan: Any) -> None:
     variables["TOKEN_COUNT"] = str(len(token_plan.choices))
     variables["TOKEN_SEED"] = str(token_plan.seed)
 
-    # Category counts table
     cat_rows = []
     for cat, count in sorted(token_plan.category_counts.items()):
         cat_rows.append(f"| {cat} | {count} |")
     variables["TOKEN_CATEGORY_TABLE"] = "\n".join(cat_rows)
 
-    # Section counts table
     sec_rows = []
     for sec, count in sorted(token_plan.section_counts.items()):
         sec_rows.append(f"| {sec} | {count} |")
     variables["TOKEN_SECTION_TABLE"] = "\n".join(sec_rows)
 
-    # Individual token values for manuscript injection
     for choice in token_plan.choices:
         variables[choice.variable_name] = choice.value
 
-    # Provenance table
     prov_rows = []
     for var_name, prov in sorted(token_plan.provenance.items()):
         prov_rows.append(
@@ -279,7 +201,17 @@ def generate_variables(project_root: Path, *, require_analysis_outputs: bool = F
         )
     variables["TOKEN_PROVENANCE_TABLE"] = "\n".join(prov_rows)
 
-    # ---- Config-derived ----
+
+def _add_config_variables(
+    variables: dict[str, str],
+    config: dict[str, Any],
+    gr_config: Any,
+    artifact_counts: dict[str, int],
+    project_root: Path,
+) -> None:
+    paper = config.get("paper", {})
+    variables["CONFIG_VERSION"] = paper.get("version", "0.1.0")
+
     variables["CONFIG_SEED"] = str(gr_config.seed)
     variables["CONFIG_DEPTH"] = gr_config.composition_depth
     variables["CONFIG_NUM_ENABLED_SECTIONS"] = str(len(gr_config.enabled_sections))
@@ -288,77 +220,53 @@ def generate_variables(project_root: Path, *, require_analysis_outputs: bool = F
     variables["CONFIG_NUM_SLOTS"] = str(len(gr_config.slots))
     variables["CONFIG_TOTAL_TOKEN_COUNT"] = str(gr_config.total_token_count)
 
-    # Lexicon inventory counts
     lex_rows = []
     for cat, vals in sorted(gr_config.lexicon.items()):
         lex_rows.append(f"| {cat} | {len(vals)} | {', '.join(vals[:3])}... |")
     variables["LEXICON_TABLE"] = "\n".join(lex_rows)
 
-    # ---- Artifact counts ----
     variables["ARTIFACT_FIGURES"] = str(artifact_counts.get("figures", 0))
     variables["ARTIFACT_DATA_FILES"] = str(artifact_counts.get("data", 0))
     variables["ARTIFACT_REPORTS"] = str(artifact_counts.get("reports", 0))
     variables["ARTIFACT_TOTAL"] = str(sum(artifact_counts.values()))
 
-    # ---- Provenance ----
     variables["CONFIG_HASH"] = _compute_config_hash(project_root)
-    variables["GENERATION_TIMESTAMP"] = _build_timestamp()
+    variables["GENERATION_TIMESTAMP"] = build_timestamp()
     variables["PYTHON_VERSION"] = platform.python_version()
 
-    # ---- Author / keyword metadata ----
     authors = config.get("authors", [])
     variables["CONFIG_FIRST_AUTHOR"] = authors[0].get("name", "Unknown") if authors else "Unknown"
     variables["CONFIG_KEYWORDS"] = ", ".join(config.get("keywords", []))
 
-    # ---- Section titles ----
     for section, title in gr_config.section_titles.items():
         upper = section.upper()
         variables[f"TITLE_{upper}"] = title
 
-    # ---- Figure references ----
-    # Figure images with labels — each appears only once in the manuscript
-    # to avoid pandoc-crossref duplicate label errors.
-    variables["FIGURE_PURITY_PROGRESSION"] = (
-        "![Purity progression across refinery stages](../output/figures/purity_progression.png)"
-        "{#fig:purity_progression}"
-    )
-    variables["FIGURE_KARAT_GRADING"] = (
-        "![Gold karat grading scale with refinery stage markers](../output/figures/karat_grading.png)"
-        "{#fig:karat_grading}"
-    )
-    variables["FIGURE_TOKEN_DENSITY"] = (  # nosec B105
-        "![Mega-madlib token distribution](../output/figures/token_density.png){#fig:token_density}"
-    )
-    variables["FIGURE_PROVENANCE_SANKEY"] = (
-        "![Provenance flow diagram](../output/figures/provenance_sankey.png){#fig:provenance_sankey}"
-    )
-    variables["FIGURE_PURITY_CLAIM_SCATTER"] = (
-        "![Purity vs claim support](../output/figures/purity_claim_scatter.png){#fig:purity_claim_scatter}"
-    )
-    variables["FIGURE_TOKEN_HEATMAP"] = (  # nosec B105
-        "![Token selection heatmap](../output/figures/token_heatmap.png){#fig:token_heatmap}"
-    )
-    variables["FIGURE_INTEGRITY_GATE_MATRIX"] = (
-        "![Integrity-gate matrix](../output/figures/integrity_gate_matrix.png){#fig:integrity_gate_matrix}"
-    )
-    variables["FIGURE_FORMALISM_TRACEABILITY"] = (
-        "![Formalism traceability](../output/figures/formalism_traceability.png){#fig:formalism_traceability}"
-    )
-    variables["FIGURE_IMPLEMENTATION_CIRCUIT"] = (
-        "![Gold-refinement implementation circuit](../output/figures/implementation_circuit.png)"
-        "{#fig:implementation_circuit}"
-    )
-    variables["FIGURE_CLAIM_EVIDENCE_ASSAY"] = (
-        "![Claim-evidence assay](../output/figures/claim_evidence_assay.png){#fig:claim_evidence_assay}"
-    )
-    variables["FIGURE_INTEGRITY_RISK_MATRIX"] = (
-        "![Scientific-integrity risk matrix](../output/figures/integrity_risk_matrix.png){#fig:integrity_risk_matrix}"
-    )
-    variables["FIGURE_EVIDENCE_TIER_LADDER"] = (
-        "![Evidence-tier ladder](../output/figures/evidence_tier_ladder.png){#fig:evidence_tier_ladder}"
-    )
 
-    # ---- Contribution claims table ----
+def _add_figure_variables(variables: dict[str, str], project_root: Path) -> None:
+    variables.update(figure_markdown_variables())
+
+    figure_quality = load_json_object(project_root / "output" / "reports" / "figure_quality_report.json")
+    figure_count = int(figure_quality.get("figure_count", 0) or 0)
+    passing_count = int(figure_quality.get("passing_count", 0) or 0)
+    registry_parity = bool(figure_quality.get("registry_parity", False))
+    if figure_count == 0:
+        quality_status = "not generated"
+    elif passing_count == figure_count and registry_parity:
+        quality_status = "passing"
+    else:
+        quality_status = "failing"
+    variables["FIGURE_QUALITY_REPORT_PATH"] = "output/reports/figure_quality_report.json"
+    variables["FIGURE_QUALITY_TOTAL"] = str(figure_count)
+    variables["FIGURE_QUALITY_PNG_COUNT"] = str(int(figure_quality.get("png_count", 0) or 0))
+    variables["FIGURE_QUALITY_SVG_COUNT"] = str(int(figure_quality.get("svg_count", 0) or 0))
+    variables["FIGURE_QUALITY_PASSING_COUNT"] = str(passing_count)
+    variables["FIGURE_QUALITY_REGISTRY_PARITY"] = "Yes" if registry_parity else "No"
+    variables["FIGURE_QUALITY_STATUS"] = quality_status
+    variables["FIGURE_QUALITY_TABLE"] = _figure_quality_table_rows(figure_quality)
+
+
+def _add_claim_and_evidence_variables(variables: dict[str, str], gr_config: Any, project_root: Path) -> dict[str, Any]:
     claim_rows = []
     for claim in gr_config.contribution_claims:
         claim_rows.append(
@@ -369,7 +277,6 @@ def generate_variables(project_root: Path, *, require_analysis_outputs: bool = F
         )
     variables["CONTRIBUTION_CLAIMS_TABLE"] = "\n".join(claim_rows)
 
-    # ---- Pipeline phases table ----
     phase_rows = []
     for phase in gr_config.pipeline_phases:
         phase_rows.append(
@@ -381,19 +288,16 @@ def generate_variables(project_root: Path, *, require_analysis_outputs: bool = F
         )
     variables["PIPELINE_PHASES_TABLE"] = "\n".join(phase_rows)
 
-    # ---- Audit rules table ----
     audit_rows = []
     for rule in gr_config.audit_rules:
         audit_rows.append(f"| {rule.get('name', '')} | {rule.get('check', '')} | {rule.get('test', '')} |")
     variables["AUDIT_RULES_TABLE"] = "\n".join(audit_rows)
 
-    # ---- Design principles table ----
     principle_rows = []
     for p in gr_config.design_principles:
         principle_rows.append(f"| {p.get('name', '')} | {p.get('rationale', '')} |")
     variables["DESIGN_PRINCIPLES_TABLE"] = "\n".join(principle_rows)
 
-    # ---- Quality probes table ----
     probe_rows = []
     for probe in gr_config.quality_probes:
         probe_rows.append(
@@ -404,7 +308,6 @@ def generate_variables(project_root: Path, *, require_analysis_outputs: bool = F
         )
     variables["QUALITY_PROBES_TABLE"] = "\n".join(probe_rows)
 
-    # ---- Failure modes table ----
     failure_rows = []
     for fm in gr_config.failure_modes:
         failure_rows.append(
@@ -437,30 +340,14 @@ def generate_variables(project_root: Path, *, require_analysis_outputs: bool = F
     variables["CLAIM_SUPPORT_STATUS"] = "passing" if claim_registry.is_passing else "failing"
     variables["CLAIM_SUPPORT_REGISTRY_PATH"] = "output/reports/claim_support_registry.json"
 
-    shared_evidence = _load_json_object(project_root / "output" / "reports" / "evidence_registry.json")
+    shared_evidence = load_json_object(project_root / "output" / "reports" / "evidence_registry.json")
     variables["SHARED_EVIDENCE_FACT_COUNT"] = str(shared_evidence.get("fact_count", 0))
     variables["SHARED_EVIDENCE_KIND_TABLE"] = _shared_evidence_kind_rows(shared_evidence)
     variables["SHARED_EVIDENCE_SCHEMA"] = str(shared_evidence.get("schema", "not generated"))
+    return shared_evidence
 
-    figure_quality = _load_json_object(project_root / "output" / "reports" / "figure_quality_report.json")
-    figure_count = int(figure_quality.get("figure_count", 0) or 0)
-    passing_count = int(figure_quality.get("passing_count", 0) or 0)
-    registry_parity = bool(figure_quality.get("registry_parity", False))
-    if figure_count == 0:
-        quality_status = "not generated"
-    elif passing_count == figure_count and registry_parity:
-        quality_status = "passing"
-    else:
-        quality_status = "failing"
-    variables["FIGURE_QUALITY_REPORT_PATH"] = "output/reports/figure_quality_report.json"
-    variables["FIGURE_QUALITY_TOTAL"] = str(figure_count)
-    variables["FIGURE_QUALITY_PNG_COUNT"] = str(int(figure_quality.get("png_count", 0) or 0))
-    variables["FIGURE_QUALITY_SVG_COUNT"] = str(int(figure_quality.get("svg_count", 0) or 0))
-    variables["FIGURE_QUALITY_PASSING_COUNT"] = str(passing_count)
-    variables["FIGURE_QUALITY_REGISTRY_PARITY"] = "Yes" if registry_parity else "No"
-    variables["FIGURE_QUALITY_STATUS"] = quality_status
-    variables["FIGURE_QUALITY_TABLE"] = _figure_quality_table_rows(figure_quality)
 
+def _add_integrity_variables(variables: dict[str, str], gr_config: Any, shared_evidence: dict[str, Any]) -> None:
     integrity_dimensions = build_integrity_dimensions(gr_config)
     evidence_tiers = build_evidence_tiers(shared_evidence, integrity_dimensions)
     variables["INTEGRITY_DIMENSION_COUNT"] = str(len(integrity_dimensions))
@@ -469,7 +356,51 @@ def generate_variables(project_root: Path, *, require_analysis_outputs: bool = F
     variables["INTEGRITY_OWNER_TABLE"] = integrity_owner_table_rows(integrity_dimensions)
     variables["EVIDENCE_TIER_TABLE"] = evidence_tier_table_rows(evidence_tiers)
 
-    # ---- Manuscript staleness detection ----
+
+# --------------------------------------------------------------------------- #
+# Public API
+# --------------------------------------------------------------------------- #
+
+
+def generate_variables(project_root: Path, *, require_analysis_outputs: bool = False) -> dict[str, str]:
+    """Generate all manuscript variables from config and refinery computation.
+
+    Args:
+        project_root: Root directory of the project (containing ``manuscript/``
+            and ``output/``).
+        require_analysis_outputs: When True, raise if
+            ``output/data/refinery_results.json`` is missing.
+
+    Returns:
+        ``dict[str, str]`` with UPPERCASE_KEY → value mapping for
+        ``{{TOKEN}}`` substitution.
+    """
+    config = load_manuscript_config(project_root)
+    if not config:
+        logger.warning("Config file not found: %s", project_root / "manuscript" / "config.yaml")
+    gr_config = load_gold_refinement_config(project_root)
+    refinery_result = run_refinery()
+
+    analysis_path = project_root / "output" / "data" / "refinery_results.json"
+    if analysis_path.exists():
+        with analysis_path.open("r") as f:
+            json.load(f)  # Validate file is readable JSON
+    elif require_analysis_outputs:
+        raise FileNotFoundError(
+            f"Analysis outputs required but missing: {analysis_path}. "
+            "Run projects/templates/template_gold_refinement/scripts/refinement_analysis.py first."
+        )
+
+    token_plan = generate_token_plan(gr_config)
+    artifact_counts = _count_output_artifacts(project_root)
+
+    variables: dict[str, str] = {}
+    _add_refinery_variables(variables, refinery_result)
+    _add_token_variables(variables, token_plan)
+    _add_config_variables(variables, config, gr_config, artifact_counts, project_root)
+    _add_figure_variables(variables, project_root)
+    shared_evidence = _add_claim_and_evidence_variables(variables, gr_config, project_root)
+    _add_integrity_variables(variables, gr_config, shared_evidence)
     variables["MANUSCRIPT_STALENESS"] = _detect_staleness(project_root)
 
     logger.info("Generated %d manuscript variables", len(variables))
