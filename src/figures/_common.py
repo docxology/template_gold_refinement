@@ -114,10 +114,10 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "purity_claim_scatter",
         "fig:purity_claim_scatter",
         "purity_claim_scatter.png",
-        "Purity vs claim support rate scatter plot.",
+        "Stage purity plotted against the single project-level claim-support assay.",
         "src/figures/diagrams.py::generate_purity_claim_scatter",
         ("output/reports/claim_support_registry.json", "src/refinery.py::run_refinery"),
-        "scatter positions encode output purity and cumulative claim-support exposure",
+        "x positions encode stage output purity; the shared y position encodes the project-level claim-support rate",
     ),
     FigureSpec(
         "token_heatmap",
@@ -127,6 +127,15 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "src/figures/diagrams.py::generate_token_heatmap",
         ("manuscript/config.yaml#gold_refinement.lexicon", "src/composition.py::generate_token_plan"),
         "heatmap cells encode deterministic selected inventory index across seeds",
+    ),
+    FigureSpec(
+        "seed_sensitivity",
+        "fig:seed_sensitivity",
+        "seed_sensitivity.png",
+        "Seed-sensitivity distribution and the declared sample-size precision ladder for token-plan agreement.",
+        "src/figures/charts.py::generate_seed_sensitivity",
+        ("output/data/seed_sensitivity.json", "src/seed_sensitivity.py::run_seed_sensitivity"),
+        "histogram encodes seed-level token agreement; line encodes the distribution-free precision radius by sample size",
     ),
     FigureSpec(
         "integrity_gate_matrix",

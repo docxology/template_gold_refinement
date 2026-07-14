@@ -1,5 +1,7 @@
 # {{TITLE_REPRODUCIBILITY}} {#sec:reproducibility}
 
+Reproduction requires identity, execution, and verification—not merely access to a PDF. Identity fixes the source revision, configuration hash, software release, and environment. Execution rebuilds analysis artifacts before manuscript hydration. Verification checks that registered claims, figures, references, and rendered formats agree with their source owners.
+
 ## Deterministic regeneration
 
 The refinery pipeline is fully deterministic. Given the same `manuscript/config.yaml` and `src/` code, every run produces identical output. This is the local version of a reproducible computational research norm: the reader should be able to inspect the source, rerun the workflow, and recover the same derived artifacts [@peng2011reproducible; @sandve2013ten].
@@ -10,6 +12,24 @@ Executable-publication scholarship sharpens that norm. Executable research compe
 - **Config hash:** {{CONFIG_HASH}}
 - **Generation timestamp:** {{GENERATION_TIMESTAMP}}
 - **Python version:** {{PYTHON_VERSION}}
+
+## Replication across technical seeds
+
+Exact replay uses the canonical seed above. Replicability of the token-plan
+mechanism is described separately by {{SEED_STUDY_N}} technical seed replicates:
+the report records {{SEED_STUDY_UNIQUE_PLANS}} unique plans, mean agreement of
+{{SEED_STUDY_MEAN_AGREEMENT}}, and a {{SEED_STUDY_CONFIDENCE_LEVEL}} descriptive
+interval of {{SEED_STUDY_AGREEMENT_INTERVAL}}. This follows the computational
+benchmarking principle that performance should be represented over relevant
+sources of variation, not only by a single run [@bouthillier2021accounting].
+The seed study is not a sample of manuscripts, readers, or scientific claims;
+it is a sensitivity analysis of one executable lexical pipeline. The National
+Academies distinguish computational reproducibility—recovering results from
+the same inputs and procedures—from replicability across changed conditions
+[@national_academies_2019_reproducibility]. This project demonstrates the
+former directly and explores only one controlled technical variation for the
+latter. It does not establish that the seed distribution represents future
+software environments or independent research teams.
 
 ## Artifact inventory
 
@@ -32,6 +52,8 @@ uv run python projects/templates/template_gold_refinement/scripts/z_generate_man
 # Full pipeline (from repo root)
 ./run.sh --project templates/template_gold_refinement --pipeline --core-only
 ```
+
+A reproduction report should record command exit status, the source revision, `{{CONFIG_HASH}}`, Python {{PYTHON_VERSION}}, and whether the generated registries pass. Matching prose alone is insufficient if the token plan, claim registry, or figure registry differs. Conversely, timestamp or renderer metadata differences should be interpreted separately from substantive differences in source-owned values.
 
 ## Config ownership
 

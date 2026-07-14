@@ -15,7 +15,7 @@ The same caution applies to checklist-shaped infrastructure. Reporting guideline
 ## Useful adaptation cases
 
 - **Domain-specific refinement pipelines**: fork the exemplar and remap stages to domain operations (e.g., clinical evidence, legal citation, engineering specification).
-- **Purity measurement**: adopt the purity fraction and karat grade vocabulary for any staged quality process.
+- **Staged-state visualization**: reuse the purity and karat vocabulary only when the fork declares what each state means, enforces ordering and continuity, and avoids presenting designed values as validated quality measurements.
 - **Mega-madlib composition**: reuse the deterministic token engine for any config-owned lexical composition task.
 - **Domain adapters**: use `src/domain_adapter.py` and `domain_profile.yaml` to translate a domain's own metrics into the same purity scale before reusing certification language.
 - **Research compendia**: package manuscript shells, token rules, analysis outputs, figures, and validation reports as a single reproducible object rather than a loose bundle of supplementary files [@marwick2018packaging].
@@ -34,6 +34,8 @@ The same caution applies to checklist-shaped infrastructure. Reporting guideline
 | Executable-package ambiguity | A fork publishes a rendered manuscript without enough software, metadata, or version identity to rebuild the object. | Reproducibility, scope, evaluation, and authoring-contract prose require source-owned metadata, exact release citation, and regenerated output reports. | Record software/template release identity, preserve source-owned metadata, and rerun the full pipeline before publishing. |
 | Security theater | Security language is presented as compliance, secure-by-design proof, or scan evidence without generated artifacts. | Security assay rows require a threat, standard, evidence surface, validator, and claim boundary. | Keep security claims bounded to the configured assay unless validated scan receipts exist. |
 | Scan result laundering | A future scan summary is imported as prose without the artifact, receipt, and validator that produced it. | Authoring-contract and evaluation prose require scan artifacts before real Codex Security or Deep Security Scan findings are claimed. | Integrate only generated scan reports with evidence-registry alignment and explicit claim boundaries. |
+| Seed-count overclaim | A large number of deterministic seed runs is presented as evidence of external manuscript quality or domain validity. | The seed-sensitivity report and manuscript label seeds as technical replicates and retain local non-claims. | Report seed variability as computational sensitivity and add independent domain evidence before expanding the claim. |
+| Seed-report drift | A stale or edited JSON report hydrates manuscript statistics that no longer match the current configuration. | Manuscript hydration validates the report against deterministic recomputation. | Regenerate analysis outputs and fail hydration when any report field differs from the recomputed payload. |
 
 ## Design principles
 
@@ -52,6 +54,8 @@ The same caution applies to checklist-shaped infrastructure. Reporting guideline
 ## Analogy-break boundary
 
 The analogy breaks when purity becomes a rhetorical grade detached from evidence. In this exemplar, [@eq:claim_support] and [@eq:integrity_vector] keep the grade tied to claim support and gate coverage. A fork that cannot provide comparable source-owned gates should keep the gold-refining language as metaphor only and avoid publication-strength claims.
+
+The reverse assay clarifies a second boundary. It can identify the shortest prefix that reaches a **declared** target, but it cannot identify the cheapest, fairest, or scientifically best workflow unless stages have empirically justified costs and outcomes. Likewise, the multi-objective purity vector prevents compensatory averaging, but its dimensions are still local engineering observables rather than a validated psychometric scale.
 
 The practical rule is simple: do not add an impressive figure unless its path through [@fig:implementation_circuit] is visible. A visual can summarize an idea, but it only supports a manuscript claim when the claim-evidence assay can point to the owning file, symbol, generated artifact, and validation surface.
 

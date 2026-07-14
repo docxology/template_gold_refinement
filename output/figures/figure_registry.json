@@ -55,13 +55,13 @@
       "name": "purity_claim_scatter",
       "label": "fig:purity_claim_scatter",
       "path": "purity_claim_scatter.png",
-      "caption": "Purity vs claim support rate scatter plot.",
+      "caption": "Stage purity plotted against the single project-level claim-support assay.",
       "generated_by": "src/figures/diagrams.py::generate_purity_claim_scatter",
       "data_sources": [
         "output/reports/claim_support_registry.json",
         "src/refinery.py::run_refinery"
       ],
-      "visual_encoding": "scatter positions encode output purity and cumulative claim-support exposure",
+      "visual_encoding": "x positions encode stage output purity; the shared y position encodes the project-level claim-support rate",
       "svg_path": "purity_claim_scatter.svg"
     },
     {
@@ -76,6 +76,19 @@
       ],
       "visual_encoding": "heatmap cells encode deterministic selected inventory index across seeds",
       "svg_path": "token_heatmap.svg"
+    },
+    {
+      "name": "seed_sensitivity",
+      "label": "fig:seed_sensitivity",
+      "path": "seed_sensitivity.png",
+      "caption": "Seed-sensitivity distribution and the declared sample-size precision ladder for token-plan agreement.",
+      "generated_by": "src/figures/charts.py::generate_seed_sensitivity",
+      "data_sources": [
+        "output/data/seed_sensitivity.json",
+        "src/seed_sensitivity.py::run_seed_sensitivity"
+      ],
+      "visual_encoding": "histogram encodes seed-level token agreement; line encodes the distribution-free precision radius by sample size",
+      "svg_path": "seed_sensitivity.svg"
     },
     {
       "name": "integrity_gate_matrix",

@@ -73,9 +73,9 @@ _common, graphs = _load_submodules()
 # _common.py: FigureSpec dataclass + registry records
 # --------------------------------------------------------------------------- #
 class TestFigureSpecSubmodule:
-    def test_specs_are_twelve_and_unique(self):
+    def test_specs_are_thirteen_and_unique(self):
         specs = _common.FIGURE_SPECS
-        assert len(specs) == 12
+        assert len(specs) == 13
         for field in ("name", "label", "path", "svg_path"):
             values = [getattr(spec, field) for spec in specs]
             assert len(values) == len(set(values)), f"duplicate {field}"
@@ -336,9 +336,7 @@ class TestGraphBuildersSubmodule:
 
         graph = graphs.build_claim_evidence_topology([Entry()])
         # None boundary falls back to the "local" label
-        boundary_labels = [
-            data["label"] for _, data in graph.nodes(data=True) if data["kind"] == "boundary"
-        ]
+        boundary_labels = [data["label"] for _, data in graph.nodes(data=True) if data["kind"] == "boundary"]
         assert boundary_labels == ["local"]
 
 

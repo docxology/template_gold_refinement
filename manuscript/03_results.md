@@ -1,6 +1,6 @@
 # {{TITLE_RESULTS}} {#sec:results}
 
-The refinery pipeline produces a monotonically increasing purity sequence across {{REFINERY_NUM_STAGES}} stages, reaching final purity of {{REFINERY_FINAL_PURITY}} ({{REFINERY_FINAL_KARAT}}).
+The canonical run completed {{REFINERY_NUM_STAGES}} ordered, continuous stages and reached the configured terminal state of {{REFINERY_FINAL_PURITY}} ({{REFINERY_FINAL_KARAT}}). These values verify execution of the declared model; they are not empirical estimates of manuscript quality.
 
 ## Purity progression
 
@@ -21,6 +21,38 @@ The refinery pipeline produces a monotonically increasing purity sequence across
 - **Total purity gain:** {{REFINERY_TOTAL_GAIN}}
 - **Nine-nines certified:** {{REFINERY_IS_CERTIFIED}}
 - **Nines count:** {{REFINERY_FINAL_NINES}}
+
+## Seed-sensitivity results
+
+The expanded sensitivity study evaluated {{SEED_STUDY_N}} technical replicates
+of the deterministic token pipeline over seeds {{SEED_STUDY_SEED_RANGE}}. It
+found {{SEED_STUDY_UNIQUE_PLANS}} unique token plans among {{SEED_STUDY_N}}
+runs, with {{SEED_STUDY_CANONICAL_MATCHES}} exact matches to the canonical
+plan. Mean slot agreement was {{SEED_STUDY_MEAN_AGREEMENT}} (SD
+{{SEED_STUDY_SD_AGREEMENT}}; descriptive {{SEED_STUDY_CONFIDENCE_LEVEL}} interval
+{{SEED_STUDY_AGREEMENT_INTERVAL}}), with observed range
+{{SEED_STUDY_AGREEMENT_MIN}}–{{SEED_STUDY_AGREEMENT_MAX}}. The configured
+threshold rate was {{SEED_STUDY_HIGH_AGREEMENT_RATE}} (score interval
+{{SEED_STUDY_HIGH_AGREEMENT_INTERVAL}}) at the {{SEED_STUDY_THRESHOLD}}
+agreement threshold. All configured inventory values were observed
+({{SEED_STUDY_INVENTORY_COVERAGE}} coverage), which is a coverage result for
+the token vocabulary rather than a quality result for the manuscript.
+
+The declared precision target requires at least {{SEED_STUDY_MINIMUM_N}}
+replicates under the chosen bounded-metric formula; the realized radius is
+{{SEED_STUDY_PRECISION_RADIUS}}. The deterministic bootstrap sensitivity
+interval for the mean is {{SEED_STUDY_BOOTSTRAP_INTERVAL}} from
+{{SEED_STUDY_BOOTSTRAP_REPLICATES}} resamples. Both intervals are conditional
+technical summaries, not population estimates.
+
+{{FIGURE_SEED_SENSITIVITY}}
+
+The report is stored at `{{SEED_STUDY_REPORT_PATH}}`. {{SEED_STUDY_CLAIM_BOUNDARY}}
+The sensitivity result therefore refines the reproducibility claim: a fixed
+seed exactly regenerates a selected plan, while neighboring seeds explore a
+wide deterministic outcome surface. It does not justify treating token
+agreement as a reader-quality metric or as evidence that one lexical choice is
+scientifically superior.
 
 ## Token plan summary
 
@@ -70,22 +102,9 @@ through the same graph, table, and validation surfaces.
 
 ## Purity vs claim support
 
-The purity-versus-claim-support view in [@fig:purity_claim_scatter] places the
-metallurgical purity sequence beside the contribution ledger. This prevents the
-paper from treating purity as an isolated aesthetic score. A point can advance
-only when two surfaces agree: the refinery computation supplies the stage purity,
-and the claim-support registry supplies the cumulative evidence exposure for
-the claims being made at that level of refinement.
+The purity-versus-claim-support view in [@fig:purity_claim_scatter] places two differently scoped measurements on explicit axes: stage output purity on the horizontal axis and the single project-level contribution-claim assay on the vertical axis. The same observed support rate is therefore repeated across stages. The figure does not fabricate a stagewise claim-support trajectory from a project-level aggregate.
 
-In the current generated assay, {{CLAIM_SUPPORT_SUPPORTED}} of
-{{CLAIM_SUPPORT_TOTAL}} contribution claims are supported
-({{CLAIM_SUPPORT_RATE}}). The figure is useful because it would make a weaker
-state visible immediately: a manuscript could still show late-stage material
-purity while failing to carry its claims along the evidence axis. In that case,
-the visual story would split, and the reader would see that certification prose
-had outrun claim support. Here the two axes are deliberately co-present, so the
-results section cannot celebrate purity while hiding unsupported contribution
-language in a separate paragraph.
+In the current generated assay, {{CLAIM_SUPPORT_SUPPORTED}} of {{CLAIM_SUPPORT_TOTAL}} contribution claims are supported ({{CLAIM_SUPPORT_RATE}}). The plot is diagnostic rather than correlational: five stage states and one ledger-level rate do not constitute independent observations suitable for association testing. Its purpose is to reveal disagreement between a late refinery state and weak overall claim support without combining the two into one score.
 
 {{FIGURE_PURITY_CLAIM_SCATTER}}
 

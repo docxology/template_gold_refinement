@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc 3.10" />
@@ -173,18 +173,23 @@
       vertical-align: middle;
     }
   </style>
+
+<link data-template-favicon rel="icon" href="favicon.ico">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<main id="main-content" tabindex="-1">
 <h1 id="sec:results">Results: Purity Progression and Karat Grading</h1>
-<p>The refinery pipeline produces a monotonically increasing purity
-sequence across 5 stages, reaching final purity of 99.9999999%
-(nine-nines) (24K (nine-nines certified)).</p>
+<p>The canonical run completed 5 ordered, continuous stages and reached
+the configured terminal state of 99.9999999% (nine-nines) (24K
+(nine-nines certified)). These values verify execution of the declared
+model; they are not empirical estimates of manuscript quality.</p>
 <h2 id="purity-progression">Purity progression</h2>
 <figure id="fig:purity_progression">
 <img src="../figures/purity_progression.png"
-alt="Purity progression across refinery stages" />
-<figcaption aria-hidden="true">Purity progression across refinery
-stages</figcaption>
+alt="Purity progression across the five refinery stages from ore (9K) to nine-nines certification." />
+<figcaption>Purity progression across the five
+refinery stages from ore (9K) to nine-nines certification.</figcaption>
 </figure>
 <table style="width:100%;">
 <colgroup>
@@ -244,9 +249,9 @@ stages</figcaption>
 <h2 id="karat-grading-scale">Karat grading scale</h2>
 <figure id="fig:karat_grading">
 <img src="../figures/karat_grading.png"
-alt="Gold karat grading scale with refinery stage markers" />
-<figcaption aria-hidden="true">Gold karat grading scale with refinery
-stage markers</figcaption>
+alt="Gold karat grading scale (9K–24K + nine-nines) with refinery stage markers." />
+<figcaption>Gold karat grading scale (9K–24K +
+nine-nines) with refinery stage markers.</figcaption>
 </figure>
 <h2 id="final-certification">Final certification</h2>
 <ul>
@@ -256,14 +261,45 @@ stage markers</figcaption>
 <li><strong>Nine-nines certified:</strong> Yes</li>
 <li><strong>Nines count:</strong> 9</li>
 </ul>
+<h2 id="seed-sensitivity-results">Seed-sensitivity results</h2>
+<p>The expanded sensitivity study evaluated 1024 technical replicates of
+the deterministic token pipeline over seeds 0–1023. It found 1024 unique
+token plans among 1024 runs, with 1 exact matches to the canonical plan.
+Mean slot agreement was 20.62% (SD 8.56%; descriptive 95% interval
+20.09%–21.14%), with observed range 0.00%–100.00%. The configured
+threshold rate was 36.43% (score interval 33.53%–39.42%) at the 25%
+agreement threshold. All configured inventory values were observed
+(100.00% coverage), which is a coverage result for the token vocabulary
+rather than a quality result for the manuscript.</p>
+<p>The declared precision target requires at least 738 replicates under
+the chosen bounded-metric formula; the realized radius is 4.24%. The
+deterministic bootstrap sensitivity interval for the mean is
+20.10%–21.11% from 2000 resamples. Both intervals are conditional
+technical summaries, not population estimates.</p>
+<figure id="fig:seed_sensitivity">
+<img src="../figures/seed_sensitivity.png"
+alt="Seed-sensitivity distribution and the declared sample-size precision ladder for token-plan agreement." />
+<figcaption>Seed-sensitivity distribution and the
+declared sample-size precision ladder for token-plan
+agreement.</figcaption>
+</figure>
+<p>The report is stored at
+<code>output/data/seed_sensitivity.json</code>. These are technical
+replicates of one executable token pipeline, not human participants,
+independent manuscripts, or evidence of external manuscript quality. The
+sensitivity result therefore refines the reproducibility claim: a fixed
+seed exactly regenerates a selected plan, while neighboring seeds
+explore a wide deterministic outcome surface. It does not justify
+treating token agreement as a reader-quality metric or as evidence that
+one lexical choice is scientifically superior.</p>
 <h2 id="token-plan-summary">Token plan summary</h2>
 <p>The mega-madlib engine generated 24 tokens from seed 431 across 8
 lexicon categories.</p>
 <figure id="fig:token_density">
 <img src="../figures/token_density.png"
-alt="Mega-madlib token distribution" />
-<figcaption aria-hidden="true">Mega-madlib token
-distribution</figcaption>
+alt="Mega-madlib token distribution across manuscript sections and lexicon categories." />
+<figcaption>Mega-madlib token distribution across
+manuscript sections and lexicon categories.</figcaption>
 </figure>
 <h3 id="category-distribution">Category distribution</h3>
 <table>
@@ -540,12 +576,11 @@ distribution</figcaption>
 Selected evidence terms: artifact manifest, figure registry, token
 provenance.</p>
 <h2 id="provenance-flow">Provenance flow</h2>
-<p>The provenance flow in <span class="citation"
-data-cites="fig:provenance_sankey">[@fig:provenance_sankey]</span> makes
-the refinement analogy auditable as a directed source path rather than a
-decorative metaphor. The graph starts from the same stage sequence used
-in the purity table and carries that sequence forward to certification,
-with edge width proportional to the purity gain owned by
+<p>The provenance flow in [fig:provenance_sankey] makes the refinement
+analogy auditable as a directed source path rather than a decorative
+metaphor. The graph starts from the same stage sequence used in the
+purity table and carries that sequence forward to certification, with
+edge width proportional to the purity gain owned by
 <code>src/refinery.py::run_refinery</code>. A reader can therefore ask
 where each improvement enters the pipeline and whether it is supported
 by the same source that generated the reported purity numbers.</p>
@@ -559,35 +594,31 @@ so a later change to the stage model must move through the same graph,
 table, and validation surfaces.</p>
 <figure id="fig:provenance_sankey">
 <img src="../figures/provenance_sankey.png"
-alt="Provenance flow diagram" />
-<figcaption aria-hidden="true">Provenance flow diagram</figcaption>
+alt="Provenance trace: ore → stages → certification purity flow." />
+<figcaption>Provenance trace: ore → stages →
+certification purity flow.</figcaption>
 </figure>
 <h2 id="purity-vs-claim-support">Purity vs claim support</h2>
-<p>The purity-versus-claim-support view in <span class="citation"
-data-cites="fig:purity_claim_scatter">[@fig:purity_claim_scatter]</span>
-places the metallurgical purity sequence beside the contribution ledger.
-This prevents the paper from treating purity as an isolated aesthetic
-score. A point can advance only when two surfaces agree: the refinery
-computation supplies the stage purity, and the claim-support registry
-supplies the cumulative evidence exposure for the claims being made at
-that level of refinement.</p>
-<p>In the current generated assay, 9 of 9 contribution claims are
-supported (100.00%). The figure is useful because it would make a weaker
-state visible immediately: a manuscript could still show late-stage
-material purity while failing to carry its claims along the evidence
-axis. In that case, the visual story would split, and the reader would
-see that certification prose had outrun claim support. Here the two axes
-are deliberately co-present, so the results section cannot celebrate
-purity while hiding unsupported contribution language in a separate
-paragraph.</p>
+<p>The purity-versus-claim-support view in [fig:purity_claim_scatter]
+places two differently scoped measurements on explicit axes: stage
+output purity on the horizontal axis and the single project-level
+contribution-claim assay on the vertical axis. The same observed support
+rate is therefore repeated across stages. The figure does not fabricate
+a stagewise claim-support trajectory from a project-level aggregate.</p>
+<p>In the current generated assay, 10 of 10 contribution claims are
+supported (100.00%). The plot is diagnostic rather than correlational:
+five stage states and one ledger-level rate do not constitute
+independent observations suitable for association testing. Its purpose
+is to reveal disagreement between a late refinery state and weak overall
+claim support without combining the two into one score.</p>
 <figure id="fig:purity_claim_scatter">
 <img src="../figures/purity_claim_scatter.png"
-alt="Purity vs claim support" />
-<figcaption aria-hidden="true">Purity vs claim support</figcaption>
+alt="Stage purity plotted against the single project-level claim-support assay." />
+<figcaption>Stage purity plotted against the single
+project-level claim-support assay.</figcaption>
 </figure>
 <h2 id="token-selection-sensitivity">Token selection sensitivity</h2>
-<p>The token selection heatmap in <span class="citation"
-data-cites="fig:token_heatmap">[@fig:token_heatmap]</span> turns the
+<p>The token selection heatmap in [fig:token_heatmap] turns the
 mega-madlib engine into an inspectable sensitivity surface. The
 manuscript uses seed 431 for the reported token plan, but the figure
 asks a neighboring question: how do selected inventory indices move when
@@ -608,15 +639,15 @@ late-bound choices. The result is a sensitivity check on authoring
 machinery, not a claim that any particular synonym is scientifically
 superior.</p>
 <figure id="fig:token_heatmap">
-<img src="../figures/token_heatmap.png" alt="Token selection heatmap" />
-<figcaption aria-hidden="true">Token selection heatmap</figcaption>
+<img src="../figures/token_heatmap.png"
+alt="Token selection heatmap: seed × category → selected index." />
+<figcaption>Token selection heatmap: seed × category
+→ selected index.</figcaption>
 </figure>
 <h2 id="integrity-gate-matrix">Integrity gate matrix</h2>
-<p>The integrity gate matrix in <span class="citation"
-data-cites="fig:integrity_gate_matrix">[@fig:integrity_gate_matrix]</span>
-makes the validation story visible: audit rules are not prose promises
-unless they connect to tests, manuscript surfaces, and generated
-artifacts.</p>
+<p>The integrity gate matrix in [fig:integrity_gate_matrix] makes the
+validation story visible: audit rules are not prose promises unless they
+connect to tests, manuscript surfaces, and generated artifacts.</p>
 <p>Each row begins as a configured audit rule, but the matrix asks
 whether that rule has enough contact with the project to matter. A rule
 that names a risk but does not touch tests, manuscript text, or
@@ -629,25 +660,23 @@ operational coverage, not a checklist of intentions.</p>
 analogy. Smelting can remove obvious dross, but scientific-integrity
 failures often survive as well-written unsupported claims, stale tables,
 or figures that no longer match their source data. By separating
-missing, partial, and full coverage across gate surfaces, <span
-class="citation"
-data-cites="fig:integrity_gate_matrix">[@fig:integrity_gate_matrix]</span>
-identifies where a future author would need to add a test, generated
-artifact, or manuscript variable before strengthening a claim. The
-result is intentionally local to this exemplar: coverage is measured
-against the specific audit rules configured here, not against a
-universal publication-readiness standard.</p>
+missing, partial, and full coverage across gate surfaces,
+[fig:integrity_gate_matrix] identifies where a future author would need
+to add a test, generated artifact, or manuscript variable before
+strengthening a claim. The result is intentionally local to this
+exemplar: coverage is measured against the specific audit rules
+configured here, not against a universal publication-readiness
+standard.</p>
 <figure id="fig:integrity_gate_matrix">
 <img src="../figures/integrity_gate_matrix.png"
-alt="Integrity-gate matrix" />
-<figcaption aria-hidden="true">Integrity-gate matrix</figcaption>
+alt="Integrity-gate matrix linking audit rules to tests, manuscript surfaces, and generated artifacts." />
+<figcaption>Integrity-gate matrix linking audit rules
+to tests, manuscript surfaces, and generated artifacts.</figcaption>
 </figure>
 <h2 id="formalism-traceability">Formalism traceability</h2>
-<p>The formalism traceability view in <span class="citation"
-data-cites="fig:formalism_traceability">[@fig:formalism_traceability]</span>
-links each equation-backed formalism to the source surface that owns it.
-This is the visual counterpart to <span class="citation"
-data-cites="tbl:formalism_registry">[@tbl:formalism_registry]</span>.</p>
+<p>The formalism traceability view in [fig:formalism_traceability] links
+each equation-backed formalism to the source surface that owns it. This
+is the visual counterpart to [tbl:formalism_registry].</p>
 <p>The registry currently exposes 7 source-owned formalisms. The figure
 makes their ownership legible by linking each formalism to its equation
 identifier and to the source surface that emits it. That linkage is
@@ -668,17 +697,17 @@ layer is a generated contract, not hand-maintained mathematical
 ornamentation.</p>
 <figure id="fig:formalism_traceability">
 <img src="../figures/formalism_traceability.png"
-alt="Formalism traceability" />
-<figcaption aria-hidden="true">Formalism traceability</figcaption>
+alt="Formalism traceability from source-owned equation identifiers to source evidence." />
+<figcaption>Formalism traceability from source-owned
+equation identifiers to source evidence.</figcaption>
 </figure>
 <h2 id="implementation-circuit">Implementation circuit</h2>
-<p>The implementation circuit in <span class="citation"
-data-cites="fig:implementation_circuit">[@fig:implementation_circuit]</span>
-shows how the concept is executed rather than merely described.
-Configuration feeds code; code emits variables, figures, and reports;
-manuscript hydration consumes those artifacts; validators feed errors
-back to source ownership. The figure is intentionally circular because
-the artifact is not complete after prose generation. It is complete only
+<p>The implementation circuit in [fig:implementation_circuit] shows how
+the concept is executed rather than merely described. Configuration
+feeds code; code emits variables, figures, and reports; manuscript
+hydration consumes those artifacts; validators feed errors back to
+source ownership. The figure is intentionally circular because the
+artifact is not complete after prose generation. It is complete only
 after the validation return path has no blocking evidence, citation,
 reference, or render failures.</p>
 <p>The circuit is the results section’s strongest guard against a
@@ -700,20 +729,20 @@ patching of rendered Markdown. That direction of repair is central to
 the manuscript’s definition of refinement.</p>
 <figure id="fig:implementation_circuit">
 <img src="../figures/implementation_circuit.png"
-alt="Gold-refinement implementation circuit" />
-<figcaption aria-hidden="true">Gold-refinement implementation
-circuit</figcaption>
+alt="Implementation circuit from config-owned ore through generated manuscript artifacts and validation feedback." />
+<figcaption>Implementation circuit from config-owned
+ore through generated manuscript artifacts and validation
+feedback.</figcaption>
 </figure>
 <h2 id="claim-evidence-assay">Claim-evidence assay</h2>
-<p>The claim-evidence assay in <span class="citation"
-data-cites="fig:claim_evidence_assay">[@fig:claim_evidence_assay]</span>
-turns the assaying stage into a reader-facing diagnostic. Each bar is a
+<p>The claim-evidence assay in [fig:claim_evidence_assay] turns the
+assaying stage into a reader-facing diagnostic. Each bar is a
 contribution claim from <code>manuscript/config.yaml</code>, and each
 annotation names the source file or symbol used to support it. This
 makes the contribution ledger inspectable at the same level as the
 purity plots: unsupported claims would appear as failed assays rather
 than remaining hidden in prose.</p>
-<p>The generated assay currently reports 9 supported claims out of 9.
+<p>The generated assay currently reports 10 supported claims out of 10.
 The value of the figure is not the perfect score by itself; it is the
 way the score is forced to name its evidence surface and boundary. A
 contribution claim is not merely present in prose. It must be
@@ -731,23 +760,22 @@ becoming a compliance claim, and a generated assay can confirm local
 evidence without pretending to certify the wider supply chain.</p>
 <figure id="fig:claim_evidence_assay">
 <img src="../figures/claim_evidence_assay.png"
-alt="Claim-evidence assay" />
-<figcaption aria-hidden="true">Claim-evidence assay</figcaption>
+alt="Claim-evidence assay showing supported contribution claims, evidence surfaces, and boundary classifications." />
+<figcaption>Claim-evidence assay showing supported
+contribution claims, evidence surfaces, and boundary
+classifications.</figcaption>
 </figure>
 <h2 id="scientific-integrity-risk-matrix">Scientific-integrity risk
 matrix</h2>
-<p>The integrity risk matrix in <span class="citation"
-data-cites="fig:integrity_risk_matrix">[@fig:integrity_risk_matrix]</span>
-plots severity against detectability for the 9 integrity dimensions in
-<span class="citation"
-data-cites="tbl:integrity_dimensions">[@tbl:integrity_dimensions]</span>.
-Bubble size encodes residual risk, while color encodes the source tier
-that owns the evidence surface. This makes boundary failures more
-visible than cosmetic source checks without hiding whether the support
-comes from config, source code, claim ledger, generated metric,
-artifact, bibliography, or validation gate. The matrix is intentionally
-local: it prioritizes where this exemplar needs source ownership, not
-where every future manuscript should focus.</p>
+<p>The integrity risk matrix in [fig:integrity_risk_matrix] plots
+severity against detectability for the 9 integrity dimensions in
+[tbl:integrity_dimensions]. Bubble size encodes residual risk, while
+color encodes the source tier that owns the evidence surface. This makes
+boundary failures more visible than cosmetic source checks without
+hiding whether the support comes from config, source code, claim ledger,
+generated metric, artifact, bibliography, or validation gate. The matrix
+is intentionally local: it prioritizes where this exemplar needs source
+ownership, not where every future manuscript should focus.</p>
 <p>The generated summary is: 9 integrity dimensions; highest residual
 risk is I4 (Analogy boundary) at 15. The matrix turns that summary into
 a triage surface. Severity asks how damaging a failure would be if it
@@ -768,21 +796,21 @@ has made inspectable and where future work would need to add stronger
 measurement before using stronger language.</p>
 <figure id="fig:integrity_risk_matrix">
 <img src="../figures/integrity_risk_matrix.png"
-alt="Scientific-integrity risk matrix" />
-<figcaption aria-hidden="true">Scientific-integrity risk
-matrix</figcaption>
+alt="Scientific-integrity risk matrix plotting severity, detectability, residual risk, and owning evidence surface." />
+<figcaption>Scientific-integrity risk matrix plotting
+severity, detectability, residual risk, and owning evidence
+surface.</figcaption>
 </figure>
 <h2 id="evidence-tier-ladder">Evidence-tier ladder</h2>
-<p>The evidence-tier ladder in <span class="citation"
-data-cites="fig:evidence_tier_ladder">[@fig:evidence_tier_ladder]</span>
-summarizes the evidence surfaces available to the shared template
-evidence registry or, before that gate has run, the fallback source
-tiers from the integrity model. It gives a quick view of whether the
-manuscript is leaning on generated metrics, claim-ledger facts,
-bibliography records, source code, or disposable artifacts.</p>
+<p>The evidence-tier ladder in [fig:evidence_tier_ladder] summarizes the
+evidence surfaces available to the shared template evidence registry or,
+before that gate has run, the fallback source tiers from the integrity
+model. It gives a quick view of whether the manuscript is leaning on
+generated metrics, claim-ledger facts, bibliography records, source
+code, or disposable artifacts.</p>
 <p>The ladder complements the risk matrix by counting source tiers
 rather than plotting risks. When the shared evidence registry is
-available, the manuscript can report 0 source-tiered facts to the
+available, the manuscript can report 15577 source-tiered facts to the
 validation surface. When that registry is not available, the same figure
 falls back to the integrity model’s configured tiers. Either way, the
 reader sees the evidentiary mix instead of receiving an undifferentiated
@@ -793,15 +821,15 @@ but weakly grounded in source rationale. A manuscript that leans only on
 bibliography may be well-cited but not locally executable. A manuscript
 that leans only on tests may catch regressions while still failing to
 explain claim boundaries to readers. The ladder gives a compact audit of
-that mix, while <span class="citation"
-data-cites="tbl:evidence_tiers">[@tbl:evidence_tiers]</span> keeps the
-counts visible in tabular form. Together they close the figure sequence
-by showing not only that the 12 public figures render, but also which
-source tiers make their claims inspectable.</p>
+that mix, while [tbl:evidence_tiers] keeps the counts visible in tabular
+form. Together they close the figure sequence by showing not only that
+the 13 public figures render, but also which source tiers make their
+claims inspectable.</p>
 <figure id="fig:evidence_tier_ladder">
 <img src="../figures/evidence_tier_ladder.png"
-alt="Evidence-tier ladder" />
-<figcaption aria-hidden="true">Evidence-tier ladder</figcaption>
+alt="Evidence-tier ladder summarizing source tiers available to the shared template evidence registry." />
+<figcaption>Evidence-tier ladder summarizing source
+tiers available to the shared template evidence registry.</figcaption>
 </figure>
 <table id="tbl:evidence_tiers">
 <caption>Evidence tiers used by the integrity model and shared registry
@@ -815,51 +843,47 @@ when available.</caption>
 </thead>
 <tbody>
 <tr>
+<td>generated_metric</td>
+<td>15282</td>
+<td>Numbers regenerated from project analysis</td>
+</tr>
+<tr>
 <td>artifact</td>
-<td>2</td>
+<td>132</td>
 <td>Generated artifacts exposed to readers</td>
 </tr>
 <tr>
-<td>source_code</td>
-<td>2</td>
-<td>Executable source files and symbols</td>
+<td>configuration</td>
+<td>92</td>
+<td>Evidence source tier</td>
 </tr>
 <tr>
 <td>bibliography</td>
-<td>1</td>
+<td>52</td>
 <td>Reference records and citation metadata</td>
 </tr>
 <tr>
 <td>claim_ledger</td>
-<td>1</td>
+<td>17</td>
 <td>Source-owned claim and fact declarations</td>
 </tr>
 <tr>
-<td>config</td>
-<td>1</td>
-<td>Author-controlled project configuration</td>
-</tr>
-<tr>
-<td>generated_metric</td>
-<td>1</td>
-<td>Numbers regenerated from project analysis</td>
-</tr>
-<tr>
-<td>validation</td>
-<td>1</td>
-<td>Template gates and test results</td>
+<td>design</td>
+<td>2</td>
+<td>Evidence source tier</td>
 </tr>
 </tbody>
 </table>
 <h2 id="adversarial-security-assay">Adversarial security assay</h2>
-<p>The adversarial assay reports 5 adversarial assay rows mapping
-threats and standards to local evidence surfaces, validators, and claim
-boundaries; they are scope controls, not completed scan findings. No
-Codex Security or Deep Security Scan findings are claimed unless a scan
-artifact is generated, validated, and cited. The rows are generated from
+<p>The adversarial assay reports 5 adversarial assay rows, 5
+schema-complete, mapping threats and standards to local evidence
+surfaces, validators, and claim boundaries; completeness is a scope
+control, not completed scan findings. No Codex Security or Deep Security
+Scan findings are claimed unless a scan artifact is generated,
+validated, and cited. The rows are generated from
 <code>gold_refinement.security_assay</code> and are intentionally
 tabular rather than a new public figure, so the visual registry remains
-the stable 12-figure contract.</p>
+the stable 13-figure contract.</p>
 <table id="tbl:security_assay">
 <caption>Source-owned adversarial security assay.</caption>
 <colgroup>
@@ -1007,10 +1031,17 @@ validators, and claim boundaries.</td>
 <td>src/security_assay.py::build_security_assay</td>
 <td>local</td>
 </tr>
+<tr>
+<td>Seed-sensitivity study</td>
+<td>The project reports a declared seed-replicate sensitivity study with
+precision metadata and explicit non-empirical boundaries.</td>
+<td>src/seed_sensitivity.py::run_seed_sensitivity</td>
+<td>local</td>
+</tr>
 </tbody>
 </table>
-<p>The project-local claim-support assay reports 9 supported claims out
-of 9 total claims, for 100.00% support. Unsupported claims: 0. The
+<p>The project-local claim-support assay reports 10 supported claims out
+of 10 total claims, for 100.00% support. Unsupported claims: 0. The
 generated project report path is
 <code>output/reports/claim_support_registry.json</code>; the shared
 template evidence report remains
@@ -1019,7 +1050,7 @@ template evidence report remains
 summary</h2>
 <p>When the template evidence gate has run, the shared registry supplies
 source-tiered facts used by the evidence validator. Current fact count
-available to this variable pass: 0.</p>
+available to this variable pass: 15577.</p>
 <table id="tbl:shared_evidence_kinds">
 <caption>Shared evidence-registry fact kinds when available.</caption>
 <thead>
@@ -1030,8 +1061,32 @@ available to this variable pass: 0.</p>
 </thead>
 <tbody>
 <tr>
-<td>not generated</td>
-<td>0</td>
+<td>artifact</td>
+<td>84</td>
+</tr>
+<tr>
+<td>citation</td>
+<td>52</td>
+</tr>
+<tr>
+<td>equation</td>
+<td>8</td>
+</tr>
+<tr>
+<td>figure</td>
+<td>31</td>
+</tr>
+<tr>
+<td>number</td>
+<td>15384</td>
+</tr>
+<tr>
+<td>section</td>
+<td>10</td>
+</tr>
+<tr>
+<td>table</td>
+<td>8</td>
 </tr>
 </tbody>
 </table>
@@ -1040,12 +1095,10 @@ available to this variable pass: 0.</p>
 <code>output/reports/figure_quality_report.json</code>, a generated QA
 report that checks PNG and SVG existence, file dimensions, nonblank
 pixel mass, color variance, and registry parity. Current status: passing
-with 12/12 registered figures passing and registry parity reported as
+with 13/13 registered figures passing and registry parity reported as
 Yes. PNG remains the manuscript render path; SVG is the companion
 technical artifact for inspection, reuse, and source-level debugging.
-<span class="citation"
-data-cites="tbl:figure_quality">[@tbl:figure_quality]</span> summarizes
-the generated surface.</p>
+[tbl:figure_quality] summarizes the generated surface.</p>
 <table id="tbl:figure_quality">
 <caption>Figure-quality report generated from source-owned figure
 specs.</caption>
@@ -1074,18 +1127,18 @@ specs.</caption>
 <td>claim_evidence_assay</td>
 <td>yes</td>
 <td>yes</td>
-<td>3947x2038</td>
-<td>0.218</td>
-<td>0.06041014</td>
+<td>3947x2172</td>
+<td>0.222</td>
+<td>0.06124546</td>
 <td>pass</td>
 </tr>
 <tr>
 <td>evidence_tier_ladder</td>
 <td>yes</td>
 <td>yes</td>
-<td>3020x1724</td>
-<td>0.216</td>
-<td>0.05410730</td>
+<td>3463x1586</td>
+<td>0.083</td>
+<td>0.03388905</td>
 <td>pass</td>
 </tr>
 <tr>
@@ -1101,18 +1154,18 @@ specs.</caption>
 <td>implementation_circuit</td>
 <td>yes</td>
 <td>yes</td>
-<td>2966x1846</td>
-<td>0.069</td>
-<td>0.02257238</td>
+<td>2966x1842</td>
+<td>0.068</td>
+<td>0.02214905</td>
 <td>pass</td>
 </tr>
 <tr>
 <td>integrity_gate_matrix</td>
 <td>yes</td>
 <td>yes</td>
-<td>1833x2060</td>
-<td>0.406</td>
-<td>0.16147143</td>
+<td>1820x2314</td>
+<td>0.407</td>
+<td>0.15927030</td>
 <td>pass</td>
 </tr>
 <tr>
@@ -1146,9 +1199,9 @@ specs.</caption>
 <td>purity_claim_scatter</td>
 <td>yes</td>
 <td>yes</td>
-<td>2347x1745</td>
-<td>0.032</td>
-<td>0.01429053</td>
+<td>2343x1745</td>
+<td>0.034</td>
+<td>0.01594966</td>
 <td>pass</td>
 </tr>
 <tr>
@@ -1158,6 +1211,15 @@ specs.</caption>
 <td>3029x2125</td>
 <td>0.182</td>
 <td>0.03971092</td>
+<td>pass</td>
+</tr>
+<tr>
+<td>seed_sensitivity</td>
+<td>yes</td>
+<td>yes</td>
+<td>3290x1773</td>
+<td>0.091</td>
+<td>0.03345077</td>
 <td>pass</td>
 </tr>
 <tr>
@@ -1180,5 +1242,6 @@ specs.</caption>
 </tr>
 </tbody>
 </table>
+</main>
 </body>
 </html>
