@@ -24,7 +24,6 @@ manuscript composition via mega-madlib token injection.
 | Shared boolean coercion helper | `src/coercion.py` |
 | Shared parsing and I/O helpers | `src/parsing.py` |
 | Cover visualization (matplotlib composite figure) | `src/cover_visualization.py` |
-| Seed-sensitivity study, intervals, bootstrap, and report-integrity recomputation | `src/seed_sensitivity.py` |
 | Experiment parameters and metadata | `manuscript/config.yaml` |
 | Open follow-up scope | `TODO.md` |
 
@@ -43,7 +42,7 @@ and hydrated manuscript output, not in hand-authored prose.
 
 ## Visualization Contract
 
-All 13 public figure labels are owned by `src/figures/_common.py::FIGURE_SPECS` (re-exported from `src/figures/__init__.py`).
+All 12 public figure labels are owned by `src/figures/_common.py::FIGURE_SPECS` (re-exported from `src/figures/__init__.py`).
 Each spec must declare `name`, `label`, `path`, `svg_path`, `caption`,
 `generated_by`, `data_sources`, and `visual_encoding`. `generate_all_figures()`
 must write PNG and SVG companions plus `output/figures/figure_registry.json`
@@ -68,13 +67,6 @@ claim assay. `output/reports/evidence_registry.json` is reserved for the shared
 template evidence validator. Do not overwrite one with the other. Manuscript
 claims should cite generated variables or registries instead of hand-maintained
 numbers.
-
-The generated `output/data/seed_sensitivity.json` is a technical-replicate
-report, not an empirical participant sample. Its sampling scheme, conditional
-precision assumption, interval methods, bootstrap settings, and minimum
-sample-size calculation are part of the report contract. The manuscript
-variable generator recomputes the report from the current config and rejects
-tampered or stale JSON before hydration.
 
 ## Edit Rules
 

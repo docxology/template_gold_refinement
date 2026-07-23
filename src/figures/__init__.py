@@ -24,7 +24,6 @@ from ._common import (
 from .charts import (
     generate_karat_grading_chart,
     generate_purity_progression,
-    generate_seed_sensitivity,
     generate_token_density_chart,
 )
 from .diagrams import (
@@ -72,7 +71,6 @@ __all__ = [
     "generate_provenance_sankey",
     "generate_purity_claim_scatter",
     "generate_purity_progression",
-    "generate_seed_sensitivity",
     "generate_token_density_chart",
     "generate_token_heatmap",
     "purity_nines_values",

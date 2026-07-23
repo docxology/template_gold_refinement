@@ -70,15 +70,10 @@ class TestLoadConfig:
             "pipeline_phases",
             "audit_rules",
             "security_assay",
-            "seed_sensitivity",
         ):
             assert getattr(cfg, field) == raw[field]
 
     def test_infrastructure_loader_accepts_gold_refinement_extension(self, caplog):
-        pytest.importorskip(
-            "infrastructure",
-            reason="The shared config loader is available only in the template monorepo.",
-        )
         from infrastructure.core.config.loader import load_config
         from infrastructure.core.config.schema import register_project_schema_extension
 
@@ -307,7 +302,6 @@ class TestConstants:
 
     def test_schema_fields_include_security_assay(self):
         assert "security_assay" in GOLD_REFINEMENT_SCHEMA_FIELDS
-        assert "seed_sensitivity" in GOLD_REFINEMENT_SCHEMA_FIELDS
 
     def test_project_lexicon_terms_are_unique(self):
         project_root = Path(__file__).resolve().parent.parent
