@@ -12,7 +12,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
 def test_live_manuscript_is_bookended() -> None:
-    receipt = validate_transmission_bookends(PROJECT_ROOT / "manuscript")
+    receipt = validate_transmission_bookends(PROJECT_ROOT / "docs" / "manuscript")
     assert receipt["status"] == "pass"
     assert receipt["first_section"]["role"] == "transmission_begin"
     assert receipt["last_section"]["role"] == "transmission_end"

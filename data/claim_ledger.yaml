@@ -23,7 +23,7 @@ claims:
 
   - id: "claim:seed_431"
     statement: "Token selection uses seed 431 for deterministic reproducibility."
-    source: "manuscript/config.yaml::gold_refinement.seed"
+    source: "docs/manuscript/config.yaml::gold_refinement.seed"
     evidence_type: "config"
     boundary: "local"
 

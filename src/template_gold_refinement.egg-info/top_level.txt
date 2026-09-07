@@ -1,4 +1,5 @@
 __init__
+analogy_boundary
 assay
 coercion
 composition
@@ -16,3 +17,4 @@ pipeline_policy
 purity
 refinery
 security_assay
+transmission

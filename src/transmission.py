@@ -9,7 +9,7 @@ from typing import Any
 BOOKEND_SCHEMA_VERSION = 1
 BEGIN_BOOKEND = "00_000_transmission_begin.md"
 END_BOOKEND = "99_999_transmission_end.md"
-_DOC_ONLY = frozenset({"AGENTS.md", "README.md", "SYNTAX.md"})
+_DOC_ONLY = frozenset({"AGENTS.md", "MANUSCRIPT_STATUS.md", "README.md", "SYNTAX.md"})
 
 
 def _file_record(path: Path, role: str) -> dict[str, Any]:

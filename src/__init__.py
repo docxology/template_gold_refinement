@@ -102,6 +102,12 @@ from .assay import (
     assay_claims,
     compute_assay_purity,
 )
+from .analysis_pipeline import (
+    refinery_results_payload,
+    reverse_assay_payload,
+    run_analysis,
+    token_plan_payload,
+)
 
 __all__ = [
     # Refinery
@@ -194,4 +200,9 @@ __all__ = [
     # Dashboard
     "build_dashboard_html",
     "write_dashboard",
+    # Analysis pipeline
+    "refinery_results_payload",
+    "reverse_assay_payload",
+    "run_analysis",
+    "token_plan_payload",
 ]

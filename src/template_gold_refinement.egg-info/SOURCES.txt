@@ -1,6 +1,8 @@
+LICENSE
 README.md
 pyproject.toml
 src/__init__.py
+src/analogy_boundary.py
 src/assay.py
 src/coercion.py
 src/composition.py
@@ -17,17 +19,21 @@ src/pipeline_policy.py
 src/purity.py
 src/refinery.py
 src/security_assay.py
+src/transmission.py
 src/figures/__init__.py
 src/figures/_common.py
 src/figures/charts.py
 src/figures/diagrams.py
 src/figures/graphs.py
 src/figures/registry.py
+src/template_gold_refinement.egg-info/AGENTS.md
 src/template_gold_refinement.egg-info/PKG-INFO
+src/template_gold_refinement.egg-info/README.md
 src/template_gold_refinement.egg-info/SOURCES.txt
 src/template_gold_refinement.egg-info/dependency_links.txt
 src/template_gold_refinement.egg-info/requires.txt
 src/template_gold_refinement.egg-info/top_level.txt
+tests/test_analogy_boundary.py
 tests/test_assay.py
 tests/test_coercion.py
 tests/test_composition.py
@@ -51,3 +57,4 @@ tests/test_refinery.py
 tests/test_registry_integrity.py
 tests/test_scripts_smoke.py
 tests/test_security_assay.py
+tests/test_transmission.py

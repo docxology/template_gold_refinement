@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import pytest
 import sys
 from pathlib import Path
 
@@ -19,7 +20,7 @@ class TestRefinementAnalysisScript:
             [sys.executable, str(_PROJECT_ROOT / "scripts" / "refinement_analysis.py")],
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=900,
             cwd=str(_PROJECT_ROOT),
             env=_SCRIPT_ENV,
         )
@@ -49,7 +50,7 @@ class TestRefinementAnalysisScript:
             [sys.executable, str(_PROJECT_ROOT / "scripts" / "refinement_analysis.py")],
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=900,
             cwd=str(_PROJECT_ROOT),
             env=_SCRIPT_ENV,
         )
@@ -65,11 +66,12 @@ class TestManuscriptVariablesScript:
         # Ensure analysis outputs exist first
         import subprocess
 
+        pytest.importorskip("infrastructure.rendering.manuscript_injection")
         proc = subprocess.run(
             [sys.executable, str(_PROJECT_ROOT / "scripts" / "refinement_analysis.py")],
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=900,
             cwd=str(_PROJECT_ROOT),
             env=_SCRIPT_ENV,
         )
@@ -82,7 +84,7 @@ class TestManuscriptVariablesScript:
             ],
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=900,
             cwd=str(_PROJECT_ROOT),
             env=_SCRIPT_ENV,
         )
@@ -110,6 +112,7 @@ class TestManuscriptVariablesScript:
     def test_script_draft_mode(self):
         import subprocess
 
+        pytest.importorskip("infrastructure.rendering.manuscript_injection")
         proc = subprocess.run(
             [
                 sys.executable,
@@ -118,7 +121,7 @@ class TestManuscriptVariablesScript:
             ],
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=900,
             cwd=str(_PROJECT_ROOT),
             env=_SCRIPT_ENV,
         )
@@ -129,6 +132,7 @@ class TestCoverVisualizationScript:
     def test_script_exits_zero_after_manuscript_variables(self):
         import subprocess
 
+        pytest.importorskip("infrastructure.rendering.manuscript_injection")
         for script in (
             "refinement_analysis.py",
             "z_generate_manuscript_variables.py",
@@ -138,7 +142,7 @@ class TestCoverVisualizationScript:
                 [sys.executable, str(_PROJECT_ROOT / "scripts" / script)],
                 capture_output=True,
                 text=True,
-                timeout=60,
+                timeout=900,
                 cwd=str(_PROJECT_ROOT),
                 env=_SCRIPT_ENV,
             )

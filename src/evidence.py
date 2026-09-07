@@ -205,7 +205,7 @@ def _check_evidence_source(source: str, project_root: Path) -> tuple[bool, str]:
     """Check if an evidence source exists.
 
     Sources are strings like ``src/refinery.py::CANONICAL_STAGES`` or
-    ``manuscript/config.yaml#gold_refinement.seed``.
+    ``docs/manuscript/config.yaml#gold_refinement.seed``.
     """
     # Split on :: or #
     if "::" in source:

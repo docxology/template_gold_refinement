@@ -1,7 +1,7 @@
 """Manuscript variable generation for the template_gold_refinement exemplar.
 
 Reads:
-- ``manuscript/config.yaml`` — gold_refinement block and paper metadata
+- ``docs/manuscript/config.yaml`` — gold_refinement block and paper metadata
 - ``src/refinery.py`` — canonical refinery stages and purity values
 - ``src/purity.py`` — karat grades and nine-nines
 - ``src/composition.py`` — token plan and section bodies
@@ -89,7 +89,7 @@ logger = logging.getLogger(__name__)
 
 
 def _compute_config_hash(project_root: Path) -> str:
-    config_path = project_root / "manuscript" / "config.yaml"
+    config_path = project_root / "docs" / "manuscript" / "config.yaml"
     if not config_path.exists():
         return "N/A"
     return hashlib.sha256(config_path.read_bytes()).hexdigest()[:16]
@@ -382,7 +382,7 @@ def generate_variables(project_root: Path, *, require_analysis_outputs: bool = F
     """
     config = load_manuscript_config(project_root)
     if not config:
-        logger.warning("Config file not found: %s", project_root / "manuscript" / "config.yaml")
+        logger.warning("Config file not found: %s", project_root / "docs" / "manuscript" / "config.yaml")
     gr_config = load_gold_refinement_config(project_root)
     refinery_result = run_refinery()
 
@@ -417,7 +417,7 @@ def _detect_staleness(project_root: Path) -> str:
 
     Returns a status string: 'fresh' or 'stale' with details.
     """
-    source_dir = project_root / "manuscript"
+    source_dir = project_root / "docs" / "manuscript"
     output_dir = project_root / "output" / "manuscript"
 
     if not output_dir.exists():

@@ -50,7 +50,7 @@ _FALLBACK_FAILURES = {
     ),
     "Empty lexicon category": (
         "A required lexicon category is empty or missing.",
-        "Add vocabulary to manuscript/config.yaml.",
+        "Add vocabulary to docs/manuscript/config.yaml.",
     ),
     "Unresolved token": (
         "A manuscript placeholder has no generated variable.",
@@ -124,7 +124,7 @@ def build_integrity_dimensions(config: Any) -> tuple[IntegrityDimension, ...]:
             lexicon_risk,
             3,
             5,
-            "manuscript/config.yaml#gold_refinement.lexicon",
+            "docs/manuscript/config.yaml#gold_refinement.lexicon",
             _audit(config, "config", "tests/test_config.py"),
             "config",
             "config",

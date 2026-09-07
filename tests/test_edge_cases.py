@@ -26,8 +26,8 @@ if str(_SRC) not in sys.path:
 
 
 def _minimal_manuscript(tmp_path: Path) -> Path:
-    """Create a minimal manuscript/config.yaml."""
-    ms = tmp_path / "manuscript"
+    """Create a minimal docs/manuscript/config.yaml."""
+    ms = tmp_path / "docs" / "manuscript"
     ms.mkdir(parents=True)
     (ms / "config.yaml").write_text(
         yaml.dump(
@@ -282,7 +282,7 @@ class TestFiguresNonePathFallbacks:
 
     def test_karat_grading_none_output_dir_with_project_root(self, tmp_path):
         """karat grading chart uses project_root/output/figures when output_dir=None."""
-        (tmp_path / "manuscript").mkdir()
+        (tmp_path / "docs" / "manuscript").mkdir(parents=True)
         from figures import generate_karat_grading_chart
 
         out = generate_karat_grading_chart(output_dir=None, project_root=tmp_path)
@@ -352,7 +352,7 @@ class TestFiguresNonePathFallbacks:
     def test_token_heatmap_none_output_dir(self, tmp_path, monkeypatch):
         """Token heatmap uses cwd fallback when output_dir=None."""
         monkeypatch.chdir(tmp_path)
-        (tmp_path / "manuscript").mkdir()
+        (tmp_path / "docs" / "manuscript").mkdir(parents=True)
         from figures import generate_token_heatmap
 
         out = generate_token_heatmap(output_dir=None, project_root=None)
@@ -382,7 +382,7 @@ class TestManuscriptVariablesStalenessDetection:
 
         root = _minimal_manuscript(tmp_path)
         # Create source section file
-        (root / "manuscript" / "00_abstract.md").write_text("# Abstract\n", encoding="utf-8")
+        (root / "docs" / "manuscript" / "00_abstract.md").write_text("# Abstract\n", encoding="utf-8")
         # Create output/manuscript/ but without the file
         (root / "output" / "manuscript").mkdir(parents=True)
         v = generate_variables(root)
@@ -394,7 +394,7 @@ class TestManuscriptVariablesStalenessDetection:
         from manuscript_variables import generate_variables
 
         root = _minimal_manuscript(tmp_path)
-        src_file = root / "manuscript" / "00_abstract.md"
+        src_file = root / "docs" / "manuscript" / "00_abstract.md"
         out_dir = root / "output" / "manuscript"
         out_dir.mkdir(parents=True)
         # Write output first, then write source (newer)
@@ -413,7 +413,7 @@ class TestManuscriptVariablesStalenessDetection:
         from manuscript_variables import generate_variables
 
         root = _minimal_manuscript(tmp_path)
-        src_file = root / "manuscript" / "00_abstract.md"
+        src_file = root / "docs" / "manuscript" / "00_abstract.md"
         src_file.write_text("# Abstract\n", encoding="utf-8")
         time.sleep(0.01)
         out_dir = root / "output" / "manuscript"

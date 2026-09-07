@@ -71,7 +71,7 @@
       "caption": "Token selection heatmap: seed × category → selected index.",
       "generated_by": "src/figures/diagrams.py::generate_token_heatmap",
       "data_sources": [
-        "manuscript/config.yaml#gold_refinement.lexicon",
+        "docs/manuscript/config.yaml#gold_refinement.lexicon",
         "src/composition.py::generate_token_plan"
       ],
       "visual_encoding": "heatmap cells encode deterministic selected inventory index across seeds",
@@ -84,7 +84,7 @@
       "caption": "Integrity-gate matrix linking audit rules to tests, manuscript surfaces, and generated artifacts.",
       "generated_by": "src/figures/diagrams.py::generate_integrity_gate_matrix",
       "data_sources": [
-        "manuscript/config.yaml#gold_refinement.audit_rules"
+        "docs/manuscript/config.yaml#gold_refinement.audit_rules"
       ],
       "visual_encoding": "categorical matrix encodes missing, partial, and full coverage by gate surface",
       "svg_path": "integrity_gate_matrix.svg"
@@ -108,7 +108,7 @@
       "caption": "Implementation circuit from config-owned ore through generated manuscript artifacts and validation feedback.",
       "generated_by": "src/figures/diagrams.py::generate_implementation_circuit",
       "data_sources": [
-        "manuscript/config.yaml",
+        "docs/manuscript/config.yaml",
         "src/refinery.py",
         "src/composition.py",
         "src/formalisms.py",
@@ -124,7 +124,7 @@
       "caption": "Claim-evidence assay showing supported contribution claims, evidence surfaces, and boundary classifications.",
       "generated_by": "src/figures/diagrams.py::generate_claim_evidence_assay",
       "data_sources": [
-        "manuscript/config.yaml#gold_refinement.contribution_claims",
+        "docs/manuscript/config.yaml#gold_refinement.contribution_claims",
         "src/evidence.py::build_evidence_registry"
       ],
       "visual_encoding": "support bars plus claim to evidence to boundary graph topology",

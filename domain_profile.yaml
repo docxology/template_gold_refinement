@@ -27,7 +27,7 @@ stage_mappings:
   - refinery_stage: ore
     domain_operation: raw manuscript drafting
     purity_target: 0.375
-    evidence_surface: manuscript/config.yaml
+    evidence_surface: docs/manuscript/config.yaml
   - refinery_stage: smelting
     domain_operation: remove unsupported prose and duplicated claims
     purity_target: 0.750

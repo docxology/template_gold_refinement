@@ -15,7 +15,7 @@ class TestBrokenConfig:
     """Config with deliberately broken values must raise errors."""
 
     def _make_config(self, tmp_path: Path, gold_refinement: dict) -> Path:
-        config_dir = tmp_path / "manuscript"
+        config_dir = tmp_path / "docs" / "manuscript"
         config_dir.mkdir(parents=True, exist_ok=True)
         (config_dir / "config.yaml").write_text(
             yaml.dump({"gold_refinement": gold_refinement}),

@@ -25,7 +25,7 @@ _TOKEN_RE = re.compile(r"\{\{([A-Z][A-Z0-9_]*)\}\}")
 
 def _make_minimal_project(tmp_path: Path) -> Path:
     """Build a minimal project tree to exercise generate_variables()."""
-    manuscript = tmp_path / "manuscript"
+    manuscript = tmp_path / "docs" / "manuscript"
     manuscript.mkdir(parents=True)
     (manuscript / "config.yaml").write_text(
         yaml.dump(
@@ -322,9 +322,9 @@ def test_all_manuscript_tokens_are_generated(tmp_path):
     the manuscript references tokens from the full config's slots.
     """
     project_root = Path(__file__).resolve().parent.parent
-    manuscript_dir = project_root / "manuscript"
+    manuscript_dir = project_root / "docs" / "manuscript"
     if not manuscript_dir.is_dir():
-        pytest.skip("manuscript/ directory not found; skipping cross-reference check")
+        pytest.skip("docs/manuscript/ directory not found; skipping cross-reference check")
 
     # Use the real project root so all configured slots are present
     produced = set(generate_variables(project_root))

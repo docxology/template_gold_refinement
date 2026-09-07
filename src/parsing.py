@@ -35,7 +35,7 @@ def load_yaml_dict(path: Path) -> dict[str, Any]:
 
 def load_manuscript_config(project_root: Path) -> dict[str, Any]:
     """Load manuscript config from a file."""
-    return load_yaml_dict(project_root / "manuscript" / "config.yaml")
+    return load_yaml_dict(project_root / "docs" / "manuscript" / "config.yaml")
 
 
 def load_json_object(path: Path) -> dict[str, Any]:

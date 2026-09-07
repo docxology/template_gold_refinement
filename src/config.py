@@ -1,6 +1,6 @@
 """Mega-madlib configuration schema for the gold-refinement exemplar.
 
-Validates ``manuscript/config.yaml`` → ``gold_refinement:`` block.
+Validates ``docs/manuscript/config.yaml`` → ``gold_refinement:`` block.
 Provides a frozen dataclass with lexicon, slots, section conditions,
 and refinement-stage metadata for deterministic token injection.
 """
@@ -216,7 +216,7 @@ def load_gold_refinement_config(
     Returns defaults when the file or block is missing.
     """
     root = project_root or Path(__file__).resolve().parent.parent
-    config_path = root / "manuscript" / "config.yaml"
+    config_path = root / "docs" / "manuscript" / "config.yaml"
     if not config_path.exists():
         return _default_config()
     with config_path.open("r") as f:

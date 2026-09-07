@@ -9,7 +9,7 @@ from pipeline_policy import llm_review_gate_reason, llm_review_is_enabled, load_
 
 
 def _write_policy_config(tmp_path: Path, *, llm_enabled: bool = False) -> Path:
-    manuscript = tmp_path / "manuscript"
+    manuscript = tmp_path / "docs" / "manuscript"
     manuscript.mkdir(parents=True, exist_ok=True)
     (manuscript / "config.yaml").write_text(
         yaml.dump(
@@ -90,7 +90,7 @@ def test_string_boolean_values_are_parsed_strictly(tmp_path):
 
 
 def test_invalid_string_boolean_raises(tmp_path):
-    manuscript = tmp_path / "manuscript"
+    manuscript = tmp_path / "docs" / "manuscript"
     manuscript.mkdir(parents=True)
     (manuscript / "config.yaml").write_text(
         yaml.dump({"steganography": {"enabled": "definitely"}}),

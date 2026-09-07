@@ -84,7 +84,7 @@ for the reported token plan, but the figure asks a neighboring question: how do
 selected inventory indices move when seeds and lexicon categories vary? This is
 not a stochastic robustness claim. It is a deterministic audit of the digest
 rule in `src/composition.py::generate_token_plan` against the configured
-lexicon inventories in `manuscript/config.yaml`.
+lexicon inventories in `docs/manuscript/config.yaml`.
 
 This view separates three issues that prose alone tends to blur. First, token
 injection is reproducible: the same seed and inventory generate the same
@@ -153,7 +153,7 @@ The implementation circuit in [@fig:implementation_circuit] shows how the concep
 The circuit is the results section's strongest guard against a prose-only
 interpretation of the template. It shows four layers that must remain connected:
 configuration, project code, generated artifacts, and validation feedback. A
-change in `manuscript/config.yaml` is not complete when the file is saved. It
+change in `docs/manuscript/config.yaml` is not complete when the file is saved. It
 must pass through source functions, generate updated variables and figures,
 hydrate the manuscript, and survive the validator return path. The circular
 layout is therefore a process claim: the manuscript is complete only when the
@@ -171,7 +171,7 @@ repair is central to the manuscript's definition of refinement.
 
 ## Claim-evidence assay
 
-The claim-evidence assay in [@fig:claim_evidence_assay] turns the assaying stage into a reader-facing diagnostic. Each bar is a contribution claim from `manuscript/config.yaml`, and each annotation names the source file or symbol used to support it. This makes the contribution ledger inspectable at the same level as the purity plots: unsupported claims would appear as failed assays rather than remaining hidden in prose.
+The claim-evidence assay in [@fig:claim_evidence_assay] turns the assaying stage into a reader-facing diagnostic. Each bar is a contribution claim from `docs/manuscript/config.yaml`, and each annotation names the source file or symbol used to support it. This makes the contribution ledger inspectable at the same level as the purity plots: unsupported claims would appear as failed assays rather than remaining hidden in prose.
 
 The generated assay currently reports {{CLAIM_SUPPORT_SUPPORTED}} supported
 claims out of {{CLAIM_SUPPORT_TOTAL}}. The value of the figure is not the perfect

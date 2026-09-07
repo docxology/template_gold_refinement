@@ -29,8 +29,8 @@ from figures import (
 
 
 def _write_representative_config(tmp_path):
-    (tmp_path / "manuscript").mkdir()
-    (tmp_path / "manuscript" / "config.yaml").write_text(
+    (tmp_path / "docs" / "manuscript").mkdir(parents=True)
+    (tmp_path / "docs" / "manuscript" / "config.yaml").write_text(
         "\n".join(
             [
                 "paper:",
@@ -49,7 +49,7 @@ def _write_representative_config(tmp_path):
                 "  contribution_claims:",
                 "    - name: Pipeline mapping",
                 "      claim: Configured claims are assayed against local evidence.",
-                "      evidence: manuscript/config.yaml",
+                "      evidence: docs/manuscript/config.yaml",
                 "      boundary: local template exemplar",
                 "",
             ]
@@ -149,7 +149,7 @@ class TestPurityProgressionFigure:
 
     def test_uses_project_root(self, tmp_path):
         # Create a minimal project structure
-        (tmp_path / "manuscript").mkdir()
+        (tmp_path / "docs" / "manuscript").mkdir(parents=True)
         (tmp_path / "output").mkdir()
         out = generate_purity_progression(project_root=tmp_path)
         assert out.exists()
@@ -193,7 +193,7 @@ class TestTokenDensityFigure:
 
     def test_token_density_with_project_root_none_output_dir(self, tmp_path):
         """token_density with output_dir=None and project_root uses project_root path."""
-        (tmp_path / "manuscript").mkdir()
+        (tmp_path / "docs" / "manuscript").mkdir(parents=True)
         out = generate_token_density_chart(output_dir=None, project_root=tmp_path)
         assert out.exists()
         assert "figures" in str(out)
@@ -315,7 +315,7 @@ class TestAdditionalFigures:
     def test_token_heatmap_generates_png(self, tmp_path):
         from figures import generate_token_heatmap
 
-        (tmp_path / "manuscript").mkdir()
+        (tmp_path / "docs" / "manuscript").mkdir(parents=True)
         out = generate_token_heatmap(tmp_path, project_root=tmp_path)
         assert out.exists()
         assert out.suffix == ".png"
@@ -325,9 +325,9 @@ class TestAdditionalFigures:
         """Heatmap handles categories with no tokens (vals empty) gracefully."""
         import yaml
 
-        (tmp_path / "manuscript").mkdir()
+        (tmp_path / "docs" / "manuscript").mkdir(parents=True)
         # Config with a lexicon category that has no matching slot
-        (tmp_path / "manuscript" / "config.yaml").write_text(
+        (tmp_path / "docs" / "manuscript" / "config.yaml").write_text(
             yaml.dump(
                 {
                     "gold_refinement": {
@@ -356,7 +356,7 @@ class TestAdditionalFigures:
         assert out.stat().st_size > 100
 
     def test_integrity_gate_matrix_generates_png(self, tmp_path):
-        (tmp_path / "manuscript").mkdir()
+        (tmp_path / "docs" / "manuscript").mkdir(parents=True)
         out = generate_integrity_gate_matrix(tmp_path, project_root=tmp_path)
         assert out.exists()
         assert out.suffix == ".png"
@@ -375,24 +375,24 @@ class TestAdditionalFigures:
         assert out.stat().st_size > 100
 
     def test_claim_evidence_assay_generates_png(self, tmp_path):
-        (tmp_path / "manuscript").mkdir()
-        (tmp_path / "manuscript" / "config.yaml").write_text("paper:\n  title: Test\n", encoding="utf-8")
+        (tmp_path / "docs" / "manuscript").mkdir(parents=True)
+        (tmp_path / "docs" / "manuscript" / "config.yaml").write_text("paper:\n  title: Test\n", encoding="utf-8")
         out = generate_claim_evidence_assay(tmp_path, project_root=tmp_path)
         assert out.exists()
         assert out.suffix == ".png"
         assert out.stat().st_size > 100
 
     def test_integrity_risk_matrix_generates_png(self, tmp_path):
-        (tmp_path / "manuscript").mkdir()
-        (tmp_path / "manuscript" / "config.yaml").write_text("paper:\n  title: Test\n", encoding="utf-8")
+        (tmp_path / "docs" / "manuscript").mkdir(parents=True)
+        (tmp_path / "docs" / "manuscript" / "config.yaml").write_text("paper:\n  title: Test\n", encoding="utf-8")
         out = generate_integrity_risk_matrix(tmp_path, project_root=tmp_path)
         assert out.exists()
         assert out.suffix == ".png"
         assert out.stat().st_size > 100
 
     def test_evidence_tier_ladder_generates_png(self, tmp_path):
-        (tmp_path / "manuscript").mkdir()
-        (tmp_path / "manuscript" / "config.yaml").write_text("paper:\n  title: Test\n", encoding="utf-8")
+        (tmp_path / "docs" / "manuscript").mkdir(parents=True)
+        (tmp_path / "docs" / "manuscript" / "config.yaml").write_text("paper:\n  title: Test\n", encoding="utf-8")
         out = generate_evidence_tier_ladder(tmp_path, project_root=tmp_path)
         assert out.exists()
         assert out.suffix == ".png"

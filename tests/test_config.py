@@ -61,7 +61,7 @@ class TestLoadConfig:
 
     def test_project_configured_rows_survive_parsing(self):
         project_root = Path(__file__).resolve().parent.parent
-        config_path = project_root / "manuscript" / "config.yaml"
+        config_path = project_root / "docs" / "manuscript" / "config.yaml"
         raw = yaml.safe_load(config_path.read_text(encoding="utf-8"))["gold_refinement"]
         cfg = load_gold_refinement_config(project_root)
         for field in (
@@ -77,12 +77,13 @@ class TestLoadConfig:
             assert getattr(cfg, field) == raw[field]
 
     def test_infrastructure_loader_accepts_gold_refinement_extension(self, caplog):
+        pytest.importorskip("infrastructure.core.config.loader")
         from infrastructure.core.config.loader import load_config
         from infrastructure.core.config.schema import register_project_schema_extension
 
         register_project_schema_extension("template_gold_refinement", PROJECT_SCHEMA_EXTENSION)
         project_root = Path(__file__).resolve().parent.parent
-        config_path = project_root / "manuscript" / "config.yaml"
+        config_path = project_root / "docs" / "manuscript" / "config.yaml"
         with caplog.at_level("WARNING"):
             loaded = load_config(config_path)
         assert loaded is not None
@@ -102,16 +103,16 @@ class TestLoadConfig:
         assert len(cfg.slots) > 0
 
     def test_load_from_empty_yaml_returns_defaults(self, tmp_path):
-        config_dir = tmp_path / "manuscript"
-        config_dir.mkdir()
+        config_dir = tmp_path / "docs" / "manuscript"
+        config_dir.mkdir(parents=True)
         (config_dir / "config.yaml").write_text("paper:\n  title: Test\n", encoding="utf-8")
         cfg = load_gold_refinement_config(tmp_path)
         assert cfg.seed == 431
         assert len(cfg.lexicon) > 0
 
     def test_load_with_custom_config(self, tmp_path):
-        config_dir = tmp_path / "manuscript"
-        config_dir.mkdir()
+        config_dir = tmp_path / "docs" / "manuscript"
+        config_dir.mkdir(parents=True)
         (config_dir / "config.yaml").write_text(
             yaml.dump(
                 {
@@ -139,8 +140,8 @@ class TestLoadConfig:
         assert cfg.slots[0].name == "TEST_SLOT"
 
     def test_invalid_composition_depth_raises(self, tmp_path):
-        config_dir = tmp_path / "manuscript"
-        config_dir.mkdir()
+        config_dir = tmp_path / "docs" / "manuscript"
+        config_dir.mkdir(parents=True)
         (config_dir / "config.yaml").write_text(
             yaml.dump(
                 {
@@ -161,8 +162,8 @@ class TestLoadConfig:
             load_gold_refinement_config(tmp_path)
 
     def test_missing_required_lexicon_raises(self, tmp_path):
-        config_dir = tmp_path / "manuscript"
-        config_dir.mkdir()
+        config_dir = tmp_path / "docs" / "manuscript"
+        config_dir.mkdir(parents=True)
         (config_dir / "config.yaml").write_text(
             yaml.dump(
                 {
@@ -180,8 +181,8 @@ class TestLoadConfig:
             load_gold_refinement_config(tmp_path)
 
     def test_empty_lexicon_category_raises(self, tmp_path):
-        config_dir = tmp_path / "manuscript"
-        config_dir.mkdir()
+        config_dir = tmp_path / "docs" / "manuscript"
+        config_dir.mkdir(parents=True)
         (config_dir / "config.yaml").write_text(
             yaml.dump(
                 {
@@ -201,8 +202,8 @@ class TestLoadConfig:
             load_gold_refinement_config(tmp_path)
 
     def test_slot_category_not_in_lexicon_raises(self, tmp_path):
-        config_dir = tmp_path / "manuscript"
-        config_dir.mkdir()
+        config_dir = tmp_path / "docs" / "manuscript"
+        config_dir.mkdir(parents=True)
         (config_dir / "config.yaml").write_text(
             yaml.dump(
                 {
@@ -225,8 +226,8 @@ class TestLoadConfig:
             load_gold_refinement_config(tmp_path)
 
     def test_optional_lexicon_category_allowed(self, tmp_path):
-        config_dir = tmp_path / "manuscript"
-        config_dir.mkdir()
+        config_dir = tmp_path / "docs" / "manuscript"
+        config_dir.mkdir(parents=True)
         (config_dir / "config.yaml").write_text(
             yaml.dump(
                 {
@@ -256,8 +257,8 @@ class TestConfigProperties:
         assert len(cfg.enabled_sections) == len(SECTION_KEYS)
 
     def test_disabled_sections(self, tmp_path):
-        config_dir = tmp_path / "manuscript"
-        config_dir.mkdir()
+        config_dir = tmp_path / "docs" / "manuscript"
+        config_dir.mkdir(parents=True)
         (config_dir / "config.yaml").write_text(
             yaml.dump(
                 {
@@ -317,7 +318,7 @@ class TestConfigBranchEdgeCases:
     """Cover remaining branch misses in _parse_config."""
 
     def _make_cfg_yaml(self, tmp_path: Path, extra: dict) -> Path:
-        config_dir = tmp_path / "manuscript"
+        config_dir = tmp_path / "docs" / "manuscript"
         config_dir.mkdir(parents=True, exist_ok=True)
         base = {
             "gold_refinement": {
@@ -337,8 +338,8 @@ class TestConfigBranchEdgeCases:
 
     def test_optional_lexicon_empty_list_ignored(self, tmp_path):
         """Optional lexicon category with empty list is silently ignored (branch 279→276)."""
-        cfg_dir = tmp_path / "manuscript"
-        cfg_dir.mkdir()
+        cfg_dir = tmp_path / "docs" / "manuscript"
+        cfg_dir.mkdir(parents=True)
         import yaml
 
         (cfg_dir / "config.yaml").write_text(

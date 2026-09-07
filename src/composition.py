@@ -92,7 +92,7 @@ def generate_token_plan(config: GoldRefinementConfig) -> TokenPlan:
                     value=value,
                     section=slot.section,
                     ordinal=ordinal,
-                    source_key=f"manuscript/config.yaml#gold_refinement.lexicon.{slot.category}[{index}]",
+                    source_key=f"docs/manuscript/config.yaml#gold_refinement.lexicon.{slot.category}[{index}]",
                 )
             )
     return TokenPlan(seed=config.seed, choices=tuple(choices))

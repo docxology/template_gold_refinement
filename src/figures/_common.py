@@ -125,7 +125,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "token_heatmap.png",
         "Token selection heatmap: seed × category → selected index.",
         "src/figures/diagrams.py::generate_token_heatmap",
-        ("manuscript/config.yaml#gold_refinement.lexicon", "src/composition.py::generate_token_plan"),
+        ("docs/manuscript/config.yaml#gold_refinement.lexicon", "src/composition.py::generate_token_plan"),
         "heatmap cells encode deterministic selected inventory index across seeds",
     ),
     FigureSpec(
@@ -134,7 +134,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "integrity_gate_matrix.png",
         "Integrity-gate matrix linking audit rules to tests, manuscript surfaces, and generated artifacts.",
         "src/figures/diagrams.py::generate_integrity_gate_matrix",
-        ("manuscript/config.yaml#gold_refinement.audit_rules",),
+        ("docs/manuscript/config.yaml#gold_refinement.audit_rules",),
         "categorical matrix encodes missing, partial, and full coverage by gate surface",
     ),
     FigureSpec(
@@ -153,7 +153,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "Implementation circuit from config-owned ore through generated manuscript artifacts and validation feedback.",
         "src/figures/diagrams.py::generate_implementation_circuit",
         (
-            "manuscript/config.yaml",
+            "docs/manuscript/config.yaml",
             "src/refinery.py",
             "src/composition.py",
             "src/formalisms.py",
@@ -167,7 +167,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "claim_evidence_assay.png",
         "Claim-evidence assay showing supported contribution claims, evidence surfaces, and boundary classifications.",
         "src/figures/diagrams.py::generate_claim_evidence_assay",
-        ("manuscript/config.yaml#gold_refinement.contribution_claims", "src/evidence.py::build_evidence_registry"),
+        ("docs/manuscript/config.yaml#gold_refinement.contribution_claims", "src/evidence.py::build_evidence_registry"),
         "support bars plus claim to evidence to boundary graph topology",
     ),
     FigureSpec(

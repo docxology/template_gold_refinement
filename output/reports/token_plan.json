@@ -28,7 +28,7 @@
       "value": "source tier",
       "section": "introduction",
       "ordinal": 1,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.integrity_terms[1]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.integrity_terms[1]"
     },
     {
       "variable_name": "INTRO_INTEGRITY_TERM_2",
@@ -37,7 +37,7 @@
       "value": "evidence spine",
       "section": "introduction",
       "ordinal": 2,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.integrity_terms[0]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.integrity_terms[0]"
     },
     {
       "variable_name": "METHOD_METAL_TERM_1",
@@ -46,7 +46,7 @@
       "value": "assaying",
       "section": "methodology",
       "ordinal": 1,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.metallurgical_terms[1]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.metallurgical_terms[1]"
     },
     {
       "variable_name": "METHOD_METAL_TERM_2",
@@ -55,7 +55,7 @@
       "value": "parting",
       "section": "methodology",
       "ordinal": 2,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.metallurgical_terms[3]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.metallurgical_terms[3]"
     },
     {
       "variable_name": "METHOD_METAL_TERM_3",
@@ -64,7 +64,7 @@
       "value": "smelting",
       "section": "methodology",
       "ordinal": 3,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.metallurgical_terms[2]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.metallurgical_terms[2]"
     },
     {
       "variable_name": "METHOD_MANUSCRIPT_TERM_1",
@@ -73,7 +73,7 @@
       "value": "evidence",
       "section": "methodology",
       "ordinal": 1,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.manuscript_terms[4]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.manuscript_terms[4]"
     },
     {
       "variable_name": "METHOD_MANUSCRIPT_TERM_2",
@@ -82,7 +82,7 @@
       "value": "evidence",
       "section": "methodology",
       "ordinal": 2,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.manuscript_terms[4]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.manuscript_terms[4]"
     },
     {
       "variable_name": "METHOD_GATE_TERM_1",
@@ -91,7 +91,7 @@
       "value": "evidence validation",
       "section": "methodology",
       "ordinal": 1,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.gate_terms[1]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.gate_terms[1]"
     },
     {
       "variable_name": "METHOD_GATE_TERM_2",
@@ -100,7 +100,7 @@
       "value": "figure registry check",
       "section": "methodology",
       "ordinal": 2,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.gate_terms[2]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.gate_terms[2]"
     },
     {
       "variable_name": "METHOD_GATE_TERM_3",
@@ -109,7 +109,7 @@
       "value": "citation validation",
       "section": "methodology",
       "ordinal": 3,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.gate_terms[3]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.gate_terms[3]"
     },
     {
       "variable_name": "RESULTS_PURITY_ADJ_1",
@@ -118,7 +118,7 @@
       "value": "unrefined",
       "section": "results",
       "ordinal": 1,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.purity_adjectives[0]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.purity_adjectives[0]"
     },
     {
       "variable_name": "RESULTS_PURITY_ADJ_2",
@@ -127,7 +127,7 @@
       "value": "purified",
       "section": "results",
       "ordinal": 2,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.purity_adjectives[1]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.purity_adjectives[1]"
     },
     {
       "variable_name": "RESULTS_EVIDENCE_TERM_1",
@@ -136,7 +136,7 @@
       "value": "artifact manifest",
       "section": "results",
       "ordinal": 1,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[1]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[1]"
     },
     {
       "variable_name": "RESULTS_EVIDENCE_TERM_2",
@@ -145,7 +145,7 @@
       "value": "figure registry",
       "section": "results",
       "ordinal": 2,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[3]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[3]"
     },
     {
       "variable_name": "RESULTS_EVIDENCE_TERM_3",
@@ -154,7 +154,7 @@
       "value": "token provenance",
       "section": "results",
       "ordinal": 3,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[4]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[4]"
     },
     {
       "variable_name": "DISCUSSION_REFINEMENT_VERB",
@@ -163,7 +163,7 @@
       "value": "smelting",
       "section": "discussion",
       "ordinal": 1,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.refinement_verbs[3]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.refinement_verbs[3]"
     },
     {
       "variable_name": "DISCUSSION_BOUNDARY_TERM_1",
@@ -172,7 +172,7 @@
       "value": "fork obligation",
       "section": "discussion",
       "ordinal": 1,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.boundary_terms[2]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.boundary_terms[2]"
     },
     {
       "variable_name": "DISCUSSION_BOUNDARY_TERM_2",
@@ -181,7 +181,7 @@
       "value": "domain validator",
       "section": "discussion",
       "ordinal": 2,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.boundary_terms[3]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.boundary_terms[3]"
     },
     {
       "variable_name": "REPRO_EVIDENCE_TERM_1",
@@ -190,7 +190,7 @@
       "value": "fact registry",
       "section": "reproducibility",
       "ordinal": 1,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[0]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[0]"
     },
     {
       "variable_name": "REPRO_EVIDENCE_TERM_2",
@@ -199,7 +199,7 @@
       "value": "figure registry",
       "section": "reproducibility",
       "ordinal": 2,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[3]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[3]"
     },
     {
       "variable_name": "EVALUATION_GATE_TERM_1",
@@ -208,7 +208,7 @@
       "value": "prerender",
       "section": "evaluation",
       "ordinal": 1,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.gate_terms[0]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.gate_terms[0]"
     },
     {
       "variable_name": "EVALUATION_GATE_TERM_2",
@@ -217,7 +217,7 @@
       "value": "citation validation",
       "section": "evaluation",
       "ordinal": 2,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.gate_terms[3]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.gate_terms[3]"
     },
     {
       "variable_name": "AUTHORING_BOUNDARY_TERM_1",
@@ -226,7 +226,7 @@
       "value": "analogy boundary",
       "section": "authoring_contract",
       "ordinal": 1,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.boundary_terms[1]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.boundary_terms[1]"
     },
     {
       "variable_name": "AUTHORING_BOUNDARY_TERM_2",
@@ -235,7 +235,7 @@
       "value": "non-claim",
       "section": "authoring_contract",
       "ordinal": 2,
-      "source_key": "manuscript/config.yaml#gold_refinement.lexicon.boundary_terms[4]"
+      "source_key": "docs/manuscript/config.yaml#gold_refinement.lexicon.boundary_terms[4]"
     }
   ]
 }

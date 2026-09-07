@@ -64,7 +64,7 @@ FORMALISMS: tuple[Formalism, ...] = (
         formalism_id="F5",
         title="Integrity vector",
         equation_label="eq:integrity_vector",
-        source="manuscript/config.yaml#gold_refinement.audit_rules",
+        source="docs/manuscript/config.yaml#gold_refinement.audit_rules",
         statement="Scientific integrity is represented as a vector of gate outcomes rather than one scalar badge.",
         formula=r"\mathbf{v} = (v_{tokens}, v_{figures}, v_{claims}, v_{render}, v_{references}, v_{security})",
         interpretation="A publication claim is only as strong as the weakest required gate.",
