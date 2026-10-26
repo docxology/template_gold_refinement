@@ -63,6 +63,7 @@ All output is disposable. Regenerate from source:
 
 ```bash
 uv run python scripts/refinement_analysis.py
+# Monorepo clone only (needs the shared `infrastructure` package):
 uv run python scripts/z_generate_manuscript_variables.py
 ```
 

@@ -13,7 +13,7 @@ FileNotFoundError: Analysis outputs required but missing: .../refinery_results.j
 uv run python scripts/refinement_analysis.py
 ```
 
-Or use draft mode:
+Or use draft mode (monorepo clone only — needs the shared `infrastructure` package):
 ```bash
 uv run python scripts/z_generate_manuscript_variables.py --allow-draft
 ```

@@ -27,7 +27,6 @@ All tests use real data, real computation, and real files. No `MagicMock`,
 ## Commands
 
 ```bash
-uv run pytest projects/templates/template_gold_refinement/tests/ -v
-uv run pytest projects/templates/template_gold_refinement/tests/ \
-  --cov=projects/templates/template_gold_refinement/src --cov-fail-under=90
+uv run pytest tests/ -v
+uv run pytest tests/ --cov=src --cov-fail-under=90
 ```

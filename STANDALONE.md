@@ -51,5 +51,6 @@ Run the project-local gate after edits:
 ```bash
 uv run pytest tests/ --cov=src --cov-fail-under=90
 uv run python scripts/refinement_analysis.py
+# Monorepo clone only (needs the shared `infrastructure` package):
 uv run python scripts/z_generate_manuscript_variables.py
 ```

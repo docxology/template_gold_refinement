@@ -89,18 +89,15 @@ numbers.
 ## Verification
 
 ```bash
-uv run pytest projects/templates/template_gold_refinement/tests/ \
-  --cov=projects/templates/template_gold_refinement/src --cov-fail-under=90
-uv run python scripts/pipeline/stage_02_analysis.py --project templates/template_gold_refinement
-uv run python scripts/pipeline/stage_03_render.py --project templates/template_gold_refinement
-uv run python scripts/pipeline/stage_04_validate.py --project templates/template_gold_refinement
-uv run python -m infrastructure.validation.cli prerender \
-  projects/templates/template_gold_refinement/manuscript --repo-root .
-uv run python -m infrastructure.validation.cli evidence \
-  projects/templates/template_gold_refinement \
-  --manuscript-dir projects/templates/template_gold_refinement/manuscript \
-  --fail-on-issues
+uv run pytest tests/ --cov=src --cov-fail-under=90
+uv run python scripts/refinement_analysis.py
 ```
+
+Inside the template monorepo the same project is additionally checked by the
+shared stages and validators (`scripts/pipeline/stage_02_analysis.py` …
+`stage_04_validate.py`, `python -m infrastructure.validation.cli
+prerender|evidence`); those commands need the monorepo's `infrastructure/`
+package and do not run in this standalone repository.
 
 
 ## Agent skill

@@ -91,16 +91,24 @@ infrastructure, pipeline stages, or cross-template validation.
 ## Quick Start
 
 ```bash
+# From this repository root
+uv sync --extra dev
+
 # Run the refinement analysis pipeline
-uv run python projects/templates/template_gold_refinement/scripts/refinement_analysis.py
+uv run python scripts/refinement_analysis.py
 
 # Run tests
-uv run pytest projects/templates/template_gold_refinement/tests/ -v
+uv run pytest tests/ -v
 
 # Test gate (authoritative)
-uv run pytest projects/templates/template_gold_refinement/tests/ \
-  --cov=projects/templates/template_gold_refinement/src --cov-fail-under=90
+uv run pytest tests/ --cov=src --cov-fail-under=90
 ```
+
+`scripts/z_generate_manuscript_variables.py` is the one step that needs the
+template monorepo: it injects resolved variables through the shared
+`infrastructure.rendering.manuscript_injection` module, so the standalone smoke
+tests skip it. Use the monorepo clone below to regenerate
+`output/manuscript/`.
 
 ## Generated artifact contract
 
@@ -191,8 +199,8 @@ See [AGENTS.md](AGENTS.md) for technical documentation.
 - Forward backlog: [`TODO.md`](TODO.md).
 - Copy-and-customize configuration: [`docs/manuscript/config.yaml.example`](docs/manuscript/config.yaml.example).
 - Standalone fork guide: [`STANDALONE.md`](STANDALONE.md).
-- Project validation: `uv run pytest projects/templates/template_gold_refinement/tests/ --cov=projects/templates/template_gold_refinement/src --cov-fail-under=90`.
-- Repo drift validation: `uv run python scripts/audit/check_template_drift.py --strict`.
+- Project validation: `uv run pytest tests/ --cov=src --cov-fail-under=90`.
+- Repo drift validation (template monorepo clone only): `uv run python scripts/audit/check_template_drift.py --strict`.
 
 <!-- foam-orphan-nav:start (hand-maintained: links sub-docs so they are reachable; no generator refreshes or validates this block) -->
 

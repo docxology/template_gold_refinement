@@ -31,6 +31,15 @@ uv run python scripts/pipeline/stage_04_validate.py --project templates/template
 uv run python scripts/pipeline/stage_05_copy.py --project templates/template_gold_refinement
 ```
 
+In the standalone `docxology/template_gold_refinement` mirror (no monorepo
+`infrastructure/`, no `scripts/pipeline/`) the local gate is:
+
+```bash
+uv sync --extra dev
+uv run pytest tests/ --cov=src --cov-fail-under=90
+uv run python scripts/refinement_analysis.py
+```
+
 ## Pitfalls
 
 - **Keep scripts thin.** Business logic belongs in `src/` or shared

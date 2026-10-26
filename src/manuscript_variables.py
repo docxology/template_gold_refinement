@@ -393,7 +393,7 @@ def generate_variables(project_root: Path, *, require_analysis_outputs: bool = F
     elif require_analysis_outputs:
         raise FileNotFoundError(
             f"Analysis outputs required but missing: {analysis_path}. "
-            "Run projects/templates/template_gold_refinement/scripts/refinement_analysis.py first."
+            "Run scripts/refinement_analysis.py first."
         )
 
     token_plan = generate_token_plan(gr_config)
