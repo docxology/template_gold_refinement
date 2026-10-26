@@ -99,7 +99,6 @@ shared stages and validators (`scripts/pipeline/stage_02_analysis.py` …
 prerender|evidence`); those commands need the monorepo's `infrastructure/`
 package and do not run in this standalone repository.
 
-
 ## Agent skill
 
 A Hermes/agentskills.io-compatible skill for this exemplar lives at
@@ -108,6 +107,9 @@ Load it when working inside this template to get when-to-use guidance,
 quick reference commands, and pitfalls.
 
 ## Parent Docs
+
+Monorepo-relative (these paths exist only in the template monorepo checkout,
+not in this standalone mirror):
 
 - Template root: [`../../../AGENTS.md`](../../../AGENTS.md)
 - Publishing guide: [`../../../docs/guides/publishing-guide.md`](../../../docs/guides/publishing-guide.md) · Publishing module reference: [`../../../infrastructure/publishing/README.md`](../../../infrastructure/publishing/README.md) · Zenodo DOI strategy: [`../../../docs/guides/zenodo-doi-strategy.md`](../../../docs/guides/zenodo-doi-strategy.md) · Archival targets: [`../../../docs/maintenance/archival-targets.md`](../../../docs/maintenance/archival-targets.md)

@@ -1,6 +1,6 @@
 # Gold Refinement — Metallurgical Manuscript Composition Exemplar
 
-> **Domain-skin variant of [`template_madlib`](../template_madlib/README.md).**
+> **Domain-skin variant of [`template_madlib`](https://github.com/docxology/template_madlib).**
 > This exemplar reuses the same deterministic token-injection composition core
 > as `template_madlib` (`src/composition.py`, `src/config.py`,
 > `src/manuscript_variables.py`, and a near-identical `docs/manuscript/config.yaml`
@@ -9,7 +9,7 @@
 > `src/refinery.py`, `src/domain_adapter.py`) maps the abstract composition
 > pipeline onto a real refinement sequence:
 > ore → smelting → assaying → cupellation → certification. Read
-> [`template_madlib`](../template_madlib/README.md) first for the generic engine;
+> [`template_madlib`](https://github.com/docxology/template_madlib) first for the generic engine;
 > read this template to see a worked domain specialization of it.
 
 ![Cover visualization: faceted gold certification under source-owned adversarial assay](output/figures/cover_visualization.png)
@@ -170,11 +170,16 @@ function cross-checked by a live regression test.
 
 ## Dependencies
 
-Run `uv sync` at the **repository root** for the shared template pipeline. Stage
-02 executes this project with `uv run --directory
-projects/templates/template_gold_refinement`, so the project-local
-`pyproject.toml` also declares the runtime dependencies needed by the exemplar,
-including `networkx>=3.4.2` for deterministic graph layouts.
+Runtime and dev dependencies are declared in this project's `pyproject.toml`
+(`numpy`, `matplotlib`, `pillow`, `networkx`, `pyyaml`; the `dev` extra adds
+`pytest`, `pytest-cov`, `hypothesis`). Install them from this repository root
+with `uv sync --extra dev`; `uv.lock` pins the resolved set.
+
+In the template monorepo the shared pipeline runs `uv sync` at the monorepo root
+and executes this project with `uv run --directory
+projects/templates/template_gold_refinement`, so the same `pyproject.toml` also
+declares the runtime dependencies needed by the exemplar, including
+`networkx>=3.4.2` for deterministic graph layouts.
 
 ## Key Features
 

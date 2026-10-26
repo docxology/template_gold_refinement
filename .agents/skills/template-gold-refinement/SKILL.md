@@ -53,6 +53,9 @@ uv run python scripts/refinement_analysis.py
 
 ## Cross-refs
 
+Monorepo-relative (in the standalone mirror, use the repository root
+`AGENTS.md`, `README.md`, and `TODO.md` instead):
+
 - Project contract: [`AGENTS.md`](../../../AGENTS.md)
 - README: [`README.md`](../../../README.md)
 - TODO: [`TODO.md`](../../../TODO.md)

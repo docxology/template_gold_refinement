@@ -34,7 +34,7 @@ output/
 │   ├── evidence_tier_ladder.png/.svg    # Evidence-tier ladder
 │   ├── cover_visualization.png/.svg     # Cover visualization composite
 │   └── figure_registry.json             # Figure registry (all 12 labels)
-├── docs/manuscript/                     # Hydrated manuscript (resolved tokens)
+├── manuscript/                          # Hydrated manuscript (resolved tokens)
 │   ├── 00_abstract.md
 │   ├── 01_introduction.md
 │   └── ...
