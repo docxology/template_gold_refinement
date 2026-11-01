@@ -111,6 +111,6 @@ quick reference commands, and pitfalls.
 Monorepo-relative (these paths exist only in the template monorepo checkout,
 not in this standalone mirror):
 
-- Template root: [`../../../AGENTS.md`](../../../AGENTS.md)
-- Publishing guide: [`../../../docs/guides/publishing-guide.md`](../../../docs/guides/publishing-guide.md) · Publishing module reference: [`../../../infrastructure/publishing/README.md`](../../../infrastructure/publishing/README.md) · Zenodo DOI strategy: [`../../../docs/guides/zenodo-doi-strategy.md`](../../../docs/guides/zenodo-doi-strategy.md) · Archival targets: [`../../../docs/maintenance/archival-targets.md`](../../../docs/maintenance/archival-targets.md)
-- Memory and decision records: [`../../../docs/rules/memory_and_decision_records.md`](../../../docs/rules/memory_and_decision_records.md)
+- Template root: [`../../../AGENTS.md`](https://github.com/docxology/template/blob/main/AGENTS.md)
+- Publishing guide: [`../../../docs/guides/publishing-guide.md`](https://github.com/docxology/template/blob/main/docs/guides/publishing-guide.md) · Publishing module reference: [`../../../infrastructure/publishing/README.md`](https://github.com/docxology/template/blob/main/infrastructure/publishing/README.md) · Zenodo DOI strategy: [`../../../docs/guides/zenodo-doi-strategy.md`](https://github.com/docxology/template/blob/main/docs/guides/zenodo-doi-strategy.md) · Archival targets: [`../../../docs/maintenance/archival-targets.md`](https://github.com/docxology/template/blob/main/docs/maintenance/archival-targets.md)
+- Memory and decision records: [`../../../docs/rules/memory_and_decision_records.md`](https://github.com/docxology/template/blob/main/docs/rules/memory_and_decision_records.md)
