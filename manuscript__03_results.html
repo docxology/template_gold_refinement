@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="pandoc 3.10" />
+  <meta name="generator" content="pandoc 3.13" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>03_results.md.web</title>
   <style>
@@ -11,7 +11,10 @@
     */
     html {
       color: #1a1a1a;
+      color: light-dark(#1a1a1a, #fdfdfd);
       background-color: #fdfdfd;
+      background-color: light-dark(#fdfdfd, #1a1a1a);
+      color-scheme: light dark;
     }
     body {
       margin: 0 auto;
@@ -36,12 +39,16 @@
     }
     @media print {
       html {
-        background-color: white;
+        color-scheme: light only;
       }
-      body {
+      html, body, pre, code {
         background-color: transparent;
+      }
+      body, a, a:visited, blockquote {
         color: black;
-        font-size: 12pt;
+      }
+      pre, code {
+        padding: 0;
       }
       p, h2, h3 {
         orphans: 3;
@@ -54,11 +61,8 @@
     p {
       margin: 1em 0;
     }
-    a {
-      color: #1a1a1a;
-    }
-    a:visited {
-      color: #1a1a1a;
+    a, a:visited {
+      color: inherit;
     }
     img {
       max-width: 100%;
@@ -87,8 +91,11 @@
     blockquote {
       margin: 1em 0 1em 1.7em;
       padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
+      border-left: 2px solid;
+      border-color: #e6e6e6;
+      border-color: light-dark(#e6e6e6, #4c4c4c);
       color: #606060;
+      color: light-dark(#606060, #b6b6b6);
     }
     code {
       white-space: pre-wrap;
@@ -112,7 +119,7 @@
     }
     hr {
       border: none;
-      border-top: 1px solid #1a1a1a;
+      border-top: 1px solid currentColor;
       height: 1px;
       margin: 1em 0;
     }
@@ -129,11 +136,11 @@
     }
     tbody {
       margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
+      border-top: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
     }
     th {
-      border-top: 1px solid #1a1a1a;
+      border-top: 1px solid currentColor;
       padding: 0.25em 0.5em 0.25em 0.5em;
     }
     td {
@@ -173,20 +180,426 @@
       vertical-align: middle;
     }
   </style>
+
+<link data-template-favicon rel="icon" href="favicon.ico">
+
+<style>
+:root {
+  --brand-1: #5b6ee0;
+  --web-bg: #f8f8f8;
+  --web-surface: #ffffff;
+  --web-text: #2c3e50;
+  --web-border: #bdc3c7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --brand-1: #7e8ce8;
+    --web-bg: #0f1420;
+    --web-surface: #161c2b;
+    --web-text: #e6eaf2;
+    --web-border: #2a3447;
+  }
+}
+.theorem-box {
+  border-left: 4px solid var(--brand-1);
+  background: var(--web-surface);
+  padding: 0.6em 1em;
+  margin: 1.1em 0;
+  border-radius: 0 4px 4px 0;
+}
+.theorem-box.definition { border-left-style: dashed; }
+.theorem-box > p:first-child { margin-top: 0; }
+.theorem-box > p:last-child { margin-bottom: 0; }
+.figure-long-description {
+  border: 1px solid var(--web-border);
+  border-radius: 4px;
+  margin-block: 0.75rem;
+  padding: 0.5rem 0.75rem;
+}
+.figure-long-description > summary { cursor: pointer; font-weight: 700; }
+.figure-long-description > p { max-width: 80ch; overflow-wrap: anywhere; }
+.figure-exact-values { max-width: 80ch; overflow-wrap: anywhere; }
+code { overflow-wrap: anywhere; word-break: break-word; }
+pre {
+  max-width: 100%;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+pre code { overflow-wrap: inherit; white-space: inherit; word-break: inherit; }
+div.sourceCode { max-width: 100%; overflow: visible; }
+pre.sourceCode { background: #2c3e50; color: #ecf0f1; }
+pre.sourceCode code,
+pre.sourceCode code span { color: inherit; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+mjx-container[display="true"] { max-width: 100%; overflow: visible; }
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
+}
+.table-scroll:focus-visible {
+  outline: 3px solid var(--brand-1);
+  outline-offset: 3px;
+}
+.table-scroll > table { margin-block: 0; display: table; min-width: 100%; width: 100%; }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+body {
+  font-family: 'Liberation Serif', 'Times New Roman', serif;
+  line-height: 1.6;
+  width: min(100%, 800px);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  color: #1a1a1a;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+main,
+nav,
+section,
+article,
+figure,
+figcaption {
+  min-width: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 0.65rem 0.9rem;
+  transform: translateY(-120%);
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-family: sans-serif;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.skip-link:visited {
+  color: #ffffff;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+  body {
+    width: 100%;
+    max-width: 100%;
+    padding: 16px;
+  }
+
+  figure img {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 800px) {
+  body {
+    width: 100%;
+    max-width: 100vw;
+    margin: 0 auto;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 5px;
+  overflow-wrap: anywhere;
+}
+
+code {
+  background-color: #ecf0f1;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: 'Liberation Mono', 'Courier New', monospace;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+pre {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  padding: 15px;
+  border-radius: 5px;
+  max-width: 100%;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  overflow-wrap: inherit;
+  white-space: inherit;
+  word-break: inherit;
+}
+
+div.sourceCode {
+  max-width: 100%;
+  overflow: visible;
+}
+
+pre.sourceCode {
+  background: #2c3e50;
+  color: #ecf0f1;
+}
+
+pre.sourceCode code,
+pre.sourceCode code span {
+  color: inherit;
+}
+
+pre > code.sourceCode {
+  white-space: pre-wrap;
+}
+
+pre > code.sourceCode > span {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
+}
+
+.table-scroll:focus-visible {
+  outline: 3px solid #1f6f8b;
+  outline-offset: 3px;
+}
+
+.table-scroll > table {
+  margin-block: 0;
+  display: table;
+  min-width: 100%;
+  width: 100%;
+}
+
+figure {
+  max-width: 100%;
+  margin: 1.5rem 0;
+}
+
+th, td {
+  border: 1px solid #bdc3c7;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #1f6f8b;
+  color: white;
+}
+
+/* Preserve a complete inline-code header within the table's scroll region. */
+th code {
+  color: inherit;
+  background-color: transparent;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+  margin: 20px 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+a {
+  color: #b91c1c;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.14em;
+  overflow-wrap: anywhere;
+}
+
+a:visited {
+  color: #8f1d1d;
+}
+
+a:hover {
+  text-decoration-thickness: 0.14em;
+}
+
+a:focus-visible {
+  outline: 3px solid #1f6f8b;
+  outline-offset: 3px;
+}
+
+.toc {
+  background-color: #ecf0f1;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.toc a,
+#TOC a {
+  color: #b91c1c;
+  display: inline-block;
+  min-height: 28px;
+  line-height: 1.5;
+  padding-block: 2px;
+}
+
+.toc li,
+#TOC li {
+  margin-block: 1px;
+}
+
+.math {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1.1em;
+}
+
+mjx-container[display="true"] {
+  display: block;
+  max-width: 100%;
+  overflow: visible;
+  padding-bottom: 0.25rem;
+}
+
+.figure {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.figure img {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #3498db;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* A reading column keeps prose comfortable, but dense scientific figures need
+   a larger inspection surface.  The rendered image remains responsive and the
+   explicit link opens its source-resolution asset without changing the PDF. */
+.figure-full-size-link {
+  color: inherit;
+  display: block;
+  max-width: 100%;
+  text-align: center;
+}
+
+.figure-full-size-link img {
+  cursor: zoom-in;
+  margin-bottom: 0.45rem;
+}
+
+.figure-full-size-label {
+  color: #1f6f8b;
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+
+.figure-full-size-link:focus-visible {
+  outline: 3px solid #1f6f8b;
+  outline-offset: 4px;
+}
+
+@media (min-width: 1000px) {
+  /* Wide figure links stay within the viewport but extend beyond the prose
+     column. Do not clip their labels at the narrower body boundary. */
+  body {
+    overflow-x: visible;
+  }
+
+  .figure-full-size-link {
+    left: 50%;
+    max-width: none;
+    position: relative;
+    transform: translateX(-50%);
+    width: min(1080px, calc(100vw - 3rem));
+  }
+}
+
+.figure-caption {
+  font-style: italic;
+  color: #4b5563;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.figure-long-description,
+.figure-exact-values {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+</style>
+<script data-template-source-font-loader src="assets/source-web-fonts.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<main id="main-content" tabindex="-1">
 <h1 id="sec:results">Results: Purity Progression and Karat Grading</h1>
-<p>The refinery pipeline produces a monotonically increasing purity
-sequence across 5 stages, reaching final purity of 99.9999999%
-(nine-nines) (24K (nine-nines certified)).</p>
+<p>The canonical run completed 5 ordered, continuous stages and reached
+the configured terminal state of 99.9999999% (nine-nines) (24K
+(nine-nines certified)). These values verify execution of the declared
+model; they are not empirical estimates of manuscript quality.</p>
 <h2 id="purity-progression">Purity progression</h2>
 <figure id="fig:purity_progression">
-<img src="../figures/purity_progression.png"
-alt="Purity progression across refinery stages" />
-<figcaption aria-hidden="true">Purity progression across refinery
-stages</figcaption>
+<a class="figure-full-size-link" href="figures/purity_progression.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Purity progression across the five refinery stages from ore"><img src="figures/purity_progression.png"
+alt="Bars and a cumulative line rise monotonically across ore, smelting, assaying, cupellation, and certification, ending at nine-nines purity." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Purity progression across the five
+refinery stages from ore (9K) to nine-nines certification.</figcaption>
 </figure>
-<table style="width:100%;">
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable data table"><table style="width:99%;" data-responsive-table="true">
 <colgroup>
 <col style="width: 17%" />
 <col style="width: 15%" />
@@ -240,13 +653,13 @@ stages</figcaption>
 <td>Certify purity grade and stamp hallmark</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="karat-grading-scale">Karat grading scale</h2>
 <figure id="fig:karat_grading">
-<img src="../figures/karat_grading.png"
-alt="Gold karat grading scale with refinery stage markers" />
-<figcaption aria-hidden="true">Gold karat grading scale with refinery
-stage markers</figcaption>
+<a class="figure-full-size-link" href="figures/karat_grading.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Gold karat grading scale (9K–24K + nine-nines) with refinery stage markers."><img src="figures/karat_grading.png"
+alt="A horizontal purity scale spans 9K through 24K and 99.999 percent, with markers showing where each successive refinery stage lands." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Gold karat grading scale (9K–24K +
+nine-nines) with refinery stage markers.</figcaption>
 </figure>
 <h2 id="final-certification">Final certification</h2>
 <ul>
@@ -260,13 +673,13 @@ stage markers</figcaption>
 <p>The mega-madlib engine generated 24 tokens from seed 431 across 8
 lexicon categories.</p>
 <figure id="fig:token_density">
-<img src="../figures/token_density.png"
-alt="Mega-madlib token distribution" />
-<figcaption aria-hidden="true">Mega-madlib token
-distribution</figcaption>
+<a class="figure-full-size-link" href="figures/token_density.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Mega-madlib token distribution across manuscript sections and lexicon categories."><img src="figures/token_density.png"
+alt="Ordered bars compare the number of injected manuscript tokens across sections and lexicon categories, exposing where the template concentrates configurable prose." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Mega-madlib token distribution across
+manuscript sections and lexicon categories.</figcaption>
 </figure>
 <h3 id="category-distribution">Category distribution</h3>
-<table>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable data table"><table data-responsive-table="true">
 <thead>
 <tr>
 <th>Category</th>
@@ -307,9 +720,9 @@ distribution</figcaption>
 <td>1</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h3 id="section-distribution">Section distribution</h3>
-<table>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable data table"><table data-responsive-table="true">
 <thead>
 <tr>
 <th>Section</th>
@@ -346,9 +759,9 @@ distribution</figcaption>
 <td>5</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h3 id="provenance-trace">Provenance trace</h3>
-<table>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable data table"><table data-responsive-table="true">
 <colgroup>
 <col style="width: 22%" />
 <col style="width: 22%" />
@@ -367,175 +780,175 @@ distribution</figcaption>
 </thead>
 <tbody>
 <tr>
-<td>AUTHORING_BOUNDARY_TERM_1</td>
-<td>boundary_terms</td>
+<td><code>AUTHORING_BOUNDARY_TERM_1</code></td>
+<td><code>boundary_terms</code></td>
 <td>analogy boundary</td>
-<td>authoring_contract</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.boundary_terms[1]</td>
+<td><code>authoring_contract</code></td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.boundary_terms</code>[1]</td>
 </tr>
 <tr>
-<td>AUTHORING_BOUNDARY_TERM_2</td>
-<td>boundary_terms</td>
+<td><code>AUTHORING_BOUNDARY_TERM_2</code></td>
+<td><code>boundary_terms</code></td>
 <td>non-claim</td>
-<td>authoring_contract</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.boundary_terms[4]</td>
+<td><code>authoring_contract</code></td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.boundary_terms</code>[4]</td>
 </tr>
 <tr>
-<td>DISCUSSION_BOUNDARY_TERM_1</td>
-<td>boundary_terms</td>
+<td><code>DISCUSSION_BOUNDARY_TERM_1</code></td>
+<td><code>boundary_terms</code></td>
 <td>fork obligation</td>
 <td>discussion</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.boundary_terms[2]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.boundary_terms</code>[2]</td>
 </tr>
 <tr>
-<td>DISCUSSION_BOUNDARY_TERM_2</td>
-<td>boundary_terms</td>
+<td><code>DISCUSSION_BOUNDARY_TERM_2</code></td>
+<td><code>boundary_terms</code></td>
 <td>domain validator</td>
 <td>discussion</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.boundary_terms[3]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.boundary_terms</code>[3]</td>
 </tr>
 <tr>
-<td>DISCUSSION_REFINEMENT_VERB</td>
-<td>refinement_verbs</td>
+<td><code>DISCUSSION_REFINEMENT_VERB</code></td>
+<td><code>refinement_verbs</code></td>
 <td>smelting</td>
 <td>discussion</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.refinement_verbs[3]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.refinement_verbs</code>[3]</td>
 </tr>
 <tr>
-<td>EVALUATION_GATE_TERM_1</td>
-<td>gate_terms</td>
+<td><code>EVALUATION_GATE_TERM_1</code></td>
+<td><code>gate_terms</code></td>
 <td>prerender</td>
 <td>evaluation</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.gate_terms[0]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.gate_terms</code>[0]</td>
 </tr>
 <tr>
-<td>EVALUATION_GATE_TERM_2</td>
-<td>gate_terms</td>
+<td><code>EVALUATION_GATE_TERM_2</code></td>
+<td><code>gate_terms</code></td>
 <td>citation validation</td>
 <td>evaluation</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.gate_terms[3]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.gate_terms</code>[3]</td>
 </tr>
 <tr>
-<td>INTRO_INTEGRITY_TERM_1</td>
-<td>integrity_terms</td>
+<td><code>INTRO_INTEGRITY_TERM_1</code></td>
+<td><code>integrity_terms</code></td>
 <td>source tier</td>
 <td>introduction</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.integrity_terms[1]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.integrity_terms</code>[1]</td>
 </tr>
 <tr>
-<td>INTRO_INTEGRITY_TERM_2</td>
-<td>integrity_terms</td>
+<td><code>INTRO_INTEGRITY_TERM_2</code></td>
+<td><code>integrity_terms</code></td>
 <td>evidence spine</td>
 <td>introduction</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.integrity_terms[0]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.integrity_terms</code>[0]</td>
 </tr>
 <tr>
-<td>METHOD_GATE_TERM_1</td>
-<td>gate_terms</td>
+<td><code>METHOD_GATE_TERM_1</code></td>
+<td><code>gate_terms</code></td>
 <td>evidence validation</td>
 <td>methodology</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.gate_terms[1]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.gate_terms</code>[1]</td>
 </tr>
 <tr>
-<td>METHOD_GATE_TERM_2</td>
-<td>gate_terms</td>
+<td><code>METHOD_GATE_TERM_2</code></td>
+<td><code>gate_terms</code></td>
 <td>figure registry check</td>
 <td>methodology</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.gate_terms[2]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.gate_terms</code>[2]</td>
 </tr>
 <tr>
-<td>METHOD_GATE_TERM_3</td>
-<td>gate_terms</td>
+<td><code>METHOD_GATE_TERM_3</code></td>
+<td><code>gate_terms</code></td>
 <td>citation validation</td>
 <td>methodology</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.gate_terms[3]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.gate_terms</code>[3]</td>
 </tr>
 <tr>
-<td>METHOD_MANUSCRIPT_TERM_1</td>
-<td>manuscript_terms</td>
+<td><code>METHOD_MANUSCRIPT_TERM_1</code></td>
+<td><code>manuscript_terms</code></td>
 <td>evidence</td>
 <td>methodology</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.manuscript_terms[4]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.manuscript_terms</code>[4]</td>
 </tr>
 <tr>
-<td>METHOD_MANUSCRIPT_TERM_2</td>
-<td>manuscript_terms</td>
+<td><code>METHOD_MANUSCRIPT_TERM_2</code></td>
+<td><code>manuscript_terms</code></td>
 <td>evidence</td>
 <td>methodology</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.manuscript_terms[4]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.manuscript_terms</code>[4]</td>
 </tr>
 <tr>
-<td>METHOD_METAL_TERM_1</td>
-<td>metallurgical_terms</td>
+<td><code>METHOD_METAL_TERM_1</code></td>
+<td><code>metallurgical_terms</code></td>
 <td>assaying</td>
 <td>methodology</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.metallurgical_terms[1]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.metallurgical_terms</code>[1]</td>
 </tr>
 <tr>
-<td>METHOD_METAL_TERM_2</td>
-<td>metallurgical_terms</td>
+<td><code>METHOD_METAL_TERM_2</code></td>
+<td><code>metallurgical_terms</code></td>
 <td>parting</td>
 <td>methodology</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.metallurgical_terms[3]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.metallurgical_terms</code>[3]</td>
 </tr>
 <tr>
-<td>METHOD_METAL_TERM_3</td>
-<td>metallurgical_terms</td>
+<td><code>METHOD_METAL_TERM_3</code></td>
+<td><code>metallurgical_terms</code></td>
 <td>smelting</td>
 <td>methodology</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.metallurgical_terms[2]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.metallurgical_terms</code>[2]</td>
 </tr>
 <tr>
-<td>REPRO_EVIDENCE_TERM_1</td>
-<td>evidence_terms</td>
+<td><code>REPRO_EVIDENCE_TERM_1</code></td>
+<td><code>evidence_terms</code></td>
 <td>fact registry</td>
 <td>reproducibility</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[0]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.evidence_terms</code>[0]</td>
 </tr>
 <tr>
-<td>REPRO_EVIDENCE_TERM_2</td>
-<td>evidence_terms</td>
+<td><code>REPRO_EVIDENCE_TERM_2</code></td>
+<td><code>evidence_terms</code></td>
 <td>figure registry</td>
 <td>reproducibility</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[3]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.evidence_terms</code>[3]</td>
 </tr>
 <tr>
-<td>RESULTS_EVIDENCE_TERM_1</td>
-<td>evidence_terms</td>
+<td><code>RESULTS_EVIDENCE_TERM_1</code></td>
+<td><code>evidence_terms</code></td>
 <td>artifact manifest</td>
 <td>results</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[1]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.evidence_terms</code>[1]</td>
 </tr>
 <tr>
-<td>RESULTS_EVIDENCE_TERM_2</td>
-<td>evidence_terms</td>
+<td><code>RESULTS_EVIDENCE_TERM_2</code></td>
+<td><code>evidence_terms</code></td>
 <td>figure registry</td>
 <td>results</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[3]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.evidence_terms</code>[3]</td>
 </tr>
 <tr>
-<td>RESULTS_EVIDENCE_TERM_3</td>
-<td>evidence_terms</td>
+<td><code>RESULTS_EVIDENCE_TERM_3</code></td>
+<td><code>evidence_terms</code></td>
 <td>token provenance</td>
 <td>results</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.evidence_terms[4]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.evidence_terms</code>[4]</td>
 </tr>
 <tr>
-<td>RESULTS_PURITY_ADJ_1</td>
-<td>purity_adjectives</td>
+<td><code>RESULTS_PURITY_ADJ_1</code></td>
+<td><code>purity_adjectives</code></td>
 <td>unrefined</td>
 <td>results</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.purity_adjectives[0]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.purity_adjectives</code>[0]</td>
 </tr>
 <tr>
-<td>RESULTS_PURITY_ADJ_2</td>
-<td>purity_adjectives</td>
+<td><code>RESULTS_PURITY_ADJ_2</code></td>
+<td><code>purity_adjectives</code></td>
 <td>purified</td>
 <td>results</td>
-<td>manuscript/config.yaml#gold_refinement.lexicon.purity_adjectives[1]</td>
+<td><code>manuscript/config.yaml#gold_refinement.lexicon.purity_adjectives</code>[1]</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>Selected purity adjectives for this section: unrefined, purified.
 Selected evidence terms: artifact manifest, figure registry, token
 provenance.</p>
@@ -546,9 +959,10 @@ the refinement analogy auditable as a directed source path rather than a
 decorative metaphor. The graph starts from the same stage sequence used
 in the purity table and carries that sequence forward to certification,
 with edge width proportional to the purity gain owned by
-<code>src/refinery.py::run_refinery</code>. A reader can therefore ask
-where each improvement enters the pipeline and whether it is supported
-by the same source that generated the reported purity numbers.</p>
+<code>src/template_gold_refinement/refinery.py::run_refinery</code>. A
+reader can therefore ask where each improvement enters the pipeline and
+whether it is supported by the same source that generated the reported
+purity numbers.</p>
 <p>The main result is structural: certification is not allowed to appear
 as a terminal label detached from the intermediate stages. It is only
 reached after the upstream transformations have been generated, ordered,
@@ -558,32 +972,30 @@ causal custody from raw material through assay and final certification,
 so a later change to the stage model must move through the same graph,
 table, and validation surfaces.</p>
 <figure id="fig:provenance_sankey">
-<img src="../figures/provenance_sankey.png"
-alt="Provenance flow diagram" />
-<figcaption aria-hidden="true">Provenance flow diagram</figcaption>
+<a class="figure-full-size-link" href="figures/provenance_sankey.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Provenance trace: ore → stages → certification purity flow."><img src="figures/provenance_sankey.png"
+alt="A directed left-to-right flow links ore through four refining stages to certification; edge widths increase with each stage&#x27;s purity gain." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Provenance trace: ore → stages →
+certification purity flow.</figcaption>
 </figure>
 <h2 id="purity-vs-claim-support">Purity vs claim support</h2>
 <p>The purity-versus-claim-support view in <span class="citation"
 data-cites="fig:purity_claim_scatter">[@fig:purity_claim_scatter]</span>
-places the metallurgical purity sequence beside the contribution ledger.
-This prevents the paper from treating purity as an isolated aesthetic
-score. A point can advance only when two surfaces agree: the refinery
-computation supplies the stage purity, and the claim-support registry
-supplies the cumulative evidence exposure for the claims being made at
-that level of refinement.</p>
+places two differently scoped measurements on explicit axes: stage
+output purity on the horizontal axis and the single project-level
+contribution-claim assay on the vertical axis. The same observed support
+rate is therefore repeated across stages. The figure does not fabricate
+a stagewise claim-support trajectory from a project-level aggregate.</p>
 <p>In the current generated assay, 9 of 9 contribution claims are
-supported (100.00%). The figure is useful because it would make a weaker
-state visible immediately: a manuscript could still show late-stage
-material purity while failing to carry its claims along the evidence
-axis. In that case, the visual story would split, and the reader would
-see that certification prose had outrun claim support. Here the two axes
-are deliberately co-present, so the results section cannot celebrate
-purity while hiding unsupported contribution language in a separate
-paragraph.</p>
+supported (100.00%). The plot is diagnostic rather than correlational:
+five stage states and one ledger-level rate do not constitute
+independent observations suitable for association testing. Its purpose
+is to reveal disagreement between a late refinery state and weak overall
+claim support without combining the two into one score.</p>
 <figure id="fig:purity_claim_scatter">
-<img src="../figures/purity_claim_scatter.png"
-alt="Purity vs claim support" />
-<figcaption aria-hidden="true">Purity vs claim support</figcaption>
+<a class="figure-full-size-link" href="figures/purity_claim_scatter.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Stage purity plotted against the single project-level claim-support assay."><img src="figures/purity_claim_scatter.png"
+alt="Five stage points progress rightward with increasing purity while sharing one vertical claim-support value, separating stage refinement from the project-level evidence assay." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Stage purity plotted against the single
+project-level claim-support assay.</figcaption>
 </figure>
 <h2 id="token-selection-sensitivity">Token selection sensitivity</h2>
 <p>The token selection heatmap in <span class="citation"
@@ -593,8 +1005,8 @@ manuscript uses seed 431 for the reported token plan, but the figure
 asks a neighboring question: how do selected inventory indices move when
 seeds and lexicon categories vary? This is not a stochastic robustness
 claim. It is a deterministic audit of the digest rule in
-<code>src/composition.py::generate_token_plan</code> against the
-configured lexicon inventories in
+<code>src/template_gold_refinement/composition.py::generate_token_plan</code>
+against the configured lexicon inventories in
 <code>manuscript/config.yaml</code>.</p>
 <p>This view separates three issues that prose alone tends to blur.
 First, token injection is reproducible: the same seed and inventory
@@ -608,8 +1020,10 @@ late-bound choices. The result is a sensitivity check on authoring
 machinery, not a claim that any particular synonym is scientifically
 superior.</p>
 <figure id="fig:token_heatmap">
-<img src="../figures/token_heatmap.png" alt="Token selection heatmap" />
-<figcaption aria-hidden="true">Token selection heatmap</figcaption>
+<a class="figure-full-size-link" href="figures/token_heatmap.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Token selection heatmap: seed × category → selected index."><img src="figures/token_heatmap.png"
+alt="A heatmap crosses deterministic seeds with lexicon categories; each cell color and label identify the selected inventory index for that seed-category pair." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Token selection heatmap: seed × category
+→ selected index.</figcaption>
 </figure>
 <h2 id="integrity-gate-matrix">Integrity gate matrix</h2>
 <p>The integrity gate matrix in <span class="citation"
@@ -638,9 +1052,10 @@ result is intentionally local to this exemplar: coverage is measured
 against the specific audit rules configured here, not against a
 universal publication-readiness standard.</p>
 <figure id="fig:integrity_gate_matrix">
-<img src="../figures/integrity_gate_matrix.png"
-alt="Integrity-gate matrix" />
-<figcaption aria-hidden="true">Integrity-gate matrix</figcaption>
+<a class="figure-full-size-link" href="figures/integrity_gate_matrix.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Integrity-gate matrix linking audit rules to tests, manuscript surfaces"><img src="figures/integrity_gate_matrix.png"
+alt="Rows of integrity rules cross columns for tests, manuscript, and artifacts; categorical cells distinguish missing, partial, and complete gate coverage." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Integrity-gate matrix linking audit rules
+to tests, manuscript surfaces, and generated artifacts.</figcaption>
 </figure>
 <h2 id="formalism-traceability">Formalism traceability</h2>
 <p>The formalism traceability view in <span class="citation"
@@ -654,9 +1069,9 @@ identifier and to the source surface that emits it. That linkage is
 important because equation labels can otherwise create a false sense of
 rigor: a numbered equation looks formal even when its assumptions,
 variables, and implementation owner are not recoverable. Here the formal
-object must remain connected to <code>src/formalisms.py</code>, the
-generated registry table, and the manuscript reference that consumes
-it.</p>
+object must remain connected to
+<code>src/template_gold_refinement/formalisms.py</code>, the generated
+registry table, and the manuscript reference that consumes it.</p>
 <p>The graph also helps distinguish formal support from decorative
 notation. A formalism earns a place in the manuscript only when it names
 a claim boundary or computation that the source can regenerate. If an
@@ -667,9 +1082,10 @@ layer should change with it. That is the desired behavior: the formal
 layer is a generated contract, not hand-maintained mathematical
 ornamentation.</p>
 <figure id="fig:formalism_traceability">
-<img src="../figures/formalism_traceability.png"
-alt="Formalism traceability" />
-<figcaption aria-hidden="true">Formalism traceability</figcaption>
+<a class="figure-full-size-link" href="figures/formalism_traceability.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Formalism traceability from source-owned equation identifiers to source evidence."><img src="figures/formalism_traceability.png"
+alt="A bipartite network connects each named formalism to its equation label and then to the source module that owns the supporting definition." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Formalism traceability from source-owned
+equation identifiers to source evidence.</figcaption>
 </figure>
 <h2 id="implementation-circuit">Implementation circuit</h2>
 <p>The implementation circuit in <span class="citation"
@@ -699,10 +1115,11 @@ backward to the owning source surface rather than encouraging local
 patching of rendered Markdown. That direction of repair is central to
 the manuscript’s definition of refinement.</p>
 <figure id="fig:implementation_circuit">
-<img src="../figures/implementation_circuit.png"
-alt="Gold-refinement implementation circuit" />
-<figcaption aria-hidden="true">Gold-refinement implementation
-circuit</figcaption>
+<a class="figure-full-size-link" href="figures/implementation_circuit.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Implementation circuit from config-owned ore through generated manuscript artifacts"><img src="figures/implementation_circuit.png"
+alt="A layered directed graph routes configuration and source modules into generated data, figures, and manuscript artifacts, then through validation feedback to publication." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Implementation circuit from config-owned
+ore through generated manuscript artifacts and validation
+feedback.</figcaption>
 </figure>
 <h2 id="claim-evidence-assay">Claim-evidence assay</h2>
 <p>The claim-evidence assay in <span class="citation"
@@ -730,9 +1147,11 @@ extensions in this manuscript: a claim can be source-owned without
 becoming a compliance claim, and a generated assay can confirm local
 evidence without pretending to certify the wider supply chain.</p>
 <figure id="fig:claim_evidence_assay">
-<img src="../figures/claim_evidence_assay.png"
-alt="Claim-evidence assay" />
-<figcaption aria-hidden="true">Claim-evidence assay</figcaption>
+<a class="figure-full-size-link" href="figures/claim_evidence_assay.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Claim-evidence assay showing supported contribution claims, evidence surfaces"><img src="figures/claim_evidence_assay.png"
+alt="Support bars summarize each contribution claim while a companion topology links claims to concrete evidence surfaces and explicit boundary classifications." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Claim-evidence assay showing supported
+contribution claims, evidence surfaces, and boundary
+classifications.</figcaption>
 </figure>
 <h2 id="scientific-integrity-risk-matrix">Scientific-integrity risk
 matrix</h2>
@@ -767,10 +1186,11 @@ issue has already been eliminated. It shows which risks this exemplar
 has made inspectable and where future work would need to add stronger
 measurement before using stronger language.</p>
 <figure id="fig:integrity_risk_matrix">
-<img src="../figures/integrity_risk_matrix.png"
-alt="Scientific-integrity risk matrix" />
-<figcaption aria-hidden="true">Scientific-integrity risk
-matrix</figcaption>
+<a class="figure-full-size-link" href="figures/integrity_risk_matrix.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Scientific-integrity risk matrix plotting severity, detectability, residual risk"><img src="figures/integrity_risk_matrix.png"
+alt="A scatter matrix positions integrity risks by severity and detectability; marker size encodes residual risk and color identifies the evidence-source tier." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Scientific-integrity risk matrix plotting
+severity, detectability, residual risk, and owning evidence
+surface.</figcaption>
 </figure>
 <h2 id="evidence-tier-ladder">Evidence-tier ladder</h2>
 <p>The evidence-tier ladder in <span class="citation"
@@ -782,7 +1202,7 @@ manuscript is leaning on generated metrics, claim-ledger facts,
 bibliography records, source code, or disposable artifacts.</p>
 <p>The ladder complements the risk matrix by counting source tiers
 rather than plotting risks. When the shared evidence registry is
-available, the manuscript can report 0 source-tiered facts to the
+available, the manuscript can report 956 source-tiered facts to the
 validation surface. When that registry is not available, the same figure
 falls back to the integrity model’s configured tiers. Either way, the
 reader sees the evidentiary mix instead of receiving an undifferentiated
@@ -799,11 +1219,12 @@ counts visible in tabular form. Together they close the figure sequence
 by showing not only that the 12 public figures render, but also which
 source tiers make their claims inspectable.</p>
 <figure id="fig:evidence_tier_ladder">
-<img src="../figures/evidence_tier_ladder.png"
-alt="Evidence-tier ladder" />
-<figcaption aria-hidden="true">Evidence-tier ladder</figcaption>
+<a class="figure-full-size-link" href="figures/evidence_tier_ladder.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Evidence-tier ladder summarizing source tiers available to the shared template evidence…"><img src="figures/evidence_tier_ladder.png"
+alt="Ordered horizontal bars form a ladder from weaker to stronger evidence-source tiers, with each bar annotated by its registry count and percentage." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Evidence-tier ladder summarizing source
+tiers available to the shared template evidence registry.</figcaption>
 </figure>
-<table id="tbl:evidence_tiers">
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable table: Evidence tiers used by the integrity model and shared registry when available."><table id="tbl:evidence_tiers" data-responsive-table="true">
 <caption>Evidence tiers used by the integrity model and shared registry
 when available.</caption>
 <thead>
@@ -815,52 +1236,43 @@ when available.</caption>
 </thead>
 <tbody>
 <tr>
+<td>generated_metric</td>
+<td>720</td>
+<td>Numbers regenerated from project analysis</td>
+</tr>
+<tr>
 <td>artifact</td>
-<td>2</td>
+<td>117</td>
 <td>Generated artifacts exposed to readers</td>
 </tr>
 <tr>
-<td>source_code</td>
-<td>2</td>
-<td>Executable source files and symbols</td>
+<td>configuration</td>
+<td>55</td>
+<td>Evidence source tier</td>
 </tr>
 <tr>
 <td>bibliography</td>
-<td>1</td>
+<td>47</td>
 <td>Reference records and citation metadata</td>
 </tr>
 <tr>
 <td>claim_ledger</td>
-<td>1</td>
+<td>17</td>
 <td>Source-owned claim and fact declarations</td>
 </tr>
-<tr>
-<td>config</td>
-<td>1</td>
-<td>Author-controlled project configuration</td>
-</tr>
-<tr>
-<td>generated_metric</td>
-<td>1</td>
-<td>Numbers regenerated from project analysis</td>
-</tr>
-<tr>
-<td>validation</td>
-<td>1</td>
-<td>Template gates and test results</td>
-</tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="adversarial-security-assay">Adversarial security assay</h2>
-<p>The adversarial assay reports 5 adversarial assay rows mapping
-threats and standards to local evidence surfaces, validators, and claim
-boundaries; they are scope controls, not completed scan findings. No
-Codex Security or Deep Security Scan findings are claimed unless a scan
-artifact is generated, validated, and cited. The rows are generated from
+<p>The adversarial assay reports 5 adversarial assay rows, 5
+schema-complete, mapping threats and standards to local evidence
+surfaces, validators, and claim boundaries; completeness is a scope
+control, not completed scan findings. No Codex Security or Deep Security
+Scan findings are claimed unless a scan artifact is generated,
+validated, and cited. The rows are generated from
 <code>gold_refinement.security_assay</code> and are intentionally
 tabular rather than a new public figure, so the visual registry remains
 the stable 12-figure contract.</p>
-<table id="tbl:security_assay">
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable table: Source-owned adversarial security assay."><table id="tbl:security_assay" data-responsive-table="true">
 <caption>Source-owned adversarial security assay.</caption>
 <colgroup>
 <col style="width: 4%" />
@@ -885,8 +1297,10 @@ the stable 12-figure contract.</p>
 <td>S1</td>
 <td>implicit trust in generated artifacts</td>
 <td>NIST SP 800-207 zero trust</td>
-<td>output/reports/evidence_registry.json and src/security_assay.py</td>
-<td>infrastructure.validation.cli evidence –fail-on-issues</td>
+<td><code>output/reports/evidence_registry.json</code> and
+<code>src/template_gold_refinement/security_assay.py</code></td>
+<td><code>infrastructure.validation.cli</code> evidence
+–fail-on-issues</td>
 <td>documents a verification posture, not a deployed zero-trust
 architecture</td>
 </tr>
@@ -894,7 +1308,7 @@ architecture</td>
 <td>S2</td>
 <td>incomplete secure-development evidence</td>
 <td>NIST SP 800-218 secure software development framework</td>
-<td>tests/, pre-render validation, and claim ledger</td>
+<td><code>tests/</code>, pre-render validation, and claim ledger</td>
 <td>project test suite and template validation gates</td>
 <td>maps local practices to SSDF concepts without claiming SSDF
 compliance</td>
@@ -927,9 +1341,9 @@ receipts when run</td>
 security</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="contribution-claims">Contribution claims</h2>
-<table>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable data table"><table data-responsive-table="true">
 <colgroup>
 <col style="width: 18%" />
 <col style="width: 28%" />
@@ -949,39 +1363,39 @@ security</td>
 <td>Five-stage refinery</td>
 <td>The refinery pipeline has 5 canonical stages from ore to
 nine-nines.</td>
-<td>src/refinery.py::CANONICAL_STAGES</td>
+<td><code>src/template_gold_refinement/refinery.py::CANONICAL_STAGES</code></td>
 <td>local</td>
 </tr>
 <tr>
 <td>Monotone purity</td>
 <td>Purity increases strictly across all refinery stages.</td>
-<td>src/purity.py::assert_monotone_increase</td>
+<td><code>src/template_gold_refinement/purity.py::assert_monotone_increase</code></td>
 <td>local</td>
 </tr>
 <tr>
 <td>Nine-nines certification</td>
 <td>The certification stage achieves 99.9999999% purity.</td>
-<td>src/purity.py::NINE_NINES_PURITY</td>
+<td><code>src/template_gold_refinement/purity.py::NINE_NINES_PURITY</code></td>
 <td>local</td>
 </tr>
 <tr>
 <td>Deterministic tokens</td>
 <td>Token selection is deterministic via seeded SHA-256 digest.</td>
-<td>src/composition.py::_choose_value</td>
+<td><code>src/template_gold_refinement/composition.py::_choose_value</code></td>
 <td>local</td>
 </tr>
 <tr>
 <td>Formalism registry</td>
 <td>The manuscript exposes 7 source-owned formalisms with equation
 labels.</td>
-<td>src/formalisms.py::FORMALISMS</td>
+<td><code>src/template_gold_refinement/formalisms.py::FORMALISMS</code></td>
 <td>local</td>
 </tr>
 <tr>
 <td>Claim-support report separation</td>
 <td>The project-local contribution-claim report is written to
 claim_support_registry.json.</td>
-<td>scripts/refinement_analysis.py::CLAIM_SUPPORT_REGISTRY_NAME</td>
+<td><code>scripts/refinement_analysis.py::CLAIM_SUPPORT_REGISTRY_NAME</code></td>
 <td>local</td>
 </tr>
 <tr>
@@ -989,14 +1403,14 @@ claim_support_registry.json.</td>
 <td>The manuscript includes generated visualizations that link the
 refinery analogy to source code, variables, evidence, and validation
 gates.</td>
-<td>src/figures/diagrams.py::generate_implementation_circuit</td>
+<td><code>src/figures/diagrams.py::generate_implementation_circuit</code></td>
 <td>local</td>
 </tr>
 <tr>
 <td>Scientific-integrity risk model</td>
 <td>The manuscript includes a source-owned integrity risk model linking
 failure modes, validators, evidence surfaces, and fork obligations.</td>
-<td>src/integrity.py::build_integrity_dimensions</td>
+<td><code>src/template_gold_refinement/integrity.py::build_integrity_dimensions</code></td>
 <td>local</td>
 </tr>
 <tr>
@@ -1004,11 +1418,11 @@ failure modes, validators, evidence surfaces, and fork obligations.</td>
 <td>The manuscript includes a source-owned security assay mapping
 adversarial threats and standards to local evidence surfaces,
 validators, and claim boundaries.</td>
-<td>src/security_assay.py::build_security_assay</td>
+<td><code>src/template_gold_refinement/security_assay.py::build_security_assay</code></td>
 <td>local</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>The project-local claim-support assay reports 9 supported claims out
 of 9 total claims, for 100.00% support. Unsupported claims: 0. The
 generated project report path is
@@ -1019,8 +1433,8 @@ template evidence report remains
 summary</h2>
 <p>When the template evidence gate has run, the shared registry supplies
 source-tiered facts used by the evidence validator. Current fact count
-available to this variable pass: 0.</p>
-<table id="tbl:shared_evidence_kinds">
+available to this variable pass: 956.</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable table: Shared evidence-registry fact kinds when available."><table id="tbl:shared_evidence_kinds" data-responsive-table="true">
 <caption>Shared evidence-registry fact kinds when available.</caption>
 <thead>
 <tr>
@@ -1030,11 +1444,35 @@ available to this variable pass: 0.</p>
 </thead>
 <tbody>
 <tr>
-<td>not generated</td>
-<td>0</td>
+<td>artifact</td>
+<td>73</td>
+</tr>
+<tr>
+<td>citation</td>
+<td>47</td>
+</tr>
+<tr>
+<td>equation</td>
+<td>8</td>
+</tr>
+<tr>
+<td>figure</td>
+<td>28</td>
+</tr>
+<tr>
+<td>number</td>
+<td>783</td>
+</tr>
+<tr>
+<td>section</td>
+<td>10</td>
+</tr>
+<tr>
+<td>table</td>
+<td>7</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <h2 id="figure-quality-report">Figure quality report</h2>
 <p>The visualization registry is paired with
 <code>output/reports/figure_quality_report.json</code>, a generated QA
@@ -1046,7 +1484,7 @@ technical artifact for inspection, reuse, and source-level debugging.
 <span class="citation"
 data-cites="tbl:figure_quality">[@tbl:figure_quality]</span> summarizes
 the generated surface.</p>
-<table id="tbl:figure_quality">
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable table: Figure-quality report generated from source-owned figure specs."><table id="tbl:figure_quality" data-responsive-table="true">
 <caption>Figure-quality report generated from source-owned figure
 specs.</caption>
 <colgroup>
@@ -1071,61 +1509,61 @@ specs.</caption>
 </thead>
 <tbody>
 <tr>
-<td>claim_evidence_assay</td>
+<td><code>claim_evidence_assay</code></td>
 <td>yes</td>
 <td>yes</td>
-<td>3947x2038</td>
-<td>0.218</td>
-<td>0.06041014</td>
+<td>3063x3193</td>
+<td>0.343</td>
+<td>0.08586759</td>
 <td>pass</td>
 </tr>
 <tr>
-<td>evidence_tier_ladder</td>
+<td><code>evidence_tier_ladder</code></td>
 <td>yes</td>
 <td>yes</td>
-<td>3020x1724</td>
-<td>0.216</td>
-<td>0.05410730</td>
+<td>3419x1447</td>
+<td>0.114</td>
+<td>0.04050309</td>
 <td>pass</td>
 </tr>
 <tr>
-<td>formalism_traceability</td>
+<td><code>formalism_traceability</code></td>
 <td>yes</td>
 <td>yes</td>
-<td>3315x1797</td>
-<td>0.140</td>
-<td>0.04409869</td>
+<td>2478x1777</td>
+<td>0.426</td>
+<td>0.10007865</td>
 <td>pass</td>
 </tr>
 <tr>
-<td>implementation_circuit</td>
+<td><code>implementation_circuit</code></td>
 <td>yes</td>
 <td>yes</td>
-<td>2966x1846</td>
-<td>0.069</td>
-<td>0.02257238</td>
+<td>2966x2160</td>
+<td>0.125</td>
+<td>0.03298687</td>
 <td>pass</td>
 </tr>
 <tr>
-<td>integrity_gate_matrix</td>
+<td><code>integrity_gate_matrix</code></td>
 <td>yes</td>
 <td>yes</td>
-<td>1833x2060</td>
-<td>0.406</td>
-<td>0.16147143</td>
+<td>3282x2137</td>
+<td>0.603</td>
+<td>0.17178490</td>
 <td>pass</td>
 </tr>
 <tr>
-<td>integrity_risk_matrix</td>
+<td><code>integrity_risk_matrix</code></td>
 <td>yes</td>
 <td>yes</td>
-<td>2499x1909</td>
-<td>0.379</td>
-<td>0.01892053</td>
+<td>2918x2025</td>
+<td>0.240</td>
+<td>0.01807742</td>
 <td>pass</td>
 </tr>
 <tr>
-<td>karat_grading</td>
+<td><code>karat_grading</code></td>
 <td>yes</td>
 <td>yes</td>
 <td>2956x1699</td>
@@ -1134,51 +1572,52 @@ specs.</caption>
 <td>pass</td>
 </tr>
 <tr>
-<td>provenance_sankey</td>
+<td><code>provenance_sankey</code></td>
 <td>yes</td>
 <td>yes</td>
 <td>2850x1461</td>
-<td>0.070</td>
-<td>0.02170098</td>
+<td>0.145</td>
+<td>0.03337035</td>
 <td>pass</td>
 </tr>
 <tr>
-<td>purity_claim_scatter</td>
+<td><code>purity_claim_scatter</code></td>
 <td>yes</td>
 <td>yes</td>
-<td>2347x1745</td>
-<td>0.032</td>
-<td>0.01429053</td>
+<td>2343x1745</td>
+<td>0.034</td>
+<td>0.01594966</td>
 <td>pass</td>
 </tr>
 <tr>
-<td>purity_progression</td>
+<td><code>purity_progression</code></td>
 <td>yes</td>
 <td>yes</td>
-<td>3029x2125</td>
-<td>0.182</td>
-<td>0.03971092</td>
+<td>2993x2454</td>
+<td>0.144</td>
+<td>0.03424524</td>
 <td>pass</td>
 </tr>
 <tr>
-<td>token_density</td>
+<td><code>token_density</code></td>
 <td>yes</td>
 <td>yes</td>
-<td>3288x1858</td>
-<td>0.234</td>
-<td>0.06696808</td>
+<td>2305x2671</td>
+<td>0.170</td>
+<td>0.05377018</td>
 <td>pass</td>
 </tr>
 <tr>
-<td>token_heatmap</td>
+<td><code>token_heatmap</code></td>
 <td>yes</td>
 <td>yes</td>
-<td>2406x2412</td>
-<td>0.621</td>
-<td>0.12867696</td>
+<td>2390x2323</td>
+<td>0.538</td>
+<td>0.12047020</td>
 <td>pass</td>
 </tr>
 </tbody>
-</table>
+</table></div>
+</main>
 </body>
 </html>
