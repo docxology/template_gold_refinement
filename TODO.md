@@ -81,3 +81,7 @@ No active rows are currently scoped at this size.
 
 Rows remain active until the acceptance command and negative control pass in the same source revision.
 A blocked row is a deliberate boundary, not a skipped success.
+
+## Workflowz review — 2026-11-10
+
+Coverage note: This bounded packet review found no concrete, evidence-complete improvement to add. It covered the supplied project guidance, README, existing backlog, package metadata, Python pin, and source/test excerpts listed in the review evidence; it did not establish full-line coverage of all 124 files or execute the project. The visible compatibility imports, named fallback values, and test behavior were not flagged on keywords alone. Re-review on a concrete failure or source change.
