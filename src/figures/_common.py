@@ -60,6 +60,7 @@ class FigureSpec:
     generated_by: str
     data_sources: tuple[str, ...]
     visual_encoding: str
+    alt_text: str
 
     @property
     def svg_path(self) -> str:
@@ -82,6 +83,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "src/figures/charts.py::generate_purity_progression",
         ("src/refinery.py::run_refinery", "src/purity.py::purity_to_nines"),
         "bars encode stage gain; line encodes cumulative purity; inset encodes nines gained",
+        alt_text="Bars show purity gains at each stage, a line shows cumulative purity, and an inset shows progress measured in nines.",
     ),
     FigureSpec(
         "karat_grading",
@@ -91,6 +93,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "src/figures/charts.py::generate_karat_grading_chart",
         ("src/purity.py::KARAT_GRADES", "src/refinery.py::run_refinery"),
         "horizontal threshold bands with refinery-stage markers",
+        alt_text="Refinery stage markers move from the 9K band toward 24K and finally reach the nine-nines certification band.",
     ),
     FigureSpec(
         "token_density",
@@ -100,6 +103,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "src/figures/charts.py::generate_token_density_chart",
         ("output/reports/token_plan.json", "src/composition.py::generate_token_plan"),
         "ordered bars encode token counts by section and lexicon category",
+        alt_text="Paired bar charts compare how many deterministic tokens are assigned to manuscript sections and lexicon categories.",
     ),
     FigureSpec(
         "provenance_sankey",
@@ -109,6 +113,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "src/figures/diagrams.py::generate_provenance_sankey",
         ("src/refinery.py::run_refinery",),
         "directed stage graph with edge widths proportional to purity gain",
+        alt_text="Arrows trace the ordered flow from ore to certification. Wider arrows indicate larger gains in purity.",
     ),
     FigureSpec(
         "purity_claim_scatter",
@@ -118,6 +123,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "src/figures/diagrams.py::generate_purity_claim_scatter",
         ("output/reports/claim_support_registry.json", "src/refinery.py::run_refinery"),
         "x positions encode stage output purity; the shared y position encodes the project-level claim-support rate",
+        alt_text="Each stage has a different purity on the horizontal axis. All stages share one vertical coordinate because claim support is measured for the project as a whole.",
     ),
     FigureSpec(
         "token_heatmap",
@@ -127,6 +133,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "src/figures/diagrams.py::generate_token_heatmap",
         ("docs/manuscript/config.yaml#gold_refinement.lexicon", "src/composition.py::generate_token_plan"),
         "heatmap cells encode deterministic selected inventory index across seeds",
+        alt_text="The grid shows the lexicon item index chosen by each combination of seed and category.",
     ),
     FigureSpec(
         "integrity_gate_matrix",
@@ -136,6 +143,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "src/figures/diagrams.py::generate_integrity_gate_matrix",
         ("docs/manuscript/config.yaml#gold_refinement.audit_rules",),
         "categorical matrix encodes missing, partial, and full coverage by gate surface",
+        alt_text="Rows represent audit rules. Cells show whether tests, manuscript sections, and generated artifacts provide full, partial, or missing coverage.",
     ),
     FigureSpec(
         "formalism_traceability",
@@ -145,6 +153,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "src/figures/diagrams.py::generate_formalism_traceability",
         ("src/formalisms.py::FORMALISMS",),
         "bipartite graph links formalisms to equation labels and source owners",
+        alt_text="A two-sided graph connects each named formalism to its equation label and source owner.",
     ),
     FigureSpec(
         "implementation_circuit",
@@ -160,6 +169,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
             "src/figures/diagrams.py",
         ),
         "directed graph encodes source, generated, validation, and publication layers",
+        alt_text="Arrows connect authored configuration and project code to generated artifacts, validation checks, and published outputs.",
     ),
     FigureSpec(
         "claim_evidence_assay",
@@ -169,6 +179,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "src/figures/diagrams.py::generate_claim_evidence_assay",
         ("docs/manuscript/config.yaml#gold_refinement.contribution_claims", "src/evidence.py::build_evidence_registry"),
         "support bars plus claim to evidence to boundary graph topology",
+        alt_text="Bars summarize support for contribution claims. A graph links the claims to their evidence and the boundaries on their interpretation.",
     ),
     FigureSpec(
         "integrity_risk_matrix",
@@ -178,6 +189,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "src/figures/diagrams.py::generate_integrity_risk_matrix",
         ("src/integrity.py::build_integrity_dimensions",),
         "scatter positions encode severity and detectability; marker size encodes residual risk; color encodes source tier",
+        alt_text="Points plot severity against detectability. Larger points indicate greater residual risk, and colors identify evidence tiers.",
     ),
     FigureSpec(
         "evidence_tier_ladder",
@@ -187,6 +199,7 @@ FIGURE_SPECS: tuple[FigureSpec, ...] = (
         "src/figures/diagrams.py::generate_evidence_tier_ladder",
         ("output/reports/evidence_registry.json", "src/integrity.py::build_evidence_tiers"),
         "ordered horizontal bars encode counts and percentages by evidence source tier",
+        alt_text="Horizontal bars compare counts and percentages across the evidence tiers available to the template registry.",
     ),
 )
 

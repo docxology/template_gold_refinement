@@ -17,13 +17,7 @@ template-infrastructure operation. Do not treat stages as decorative labels.
    in `src/manuscript_variables.py`, and a test in
    `tests/test_manuscript_variables.py`.
 4. **Never hand-edit** files under `output/` — regenerate from source.
-5. **Run the full gate** after edits:
-   ```bash
-   uv run pytest tests/ --cov=src --cov-fail-under=90
-   uv run python scripts/refinement_analysis.py
-   # Monorepo clone only (needs the shared `infrastructure` package):
-   uv run python scripts/z_generate_manuscript_variables.py
-   ```
+5. Run the [local coverage and manuscript checks](quickstart.md) after edits.
 
 ### Forbidden actions
 

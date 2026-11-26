@@ -59,12 +59,8 @@ companion; `output/dashboard.html` is a separate artifact owned by
 
 ## Regeneration
 
-All output is disposable. Regenerate from source:
-
-```bash
-uv run python scripts/refinement_analysis.py
-# Monorepo clone only (needs the shared `infrastructure` package):
-uv run python scripts/z_generate_manuscript_variables.py
-```
-
-Never hand-edit files under `output/`.
+Use the [quickstart](quickstart.md) to regenerate analysis, hydrated manuscript,
+PDF, and HTML in a fresh detached copy. The repository tracks selected release
+snapshots under `output/`, including the hydrated manuscript, generated figures,
+and validation reports. Edit the [canonical source](manuscript/README.md) and
+regenerate the artifacts through their owning stage.

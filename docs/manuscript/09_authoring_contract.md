@@ -27,11 +27,7 @@ Security authorship has the same rule. Standards and guidance can shape the thre
 7. Keep `steganography` and `llm` policy blocks explicit when the secure pipeline or optional review path is used
 8. Cite the exact template/software release and record environment metadata for the executable package
 9. Update `gold_refinement.security_assay` and add scan artifacts before making secure-by-design, supply-chain, or vulnerability findings claims
-10. Regenerate all outputs through the pipeline:
-   ```bash
-   uv run python scripts/refinement_analysis.py
-   uv run python scripts/z_generate_manuscript_variables.py
-   ```
+10. Regenerate the analysis and rendered manuscript using `docs/quickstart.md`.
 11. Do not hand-edit generated manuscript, PDFs, or figures
 12. If using reverse assay, preserve ordered-prefix semantics and disclose that the target is configured rather than empirically optimized
 13. If using multi-objective purity, report dimensions separately unless external evidence justifies an aggregation rule

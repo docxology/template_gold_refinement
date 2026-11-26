@@ -44,7 +44,7 @@ and hydrated manuscript output, not in hand-authored prose.
 
 All 12 public figure labels are owned by `src/figures/_common.py::FIGURE_SPECS` (re-exported from `src/figures/__init__.py`).
 Each spec must declare `name`, `label`, `path`, `svg_path`, `caption`,
-`generated_by`, `data_sources`, and `visual_encoding`. `generate_all_figures()`
+`generated_by`, `data_sources`, `visual_encoding`, and `alt_text`. `generate_all_figures()`
 must write PNG and SVG companions plus `output/figures/figure_registry.json`
 and `output/reports/figure_quality_report.json`.
 

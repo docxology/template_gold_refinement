@@ -11,7 +11,4 @@ Rules:
 - Add new placeholders only after adding corresponding keys in
   `src/manuscript_variables.py` and tests in `tests/test_manuscript_variables.py`.
 
-```bash
-uv run python projects/templates/template_gold_refinement/scripts/z_generate_manuscript_variables.py
-grep -r "{{" projects/templates/template_gold_refinement/output/manuscript/
-```
+Use the [shared render and validation workflow](../quickstart.md#render-this-checkout).
