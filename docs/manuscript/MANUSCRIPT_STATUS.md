@@ -1,7 +1,7 @@
-# Manuscript Status
+# Manuscript status
 
-- **Project:** template_gold_refinement
-- **Manuscript title:** Refinement of Gold: A Metallurgical Analogy for Scientific Manuscript Composition
-- **Location:** `docs/manuscript/` (canonical default; legacy `docs/manuscript/` fallback resolved by `infrastructure.core.project_paths.resolve_manuscript_dir`)
-- **Type:** Active publication-target manuscript (12 section files)
-- **Status file purpose:** Tracks publication-readiness of the manuscript content in this directory. Migrated from legacy `docs/manuscript/` location.
+The active publication manuscript, *Refinement of Gold: A Metallurgical Analogy
+for Scientific Manuscript Composition*, is authored here. The [section index](README.md)
+lists its maintained inputs. The tracked files under `output/manuscript/` are
+generated release snapshots. Follow the [render guide](../quickstart.md#render-this-checkout)
+to hydrate and verify the manuscript again.

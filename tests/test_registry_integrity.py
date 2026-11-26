@@ -9,6 +9,7 @@ from pathlib import Path
 from figures import FIGURE_SPECS
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
+_MANUSCRIPT_ROOT = _PROJECT_ROOT / "docs" / "manuscript"
 
 _FIG_LABEL_RE = re.compile(r"\[@fig:([a-z_]+)\]")
 _EQ_REF_RE = re.compile(r"\[@(eq:[A-Za-z0-9_.:-]+)\]")
@@ -23,7 +24,7 @@ def _resolved_manuscript_text() -> str:
 
     variables = generate_variables(_PROJECT_ROOT)
     parts = []
-    for md_file in sorted((_PROJECT_ROOT / "manuscript").glob("*.md")):
+    for md_file in sorted(_MANUSCRIPT_ROOT.glob("*.md")):
         if md_file.name in _DOC_ONLY:
             continue
         text = md_file.read_text(encoding="utf-8")
@@ -51,9 +52,8 @@ class TestFigureRegistryIntegrity:
         assert len(registered_labels) > 0, "No figures registered"
 
         # Scan manuscript for [@fig:...] references
-        manuscript_dir = _PROJECT_ROOT / "manuscript"
         unresolved: dict[str, list[str]] = {}
-        for md_file in sorted(manuscript_dir.glob("*.md")):
+        for md_file in sorted(_MANUSCRIPT_ROOT.glob("*.md")):
             if md_file.name in _DOC_ONLY:
                 continue
             text = md_file.read_text(encoding="utf-8")

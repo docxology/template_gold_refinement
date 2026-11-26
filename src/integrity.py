@@ -184,7 +184,7 @@ def build_integrity_dimensions(config: Any) -> tuple[IntegrityDimension, ...]:
             "A citation key could be unresolved or backed by malformed bibliography metadata.",
             4,
             5,
-            "manuscript/references.bib",
+            "docs/manuscript/references.bib",
             "infrastructure.reference.citation validate",
             "bibliography",
             "bibliography",

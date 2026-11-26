@@ -44,6 +44,6 @@ categories are: `metallurgical_terms`, `manuscript_terms`, `purity_adjectives`,
 
 ## How do I fork this exemplar?
 
-See [STANDALONE.md](../STANDALONE.md) for the fork checklist,
+See [the standalone guide](standalone.md) for the fork checklist,
 [docs/domain_fork_guide.md](domain_fork_guide.md) for the stage-remap pattern,
 and [docs/quickstart.md](quickstart.md) for getting started.

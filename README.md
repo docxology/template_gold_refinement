@@ -69,46 +69,8 @@ _Status legend: ✅ published (durable identifier recorded in `config.yaml`) · 
 - Canonical renderer: [docxology/template](https://github.com/docxology/template) with `--project templates/template_gold_refinement`
 - Tracked outputs: [`output/`](output/) in this project and `output/templates/template_gold_refinement/` in the monorepo; public output files above 50 MB stay out of git.
 
-To regenerate this exemplar from the public monorepo:
-
-```bash
-git clone https://github.com/docxology/template
-cd template
-uv sync
-export SOURCE_DATE_EPOCH=1782345600  # 2026-06-25T00:00:00Z, matching docs/manuscript/config.yaml
-./run.sh --project templates/template_gold_refinement --pipeline --core-only
-uv run python scripts/pipeline/stage_04_validate.py --project templates/template_gold_refinement
-uv run python scripts/pipeline/stage_05_copy.py --project templates/template_gold_refinement
-```
-
-Keep `SOURCE_DATE_EPOCH` set when refreshing tracked public outputs so dashboard
-and manuscript timestamps are reproducible instead of wall-clock dependent.
-
-Standalone repositories are publication mirrors for source, DOI metadata, and
-tracked rendered artifacts. Use the monorepo above when you need the full shared
-infrastructure, pipeline stages, or cross-template validation.
-
-## Quick Start
-
-```bash
-# From this repository root
-uv sync --extra dev
-
-# Run the refinement analysis pipeline
-uv run python scripts/refinement_analysis.py
-
-# Run tests
-uv run pytest tests/ -v
-
-# Test gate (authoritative)
-uv run pytest tests/ --cov=src --cov-fail-under=90
-```
-
-`scripts/z_generate_manuscript_variables.py` is the one step that needs the
-template monorepo: it injects resolved variables through the shared
-`infrastructure.rendering.manuscript_injection` module, so the standalone smoke
-tests skip it. Use the monorepo clone below to regenerate
-`output/manuscript/`.
+See the [documentation index](docs/README.md) for setup, configuration, the authored
+manuscript, and [instructions for rebuilding this standalone checkout](docs/quickstart.md).
 
 ## Generated artifact contract
 
@@ -170,16 +132,9 @@ function cross-checked by a live regression test.
 
 ## Dependencies
 
-Runtime and dev dependencies are declared in this project's `pyproject.toml`
-(`numpy`, `matplotlib`, `pillow`, `networkx`, `pyyaml`; the `dev` extra adds
-`pytest`, `pytest-cov`, `hypothesis`). Install them from this repository root
-with `uv sync --extra dev`; `uv.lock` pins the resolved set.
-
-In the template monorepo the shared pipeline runs `uv sync` at the monorepo root
-and executes this project with `uv run --directory
-projects/templates/template_gold_refinement`, so the same `pyproject.toml` also
-declares the runtime dependencies needed by the exemplar, including
-`networkx>=3.4.2` for deterministic graph layouts.
+Runtime and development dependencies are declared in `pyproject.toml` and pinned
+by `uv.lock`. See the [quickstart](docs/quickstart.md) for installation and
+the native test command.
 
 ## Key Features
 
@@ -204,8 +159,7 @@ See [AGENTS.md](AGENTS.md) for technical documentation.
 - Forward backlog: [`TODO.md`](TODO.md).
 - Copy-and-customize configuration: [`docs/manuscript/config.yaml.example`](docs/manuscript/config.yaml.example).
 - Standalone fork guide: [`STANDALONE.md`](STANDALONE.md).
-- Project validation: `uv run pytest tests/ --cov=src --cov-fail-under=90`.
-- Repo drift validation (template monorepo clone only): `uv run python scripts/audit/check_template_drift.py --strict`.
+- Verification: [native coverage and pinned manuscript stages](docs/quickstart.md).
 
 <!-- foam-orphan-nav:start (hand-maintained: links sub-docs so they are reachable; no generator refreshes or validates this block) -->
 

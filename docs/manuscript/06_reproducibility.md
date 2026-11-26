@@ -24,16 +24,9 @@ Executable-publication scholarship sharpens that norm. Executable research compe
 
 ## Regeneration commands
 
-```bash
-# Run the refinery analysis
-uv run python projects/templates/template_gold_refinement/scripts/refinement_analysis.py
-
-# Generate manuscript variables
-uv run python projects/templates/template_gold_refinement/scripts/z_generate_manuscript_variables.py
-
-# Full pipeline (from repo root)
-./run.sh --project templates/template_gold_refinement --pipeline --core-only
-```
+Follow the standalone build in `docs/quickstart.md`. It pins the shared renderer,
+regenerates analysis in a detached copy, and runs the renderer's Stage 03 and
+Stage 04 against that copy.
 
 A reproduction report should record command exit status, the source revision, `{{CONFIG_HASH}}`, Python {{PYTHON_VERSION}}, and whether the generated registries pass. Matching prose alone is insufficient if the token plan, claim registry, or figure registry differs. Conversely, timestamp or renderer metadata differences should be interpreted separately from substantive differences in source-owned values.
 

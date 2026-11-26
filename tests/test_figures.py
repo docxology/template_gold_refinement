@@ -75,12 +75,14 @@ class TestFigureSpecContract:
             "path",
             "svg_path",
             "caption",
+            "alt_text",
             "generated_by",
             "data_sources",
             "visual_encoding",
         }
         for record in figures:
             assert required <= set(record)
+            assert record["alt_text"].strip()
             assert record["path"].endswith(".png")
             assert record["svg_path"].endswith(".svg")
             # Provenance points into the figures/ subpackage (split from the
