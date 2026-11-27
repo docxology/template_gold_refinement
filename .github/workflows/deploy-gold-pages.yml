@@ -1,0 +1,88 @@
+name: Deploy verified Gold Pages reader
+
+on:
+  push:
+    branches: [gh-pages]
+    paths: [.github/workflows/deploy-gold-pages.yml]
+
+permissions: {}
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.repository == 'docxology/template_gold_refinement'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the triggering commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+
+      - name: Verify and stage the existing reader
+        id: site
+        shell: bash
+        run: |
+          set -euo pipefail
+          publication=59179e99d7e3e5e4489e5bcdc9f451d0dc0ddcec
+          publication_tree=ec15d65e40c1ce51fd8ed3f275f25ac47114835e
+          workflow=.github/workflows/deploy-gold-pages.yml
+
+          test "$GITHUB_REF" = refs/heads/gh-pages
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git show -s --format=%P HEAD)" = "$publication"
+          test "$(git rev-parse "${publication}^{tree}")" = "$publication_tree"
+          test "$(git diff --name-status --no-renames "$publication" HEAD)" = "$(printf 'A\t%s' "$workflow")"
+
+          site="$(mktemp -d "$RUNNER_TEMP/gold-pages.XXXXXX")"
+          git archive "$publication" | tar -x -C "$site"
+          python3 - "$site" <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          import sys
+
+          site = Path(sys.argv[1])
+          receipt = ".template-publication-tree.json"
+          manifest = json.loads((site / receipt).read_bytes())
+          destination = {"repository": "https://github.com/docxology/template_gold_refinement", "branch": "gh-pages"}
+          if manifest["schema_version"] != "template-publication-tree/1" or manifest["destination"] != destination:
+              sys.exit("Unexpected publication manifest")
+
+          files = manifest["files"]
+          actual = {str(path.relative_to(site)) for path in site.rglob("*") if path.is_file()}
+          if actual != set(files) | {receipt}:
+              sys.exit("Publication file set differs from the manifest")
+          for relative, expected in files.items():
+              path = site / relative
+              with path.open("rb") as data:
+                  checksum = hashlib.file_digest(data, "sha256").hexdigest()
+              if checksum != expected["sha256"]:
+                  sys.exit(f"Publication checksum differs for {relative}")
+
+          print(f"Verified {len(files)} reader files against the frozen publication manifest.")
+          PY
+          printf 'path=%s\n' "$site" >> "$GITHUB_OUTPUT"
+          printf 'Reader source %s, workflow event %s\n' "$publication" "$GITHUB_SHA"
+
+      - name: Upload the exact static reader
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ${{ steps.site.outputs.path }}
+          include-hidden-files: true
+
+      - name: Deploy to the existing Pages environment
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
