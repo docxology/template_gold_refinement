@@ -7,11 +7,11 @@
       "caption": "Purity progression across the five refinery stages from ore (9K) to nine-nines certification.",
       "generated_by": "src/figures/charts.py::generate_purity_progression",
       "data_sources": [
-        "src/template_gold_refinement/refinery.py::run_refinery",
-        "src/template_gold_refinement/purity.py::purity_to_nines"
+        "src/refinery.py::run_refinery",
+        "src/purity.py::purity_to_nines"
       ],
       "visual_encoding": "bars encode stage gain; line encodes cumulative purity; inset encodes nines gained",
-      "alt": "Bars and a cumulative line rise monotonically across ore, smelting, assaying, cupellation, and certification, ending at nine-nines purity.",
+      "alt_text": "Bars show purity gains at each stage, a line shows cumulative purity, and an inset shows progress measured in nines.",
       "svg_path": "purity_progression.svg"
     },
     {
@@ -21,11 +21,11 @@
       "caption": "Gold karat grading scale (9K–24K + nine-nines) with refinery stage markers.",
       "generated_by": "src/figures/charts.py::generate_karat_grading_chart",
       "data_sources": [
-        "src/template_gold_refinement/purity.py::KARAT_GRADES",
-        "src/template_gold_refinement/refinery.py::run_refinery"
+        "src/purity.py::KARAT_GRADES",
+        "src/refinery.py::run_refinery"
       ],
       "visual_encoding": "horizontal threshold bands with refinery-stage markers",
-      "alt": "A horizontal purity scale spans 9K through 24K and 99.999 percent, with markers showing where each successive refinery stage lands.",
+      "alt_text": "Refinery stage markers move from the 9K band toward 24K and finally reach the nine-nines certification band.",
       "svg_path": "karat_grading.svg"
     },
     {
@@ -36,10 +36,10 @@
       "generated_by": "src/figures/charts.py::generate_token_density_chart",
       "data_sources": [
         "output/reports/token_plan.json",
-        "src/template_gold_refinement/composition.py::generate_token_plan"
+        "src/composition.py::generate_token_plan"
       ],
       "visual_encoding": "ordered bars encode token counts by section and lexicon category",
-      "alt": "Ordered bars compare the number of injected manuscript tokens across sections and lexicon categories, exposing where the template concentrates configurable prose.",
+      "alt_text": "Paired bar charts compare how many deterministic tokens are assigned to manuscript sections and lexicon categories.",
       "svg_path": "token_density.svg"
     },
     {
@@ -49,10 +49,10 @@
       "caption": "Provenance trace: ore → stages → certification purity flow.",
       "generated_by": "src/figures/diagrams.py::generate_provenance_sankey",
       "data_sources": [
-        "src/template_gold_refinement/refinery.py::run_refinery"
+        "src/refinery.py::run_refinery"
       ],
       "visual_encoding": "directed stage graph with edge widths proportional to purity gain",
-      "alt": "A directed left-to-right flow links ore through four refining stages to certification; edge widths increase with each stage's purity gain.",
+      "alt_text": "Arrows trace the ordered flow from ore to certification. Wider arrows indicate larger gains in purity.",
       "svg_path": "provenance_sankey.svg"
     },
     {
@@ -63,10 +63,10 @@
       "generated_by": "src/figures/diagrams.py::generate_purity_claim_scatter",
       "data_sources": [
         "output/reports/claim_support_registry.json",
-        "src/template_gold_refinement/refinery.py::run_refinery"
+        "src/refinery.py::run_refinery"
       ],
       "visual_encoding": "x positions encode stage output purity; the shared y position encodes the project-level claim-support rate",
-      "alt": "Five stage points progress rightward with increasing purity while sharing one vertical claim-support value, separating stage refinement from the project-level evidence assay.",
+      "alt_text": "Each stage has a different purity on the horizontal axis. All stages share one vertical coordinate because claim support is measured for the project as a whole.",
       "svg_path": "purity_claim_scatter.svg"
     },
     {
@@ -76,11 +76,11 @@
       "caption": "Token selection heatmap: seed × category → selected index.",
       "generated_by": "src/figures/diagrams.py::generate_token_heatmap",
       "data_sources": [
-        "manuscript/config.yaml#gold_refinement.lexicon",
-        "src/template_gold_refinement/composition.py::generate_token_plan"
+        "docs/manuscript/config.yaml#gold_refinement.lexicon",
+        "src/composition.py::generate_token_plan"
       ],
       "visual_encoding": "heatmap cells encode deterministic selected inventory index across seeds",
-      "alt": "A heatmap crosses deterministic seeds with lexicon categories; each cell color and label identify the selected inventory index for that seed-category pair.",
+      "alt_text": "The grid shows the lexicon item index chosen by each combination of seed and category.",
       "svg_path": "token_heatmap.svg"
     },
     {
@@ -90,10 +90,10 @@
       "caption": "Integrity-gate matrix linking audit rules to tests, manuscript surfaces, and generated artifacts.",
       "generated_by": "src/figures/diagrams.py::generate_integrity_gate_matrix",
       "data_sources": [
-        "manuscript/config.yaml#gold_refinement.audit_rules"
+        "docs/manuscript/config.yaml#gold_refinement.audit_rules"
       ],
       "visual_encoding": "categorical matrix encodes missing, partial, and full coverage by gate surface",
-      "alt": "Rows of integrity rules cross columns for tests, manuscript, and artifacts; categorical cells distinguish missing, partial, and complete gate coverage.",
+      "alt_text": "Rows represent audit rules. Cells show whether tests, manuscript sections, and generated artifacts provide full, partial, or missing coverage.",
       "svg_path": "integrity_gate_matrix.svg"
     },
     {
@@ -103,10 +103,10 @@
       "caption": "Formalism traceability from source-owned equation identifiers to source evidence.",
       "generated_by": "src/figures/diagrams.py::generate_formalism_traceability",
       "data_sources": [
-        "src/template_gold_refinement/formalisms.py::FORMALISMS"
+        "src/formalisms.py::FORMALISMS"
       ],
       "visual_encoding": "bipartite graph links formalisms to equation labels and source owners",
-      "alt": "A bipartite network connects each named formalism to its equation label and then to the source module that owns the supporting definition.",
+      "alt_text": "A two-sided graph connects each named formalism to its equation label and source owner.",
       "svg_path": "formalism_traceability.svg"
     },
     {
@@ -116,14 +116,14 @@
       "caption": "Implementation circuit from config-owned ore through generated manuscript artifacts and validation feedback.",
       "generated_by": "src/figures/diagrams.py::generate_implementation_circuit",
       "data_sources": [
-        "manuscript/config.yaml",
-        "src/template_gold_refinement/refinery.py",
-        "src/template_gold_refinement/composition.py",
-        "src/template_gold_refinement/formalisms.py",
+        "docs/manuscript/config.yaml",
+        "src/refinery.py",
+        "src/composition.py",
+        "src/formalisms.py",
         "src/figures/diagrams.py"
       ],
       "visual_encoding": "directed graph encodes source, generated, validation, and publication layers",
-      "alt": "A layered directed graph routes configuration and source modules into generated data, figures, and manuscript artifacts, then through validation feedback to publication.",
+      "alt_text": "Arrows connect authored configuration and project code to generated artifacts, validation checks, and published outputs.",
       "svg_path": "implementation_circuit.svg"
     },
     {
@@ -133,11 +133,11 @@
       "caption": "Claim-evidence assay showing supported contribution claims, evidence surfaces, and boundary classifications.",
       "generated_by": "src/figures/diagrams.py::generate_claim_evidence_assay",
       "data_sources": [
-        "manuscript/config.yaml#gold_refinement.contribution_claims",
-        "src/template_gold_refinement/evidence.py::build_evidence_registry"
+        "docs/manuscript/config.yaml#gold_refinement.contribution_claims",
+        "src/evidence.py::build_evidence_registry"
       ],
       "visual_encoding": "support bars plus claim to evidence to boundary graph topology",
-      "alt": "Support bars summarize each contribution claim while a companion topology links claims to concrete evidence surfaces and explicit boundary classifications.",
+      "alt_text": "Bars summarize support for contribution claims. A graph links the claims to their evidence and the boundaries on their interpretation.",
       "svg_path": "claim_evidence_assay.svg"
     },
     {
@@ -147,10 +147,10 @@
       "caption": "Scientific-integrity risk matrix plotting severity, detectability, residual risk, and owning evidence surface.",
       "generated_by": "src/figures/diagrams.py::generate_integrity_risk_matrix",
       "data_sources": [
-        "src/template_gold_refinement/integrity.py::build_integrity_dimensions"
+        "src/integrity.py::build_integrity_dimensions"
       ],
       "visual_encoding": "scatter positions encode severity and detectability; marker size encodes residual risk; color encodes source tier",
-      "alt": "A scatter matrix positions integrity risks by severity and detectability; marker size encodes residual risk and color identifies the evidence-source tier.",
+      "alt_text": "Points plot severity against detectability. Larger points indicate greater residual risk, and colors identify evidence tiers.",
       "svg_path": "integrity_risk_matrix.svg"
     },
     {
@@ -161,10 +161,10 @@
       "generated_by": "src/figures/diagrams.py::generate_evidence_tier_ladder",
       "data_sources": [
         "output/reports/evidence_registry.json",
-        "src/template_gold_refinement/integrity.py::build_evidence_tiers"
+        "src/integrity.py::build_evidence_tiers"
       ],
       "visual_encoding": "ordered horizontal bars encode counts and percentages by evidence source tier",
-      "alt": "Ordered horizontal bars form a ladder from weaker to stronger evidence-source tiers, with each bar annotated by its registry count and percentage.",
+      "alt_text": "Horizontal bars compare counts and percentages across the evidence tiers available to the template registry.",
       "svg_path": "evidence_tier_ladder.svg"
     }
   ]
