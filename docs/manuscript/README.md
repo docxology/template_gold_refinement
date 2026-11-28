@@ -6,6 +6,10 @@ hydrated copy in `output/manuscript/`, then render and validate PDF and HTML.
 See [manuscript status](MANUSCRIPT_STATUS.md) for the publication role and
 [syntax](SYNTAX.md) for source conventions.
 
+Download the [tracked manuscript PDF](https://raw.githubusercontent.com/docxology/template_gold_refinement/13758370cbbb74023088bb66d8196d6ab6637b4c/output/pdf/template_gold_refinement_combined.pdf).
+Follow [GitHub Pages issue #11](https://github.com/docxology/template_gold_refinement/issues/11) for delivery of the corrected
+methodology page.
+
 ## Files
 
 | File | Role |
